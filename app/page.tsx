@@ -69,6 +69,7 @@ export default async function HomePage() {
                 alt="Fikri"
                 fill
                 priority
+                sizes="(max-width: 980px) 100vw, 45vw"
                 style={{ objectFit: "cover", filter: "grayscale(1) contrast(1.05)" }}
               />
             </div>
