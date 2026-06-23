@@ -7,9 +7,22 @@ import GridBackground from "@/components/GridBackground";
 import { LiveClock, RoleTyping } from "@/components/HeroBits";
 import { getData } from "@/lib/data";
 
+const MONTHS: Record<string, number> = {
+  JAN:1,FEB:2,MAR:3,APR:4,MEI:5,MAY:5,JUN:6,
+  JUL:7,AGU:8,AUG:8,SEP:9,OKT:10,OCT:10,NOV:11,DES:12,DEC:12,
+};
+function parsePeriodStart(period: string): number {
+  const start = period.split(/\s*[—–-]\s*/)[0].trim();
+  const [mon, yr] = start.split(/\s+/);
+  const month = MONTHS[mon?.toUpperCase()] ?? 0;
+  const year = parseInt((yr ?? "").replace(/\D/g, "").slice(0, 4)) || 0;
+  return year * 100 + month;
+}
+
 export default async function HomePage() {
   const S = await getData();
-  const { profile: P, stats: ST, tools, experience, webWorks, products, blog } = S;
+  const { profile: P, stats: ST, tools, webWorks, products, blog } = S;
+  const experience = [...S.experience].sort((a, b) => parsePeriodStart(b.period) - parsePeriodStart(a.period));
   const featured = blog.posts.find((p) => p.id === blog.featuredId) || blog.posts[0];
   const blogPreview = [featured, ...blog.posts.filter((p) => p.id !== featured?.id)].filter(Boolean).slice(0, 3) as typeof blog.posts;
 
