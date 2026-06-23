@@ -10,7 +10,11 @@ const STORE_PATH = path.join(process.cwd(), "data", "store.json");
 
 async function getDb() {
   const { default: postgres } = await import("postgres");
-  const sql = postgres(process.env.DATABASE_URL!, { ssl: "require", max: 1 });
+  const sql = postgres(process.env.DATABASE_URL!, {
+    ssl: "require",
+    max: 1,
+    prepare: false, // required for Supabase PgBouncer (transaction mode)
+  });
   await sql`
     CREATE TABLE IF NOT EXISTS portfolio (
       id   INT PRIMARY KEY DEFAULT 1,
