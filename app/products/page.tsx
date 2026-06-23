@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import { getData } from "@/lib/data";
