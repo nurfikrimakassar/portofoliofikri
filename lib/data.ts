@@ -29,7 +29,7 @@ async function getFromDb(): Promise<PortfolioData> {
   try {
     const rows = await sql`SELECT data FROM portfolio WHERE id = 1`;
     if (rows.length === 0) {
-      await sql`INSERT INTO portfolio (id, data) VALUES (1, ${JSON.stringify(defaultData)})`;
+      await sql`INSERT INTO portfolio (id, data) VALUES (1, ${sql.json(defaultData)})`;
       return defaultData;
     }
     return { ...defaultData, ...(rows[0].data as PortfolioData) };
@@ -42,7 +42,7 @@ async function saveToDb(data: PortfolioData): Promise<void> {
   const sql = await getDb();
   try {
     await sql`
-      INSERT INTO portfolio (id, data) VALUES (1, ${JSON.stringify(data)})
+      INSERT INTO portfolio (id, data) VALUES (1, ${sql.json(data)})
       ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data
     `;
   } finally {
