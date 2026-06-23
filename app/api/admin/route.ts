@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
   revalidatePath("/blog");
   revalidatePath("/products");
   revalidatePath("/work/[id]", "page");
+  revalidatePath("/graphic/[id]", "page");
   revalidatePath("/blog/[id]", "page");
   revalidatePath("/products/[id]", "page");
   return NextResponse.json({ ok: true });
