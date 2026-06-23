@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
+import Image from "next/image";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
@@ -69,14 +70,28 @@ export default async function WorkPage() {
               href={`/graphic/${g.id}`}
               className="hover-panel relative bg-[#0a0a0a] aspect-[4/3] flex flex-col justify-end p-5 no-underline text-[#f5f5f5] overflow-hidden"
             >
-              <div
-                className="absolute inset-0 opacity-60"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px)",
-                  backgroundSize: "22px 22px",
-                }}
-              />
+              {S.detail.graphic[g.id]?.cover ? (
+                <>
+                  <Image
+                    src={S.detail.graphic[g.id].cover!}
+                    alt={g.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw"
+                    style={{ objectFit: "cover" }}
+                    className="opacity-50"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                </>
+              ) : (
+                <div
+                  className="absolute inset-0 opacity-60"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px)",
+                    backgroundSize: "22px 22px",
+                  }}
+                />
+              )}
               <div className="absolute top-[18px] left-5 font-mono text-[11px] text-[#525252]">{g.cat}</div>
               <div className="relative text-lg font-semibold tracking-[-0.01em]">{g.title}</div>
             </Link>
