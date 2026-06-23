@@ -14,6 +14,14 @@ function parsePeriodStart(period: string): number {
   const year = parseInt((yr ?? "").replace(/\D/g, "").slice(0, 4)) || 0;
   return year * 100 + month;
 }
+function sortExp(list: { period: string }[]) {
+  return [...list].sort((a, b) => {
+    const aNow = /now/i.test(a.period) ? 1 : 0;
+    const bNow = /now/i.test(b.period) ? 1 : 0;
+    if (bNow !== aNow) return bNow - aNow;
+    return parsePeriodStart(b.period) - parsePeriodStart(a.period);
+  });
+}
 
 export default function ExperienceTab({
   data,
@@ -22,7 +30,7 @@ export default function ExperienceTab({
   data: PortfolioData;
   setData: (d: PortfolioData) => void;
 }) {
-  const sorted = [...data.experience].sort((a, b) => parsePeriodStart(b.period) - parsePeriodStart(a.period));
+  const sorted = sortExp(data.experience) as typeof data.experience;
 
   function update(i: number, patch: Partial<Experience>) {
     const next = sorted.slice();

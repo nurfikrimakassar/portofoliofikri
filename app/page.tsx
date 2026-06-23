@@ -18,11 +18,19 @@ function parsePeriodStart(period: string): number {
   const year = parseInt((yr ?? "").replace(/\D/g, "").slice(0, 4)) || 0;
   return year * 100 + month;
 }
+function sortExperience<T extends { period: string }>(list: T[]): T[] {
+  return [...list].sort((a, b) => {
+    const aNow = /now/i.test(a.period) ? 1 : 0;
+    const bNow = /now/i.test(b.period) ? 1 : 0;
+    if (bNow !== aNow) return bNow - aNow;
+    return parsePeriodStart(b.period) - parsePeriodStart(a.period);
+  });
+}
 
 export default async function HomePage() {
   const S = await getData();
   const { profile: P, stats: ST, tools, webWorks, products, blog } = S;
-  const experience = [...S.experience].sort((a, b) => parsePeriodStart(b.period) - parsePeriodStart(a.period));
+  const experience = sortExperience(S.experience);
   const featured = blog.posts.find((p) => p.id === blog.featuredId) || blog.posts[0];
   const blogPreview = [featured, ...blog.posts.filter((p) => p.id !== featured?.id)].filter(Boolean).slice(0, 3) as typeof blog.posts;
 
