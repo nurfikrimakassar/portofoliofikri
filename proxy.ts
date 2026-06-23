@@ -18,10 +18,12 @@ function toHex(buf: ArrayBuffer): string {
     .join("");
 }
 
-function fromHex(hex: string): Uint8Array {
+function fromHex(hex: string): Uint8Array<ArrayBuffer> {
   const bytes = hex.match(/.{1,2}/g);
   if (!bytes) return new Uint8Array(0);
-  return new Uint8Array(bytes.map((b) => parseInt(b, 16)));
+  const result = new Uint8Array(bytes.length);
+  for (let i = 0; i < bytes.length; i++) result[i] = parseInt(bytes[i], 16);
+  return result;
 }
 
 export async function signToken(secret: string): Promise<string> {
