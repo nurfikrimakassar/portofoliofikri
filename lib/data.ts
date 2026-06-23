@@ -6,6 +6,48 @@ import { defaultData } from "./default-data";
 
 const STORE_PATH = path.join(process.cwd(), "data", "store.json");
 
+// ─── PostgreSQL (Neon) ────────────────────────────────────────────────────────
+
+async function getDb() {
+  const { default: postgres } = await import("postgres");
+  const sql = postgres(process.env.DATABASE_URL!, { ssl: "require", max: 1 });
+  await sql`
+    CREATE TABLE IF NOT EXISTS portfolio (
+      id   INT PRIMARY KEY DEFAULT 1,
+      data JSONB NOT NULL
+    )
+  `;
+  return sql;
+}
+
+async function getFromDb(): Promise<PortfolioData> {
+  const sql = await getDb();
+  try {
+    const rows = await sql`SELECT data FROM portfolio WHERE id = 1`;
+    if (rows.length === 0) {
+      await sql`INSERT INTO portfolio (id, data) VALUES (1, ${JSON.stringify(defaultData)})`;
+      return defaultData;
+    }
+    return { ...defaultData, ...(rows[0].data as PortfolioData) };
+  } finally {
+    await sql.end();
+  }
+}
+
+async function saveToDb(data: PortfolioData): Promise<void> {
+  const sql = await getDb();
+  try {
+    await sql`
+      INSERT INTO portfolio (id, data) VALUES (1, ${JSON.stringify(data)})
+      ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data
+    `;
+  } finally {
+    await sql.end();
+  }
+}
+
+// ─── JSON store (dev lokal) ───────────────────────────────────────────────────
+
 async function ensureStore(): Promise<void> {
   try {
     await fs.access(STORE_PATH);
@@ -15,25 +57,27 @@ async function ensureStore(): Promise<void> {
   }
 }
 
-/**
- * Reads the portfolio content store. In this starter, the "database" is a
- * single JSON file on disk (data/store.json) seeded from default-data.ts.
- * Swap this function for a real DB call (Prisma/Postgres) in production —
- * everything else in the app reads through this one function.
- */
-export async function getData(): Promise<PortfolioData> {
+async function getFromJson(): Promise<PortfolioData> {
   await ensureStore();
   try {
     const raw = await fs.readFile(STORE_PATH, "utf-8");
-    const parsed = JSON.parse(raw);
-    // Shallow-merge over defaults so partially-edited stores never crash a render.
-    return { ...defaultData, ...parsed };
+    return { ...defaultData, ...(JSON.parse(raw) as PortfolioData) };
   } catch {
     return defaultData;
   }
 }
 
-export async function saveData(data: PortfolioData): Promise<void> {
+async function saveToJson(data: PortfolioData): Promise<void> {
   await fs.mkdir(path.dirname(STORE_PATH), { recursive: true });
   await fs.writeFile(STORE_PATH, JSON.stringify(data, null, 2), "utf-8");
+}
+
+// ─── Public API ───────────────────────────────────────────────────────────────
+
+export async function getData(): Promise<PortfolioData> {
+  return process.env.DATABASE_URL ? getFromDb() : getFromJson();
+}
+
+export async function saveData(data: PortfolioData): Promise<void> {
+  return process.env.DATABASE_URL ? saveToDb(data) : saveToJson(data);
 }
