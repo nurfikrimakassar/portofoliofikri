@@ -39,11 +39,10 @@ export async function POST(req: NextRequest) {
 
   if (token) {
     try {
-      const blob = await put(name, outBuf, {
-        access: "public",
-        token,
-        contentType: isSvg ? "image/svg+xml" : "image/webp",
+      const blobData = new Blob([outBuf], {
+        type: isSvg ? "image/svg+xml" : "image/webp",
       });
+      const blob = await put(name, blobData, { access: "public", token });
       return NextResponse.json({ url: blob.url });
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
