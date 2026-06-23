@@ -38,16 +38,26 @@ export async function POST(req: NextRequest) {
   const token = process.env.BLOB_READ_WRITE_TOKEN;
 
   if (token) {
-    const blob = await put(name, outBuf, {
-      access: "public",
-      token,
-      contentType: isSvg ? "image/svg+xml" : "image/webp",
-    });
-    return NextResponse.json({ url: blob.url });
+    try {
+      const blob = await put(name, outBuf, {
+        access: "public",
+        token,
+        contentType: isSvg ? "image/svg+xml" : "image/webp",
+      });
+      return NextResponse.json({ url: blob.url });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      return NextResponse.json({ error: `Blob upload gagal: ${msg}` }, { status: 500 });
+    }
   }
 
   // Fallback: simpan ke public/uploads/ (dev lokal)
-  await fs.mkdir(UPLOAD_DIR, { recursive: true });
-  await fs.writeFile(path.join(UPLOAD_DIR, name), outBuf);
-  return NextResponse.json({ url: `/uploads/${name}` });
+  try {
+    await fs.mkdir(UPLOAD_DIR, { recursive: true });
+    await fs.writeFile(path.join(UPLOAD_DIR, name), outBuf);
+    return NextResponse.json({ url: `/uploads/${name}` });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: `Filesystem upload gagal: ${msg}` }, { status: 500 });
+  }
 }
