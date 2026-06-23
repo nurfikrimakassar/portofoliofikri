@@ -63,6 +63,8 @@ export type Product = {
   desc: string;
   stat: string;
   tags: string[];
+  image?: string;
+  link?: string;
 };
 
 export type Automation = {

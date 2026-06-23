@@ -1,7 +1,7 @@
 "use client";
 
 import { Automation, PortfolioData, Product } from "@/lib/types";
-import { Card, Field, GhostButton, PrimaryButton, SectionTitle, TextAreaField } from "../ui";
+import { Card, Field, GhostButton, ImageUploadField, PrimaryButton, SectionTitle, TextAreaField } from "../ui";
 
 function slugId(prefix: string, existing: string[]) {
   let n = 1;
@@ -75,6 +75,8 @@ export default function ProductsTab({
                 value={p.tags.join(", ")}
                 onChange={(v) => updateProduct(i, { tags: v.split(",").map((s) => s.trim()).filter(Boolean) })}
               />
+              <ImageUploadField label="GAMBAR PRODUK" url={p.image} onChange={(url) => updateProduct(i, { image: url })} />
+              <Field label="LINK BELI (Lynk / Gumroad / dll)" value={p.link || ""} onChange={(v) => updateProduct(i, { link: v })} />
               <div className="flex justify-end">
                 <GhostButton danger onClick={() => removeProduct(i)}>
                   HAPUS
