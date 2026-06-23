@@ -1,27 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createHmac, timingSafeEqual } from "crypto";
 
 const COOKIE = "fikri_admin_session";
 
-function signToken(secret: string): string {
-  const ts = Date.now().toString(36);
-  const sig = createHmac("sha256", secret).update(ts).digest("hex");
-  return `${ts}.${sig}`;
+async function getKey(secret: string): Promise<CryptoKey> {
+  return crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign", "verify"]
+  );
 }
 
-export function verifyToken(token: string, secret: string): boolean {
+function toHex(buf: ArrayBuffer): string {
+  return Array.from(new Uint8Array(buf))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function fromHex(hex: string): Uint8Array {
+  const bytes = hex.match(/.{1,2}/g);
+  if (!bytes) return new Uint8Array(0);
+  return new Uint8Array(bytes.map((b) => parseInt(b, 16)));
+}
+
+export async function signToken(secret: string): Promise<string> {
+  const ts = Date.now().toString(36);
+  const key = await getKey(secret);
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(ts));
+  return `${ts}.${toHex(sig)}`;
+}
+
+export async function verifyToken(token: string, secret: string): Promise<boolean> {
   const parts = token.split(".");
   if (parts.length !== 2) return false;
-  const [ts, sig] = parts;
-  const expected = createHmac("sha256", secret).update(ts).digest("hex");
+  const [ts, sigHex] = parts;
   try {
-    return timingSafeEqual(Buffer.from(sig, "hex"), Buffer.from(expected, "hex"));
+    const key = await getKey(secret);
+    const sigBytes = fromHex(sigHex);
+    if (sigBytes.length === 0) return false;
+    return await crypto.subtle.verify("HMAC", key, sigBytes, new TextEncoder().encode(ts));
   } catch {
     return false;
   }
 }
-
-export { signToken };
 
 const SECURITY_HEADERS = {
   "X-Frame-Options": "DENY",
@@ -31,7 +53,7 @@ const SECURITY_HEADERS = {
   "X-XSS-Protection": "1; mode=block",
 };
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const secret = process.env.SESSION_SECRET || "dev-secret-change-in-prod";
 
@@ -45,7 +67,7 @@ export function middleware(req: NextRequest) {
   // Protect /admin and /api/admin
   if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
     const token = req.cookies.get(COOKIE)?.value ?? "";
-    const valid = verifyToken(token, secret);
+    const valid = await verifyToken(token, secret);
 
     if (!valid) {
       if (pathname.startsWith("/api/admin")) {

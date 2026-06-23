@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
   attempts.delete(ip);
 
   const secret = process.env.SESSION_SECRET || "dev-secret-change-in-prod";
-  const token = signToken(secret);
+  const token = await signToken(secret);
 
   const res = NextResponse.json({ ok: true });
   res.cookies.set(COOKIE, token, {
