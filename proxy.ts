@@ -53,18 +53,16 @@ const SECURITY_HEADERS = {
   "X-XSS-Protection": "1; mode=block",
 };
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const secret = process.env.SESSION_SECRET || "dev-secret-change-in-prod";
 
-  // Pass-through for login endpoints
   if (pathname === "/admin/login" || pathname === "/api/admin/login") {
     const res = NextResponse.next();
     Object.entries(SECURITY_HEADERS).forEach(([k, v]) => res.headers.set(k, v));
     return res;
   }
 
-  // Protect /admin and /api/admin
   if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
     const token = req.cookies.get(COOKIE)?.value ?? "";
     const valid = await verifyToken(token, secret);

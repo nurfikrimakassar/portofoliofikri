@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { signToken } from "@/middleware";
+import { signToken } from "@/proxy";
 
 const COOKIE = "fikri_admin_session";
 
