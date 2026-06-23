@@ -3,6 +3,18 @@
 import { Experience, PortfolioData } from "@/lib/types";
 import { Card, Field, GhostButton, PrimaryButton, SectionTitle } from "../ui";
 
+const MONTHS: Record<string, number> = {
+  JAN:1,FEB:2,MAR:3,APR:4,MEI:5,MAY:5,JUN:6,
+  JUL:7,AGU:8,AUG:8,SEP:9,OKT:10,OCT:10,NOV:11,DES:12,DEC:12,
+};
+function parsePeriodStart(period: string): number {
+  const start = period.split(/\s*[—–-]\s*/)[0].trim();
+  const [mon, yr] = start.split(/\s+/);
+  const month = MONTHS[mon?.toUpperCase()] ?? 0;
+  const year = parseInt((yr ?? "").replace(/\D/g, "").slice(0, 4)) || 0;
+  return year * 100 + month;
+}
+
 export default function ExperienceTab({
   data,
   setData,
@@ -10,27 +22,27 @@ export default function ExperienceTab({
   data: PortfolioData;
   setData: (d: PortfolioData) => void;
 }) {
-  const list = data.experience;
+  const sorted = [...data.experience].sort((a, b) => parsePeriodStart(b.period) - parsePeriodStart(a.period));
 
   function update(i: number, patch: Partial<Experience>) {
-    const next = list.slice();
+    const next = sorted.slice();
     next[i] = { ...next[i], ...patch };
     setData({ ...data, experience: next });
   }
   function remove(i: number) {
-    setData({ ...data, experience: list.filter((_, idx) => idx !== i) });
+    setData({ ...data, experience: sorted.filter((_, idx) => idx !== i) });
   }
   function add() {
     setData({
       ...data,
-      experience: [...list, { period: "2024 — NOW", role: "Role baru", org: "Organisasi", tag: "TAG" }],
+      experience: [...sorted, { period: "2024 — NOW", role: "Role baru", org: "Organisasi", tag: "TAG" }],
     });
   }
 
   return (
     <div className="flex flex-col gap-4 max-w-[720px]">
       <SectionTitle>EXPERIENCE.LOG</SectionTitle>
-      {list.map((job, i) => (
+      {sorted.map((job, i) => (
         <Card key={i}>
           <div className="grid grid-cols-2 gap-3">
             <Field label="PERIODE" value={job.period} onChange={(v) => update(i, { period: v })} />
