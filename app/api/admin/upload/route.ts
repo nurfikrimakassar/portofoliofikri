@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
   if (token) {
     try {
-      const blobData = new Blob([outBuf], {
+      const blobData = new Blob([Uint8Array.from(outBuf)], {
         type: isSvg ? "image/svg+xml" : "image/webp",
       });
       const blob = await put(name, blobData, { access: "public", token });
