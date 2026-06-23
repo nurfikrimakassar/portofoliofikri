@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
+import Image from "next/image";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
@@ -50,14 +51,25 @@ export default async function BlogPage() {
               </div>
             </div>
             <div className="relative bg-[#141414] min-h-[280px] flex items-center justify-center overflow-hidden">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px)",
-                  backgroundSize: "28px 28px",
-                }}
-              />
+              {S.detail.blog[featured.id]?.cover ? (
+                <Image
+                  src={S.detail.blog[featured.id].cover!}
+                  alt={featured.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  style={{ objectFit: "cover" }}
+                  className="opacity-70"
+                />
+              ) : (
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px)",
+                    backgroundSize: "28px 28px",
+                  }}
+                />
+              )}
               <span className="relative font-mono text-[13px] text-[#525252]">{featured.cat}</span>
             </div>
           </Link>
