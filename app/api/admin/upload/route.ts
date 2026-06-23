@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "File maksimal 20MB." }, { status: 400 });
   }
 
-  const raw = Buffer.from(await file.arrayBuffer());
+  const raw = Buffer.from(new Uint8Array(await file.arrayBuffer()));
   const isSvg = file.type === "image/svg+xml";
   const outBuf = isSvg ? raw : await compress(raw);
   const outExt = isSvg ? "svg" : "webp";
