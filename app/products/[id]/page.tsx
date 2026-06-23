@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
+import ImageSlot from "@/components/ImageSlot";
 import BlockBody from "@/components/BlockBody";
 import { getData } from "@/lib/data";
 
@@ -60,6 +61,12 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ id: 
       </header>
 
       <div className="relative z-10 max-w-[880px] mx-auto px-8 max-[640px]:px-6">
+        <ImageSlot
+          url={C.cover}
+          alt={`Cover ${item.title}`}
+          placeholder="Gambar cover · ratio bebas"
+          className="block w-full aspect-video my-10"
+        />
         <div className="flex flex-col gap-7 mt-11">
           <BlockBody body={C.body || []} />
         </div>

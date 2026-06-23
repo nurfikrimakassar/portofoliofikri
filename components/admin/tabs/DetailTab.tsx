@@ -166,6 +166,7 @@ function CsDetailEditor({
 
   return (
     <div className="flex flex-col gap-5 border-t border-white/10 pt-6">
+      <ImageUploadField label="COVER" url={detail.cover} onChange={(url) => update({ cover: url })} />
       <TextAreaField label="SUMMARY" value={detail.summary || ""} onChange={(v) => update({ summary: v })} rows={3} />
       <div>
         <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">META (KLIEN/PERAN/TAHUN/STACK)</span>
