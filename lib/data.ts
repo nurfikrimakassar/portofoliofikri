@@ -48,17 +48,7 @@ async function saveToDb(data: PortfolioData): Promise<void> {
 
 // ─── JSON store (dev lokal) ───────────────────────────────────────────────────
 
-async function ensureStore(): Promise<void> {
-  try {
-    await fs.access(STORE_PATH);
-  } catch {
-    await fs.mkdir(path.dirname(STORE_PATH), { recursive: true });
-    await fs.writeFile(STORE_PATH, JSON.stringify(defaultData, null, 2), "utf-8");
-  }
-}
-
 async function getFromJson(): Promise<PortfolioData> {
-  await ensureStore();
   try {
     const raw = await fs.readFile(STORE_PATH, "utf-8");
     return { ...defaultData, ...(JSON.parse(raw) as PortfolioData) };
