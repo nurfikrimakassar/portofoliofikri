@@ -245,26 +245,26 @@ export default function ContactClient({ profile }: { profile: Profile }) {
       )}
 
       <div className="mt-16 font-mono text-[11.5px] tracking-[0.12em] text-[#737373] mb-4">ATAU TEMUKAN AKU DI</div>
-      <div data-r="four" className="grid grid-cols-5 gap-px bg-white/8 border border-white/8 max-[980px]:grid-cols-2">
-        <a href={`mailto:${profile.email}`} className="hover-panel bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5]">
+      <div data-r="four" className="grid grid-cols-1 gap-px bg-white/8 border border-white/8 md:grid-cols-6">
+        <a href={`mailto:${profile.email}`} className="hover-panel min-w-0 bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5] md:col-span-3">
           <div className="font-mono text-[11px] text-[#525252] mb-2">EMAIL</div>
-          <div className="text-[15px]">{profile.email}</div>
+          <div className="text-[15px] leading-snug break-words [overflow-wrap:anywhere]">{profile.email}</div>
         </a>
-        <a href={profile.instagramUrl} target="_blank" rel="noreferrer" className="hover-panel bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5]">
-          <div className="font-mono text-[11px] text-[#525252] mb-2">INSTAGRAM</div>
-          <div className="text-[15px]">{profile.instagram} ↗</div>
-        </a>
-        <a href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="hover-panel bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5]">
+        <a href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="hover-panel min-w-0 bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5] md:col-span-3">
           <div className="font-mono text-[11px] text-[#525252] mb-2">LINKEDIN</div>
           <div className="text-[15px]">{profile.linkedin} ↗</div>
         </a>
-        <a href={profile.githubUrl} target="_blank" rel="noreferrer" className="hover-panel bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5]">
-          <div className="font-mono text-[11px] text-[#525252] mb-2">GITHUB</div>
-          <div className="text-[15px]">{profile.github} ↗</div>
-        </a>
-        <a href={profile.tiktokUrl} target="_blank" rel="noreferrer" className="hover-panel bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5]">
+        <a href={profile.tiktokUrl} target="_blank" rel="noreferrer" className="hover-panel min-w-0 bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5] md:col-span-2">
           <div className="font-mono text-[11px] text-[#525252] mb-2">TIKTOK</div>
           <div className="text-[15px]">{profile.tiktok} ↗</div>
+        </a>
+        <a href={profile.instagramUrl} target="_blank" rel="noreferrer" className="hover-panel min-w-0 bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5] md:col-span-2">
+          <div className="font-mono text-[11px] text-[#525252] mb-2">INSTAGRAM</div>
+          <div className="text-[15px]">{profile.instagram} ↗</div>
+        </a>
+        <a href={profile.githubUrl} target="_blank" rel="noreferrer" className="hover-panel min-w-0 bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5] md:col-span-2">
+          <div className="font-mono text-[11px] text-[#525252] mb-2">GITHUB</div>
+          <div className="text-[15px]">{profile.github} ↗</div>
         </a>
       </div>
     </>
