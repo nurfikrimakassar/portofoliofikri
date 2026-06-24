@@ -261,8 +261,8 @@ export default async function HomePage() {
                   <span className="px-2.5 py-1 bg-[#0a0a0a] text-[#f5f5f5]">{p.stat}</span>
                 </div>
                 <h3 className="text-[21px] font-bold tracking-[-0.01em] mb-2.5">{p.title}</h3>
-                <p className="text-sm leading-[1.6] text-[#404040] flex-1 overflow-hidden line-clamp-3">{p.desc}</p>
-                <div className="flex justify-between items-center pt-[18px] mt-[18px] border-t border-black/10">
+                <p className="text-sm leading-[1.6] text-[#404040] line-clamp-3">{p.desc}</p>
+                <div className="flex justify-between items-center pt-[18px] mt-auto border-t border-black/10">
                   <span className="text-[19px] font-bold">{p.price}</span>
                   <Link href={`/products/digital/${p.idx.toLowerCase()}`} className="font-mono text-xs px-3.5 py-2.5 bg-[#0a0a0a] text-[#f5f5f5] no-underline">
                     GET →

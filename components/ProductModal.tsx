@@ -15,8 +15,8 @@ export default function ProductCards({ products }: { products: Product[] }) {
             <span className="px-2.5 py-1 bg-[#0a0a0a] text-[#f5f5f5]">{p.stat}</span>
           </div>
           <h3 className="text-[22px] font-bold tracking-[-0.01em] mb-3">{p.title}</h3>
-          <p className="text-[14.5px] leading-[1.6] text-[#404040] flex-1 overflow-hidden line-clamp-3">{p.desc}</p>
-          <div className="flex gap-2 my-[18px] flex-wrap">
+          <p className="text-[14.5px] leading-[1.6] text-[#404040] line-clamp-3">{p.desc}</p>
+          <div className="flex gap-2 mt-auto pt-[18px] flex-wrap">
             {p.tags.map((t) => (
               <span key={t} className="font-mono text-[10.5px] px-2 py-1 border border-black/16 text-[#525252]">
                 {t}
