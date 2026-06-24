@@ -6,14 +6,13 @@ import { Field, ImageUploadField, SectionTitle, TextAreaField } from "../ui";
 import BlockEditor from "../BlockEditor";
 import { GalleryEditor, MetaEditor } from "../MetaAndGallery";
 
-type Kind = "project" | "blog" | "cs" | "graphic" | "prod";
+type Kind = "project" | "blog" | "cs" | "graphic";
 
 const KIND_LABEL: Record<Kind, string> = {
   project: "Web Project",
   blog: "Blog Post",
   cs: "Case Study (Automation)",
   graphic: "Graphic Design",
-  prod: "Digital Product",
 };
 
 export default function DetailTab({
@@ -32,8 +31,6 @@ export default function DetailTab({
       ? data.blog.posts.map((p) => ({ id: p.id, label: p.title }))
       : kind === "cs"
       ? data.automation.map((a) => ({ id: a.id, label: `${a.idx} · ${a.title}` }))
-      : kind === "prod"
-      ? data.products.map((p) => ({ id: p.idx, label: `${p.idx} · ${p.title}` }))
       : data.graphicWorks.map((g) => ({ id: g.id, label: g.title }));
 
   const [itemId, setItemId] = useState(options[0]?.id || "");
@@ -89,7 +86,6 @@ export default function DetailTab({
           {kind === "blog" && currentId && <BlogDetailEditor data={data} setData={setData} id={currentId} />}
           {kind === "cs" && currentId && <CsDetailEditor data={data} setData={setData} id={currentId} />}
           {kind === "graphic" && currentId && <GraphicDetailEditor data={data} setData={setData} id={currentId} />}
-          {kind === "prod" && currentId && <ProdDetailEditor data={data} setData={setData} id={currentId} />}
         </>
       )}
     </div>
@@ -240,28 +236,3 @@ function GraphicDetailEditor({
   );
 }
 
-function ProdDetailEditor({
-  data,
-  setData,
-  id,
-}: {
-  data: PortfolioData;
-  setData: (d: PortfolioData) => void;
-  id: string;
-}) {
-  const prod = data.detail.prod ?? {};
-  const detail = prod[id] || {};
-  function update(patch: typeof detail) {
-    setData({ ...data, detail: { ...data.detail, prod: { ...prod, [id]: { ...detail, ...patch } } } });
-  }
-
-  return (
-    <div className="flex flex-col gap-5 border-t border-white/10 pt-6">
-      <ImageUploadField label="COVER PRODUK (tampil di halaman detail)" url={detail.cover} onChange={(url) => update({ cover: url })} />
-      <div>
-        <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">BODY (deskripsi panjang)</span>
-        <BlockEditor blocks={detail.body || []} onChange={(body) => update({ body })} />
-      </div>
-    </div>
-  );
-}

@@ -2,6 +2,7 @@
 
 import { Automation, PortfolioData, Product } from "@/lib/types";
 import { Card, Field, GhostButton, ImageUploadField, PrimaryButton, SectionTitle, TextAreaField } from "../ui";
+import BlockEditor from "../BlockEditor";
 
 function slugId(prefix: string, existing: string[]) {
   let n = 1;
@@ -23,6 +24,11 @@ export default function ProductsTab({
     const next = products.slice();
     next[i] = { ...next[i], ...patch };
     setData({ ...data, products: next });
+  }
+  function updateProdDetail(idx: string, patch: Partial<{ cover?: string; body?: import("@/lib/types").Block[] }>) {
+    const prod = data.detail.prod ?? {};
+    const cur = prod[idx] || {};
+    setData({ ...data, detail: { ...data.detail, prod: { ...prod, [idx]: { ...cur, ...patch } } } });
   }
   function removeProduct(i: number) {
     setData({ ...data, products: products.filter((_, idx) => idx !== i) });
@@ -75,10 +81,22 @@ export default function ProductsTab({
                 value={p.tags.join(", ")}
                 onChange={(v) => updateProduct(i, { tags: v.split(",").map((s) => s.trim()).filter(Boolean) })}
               />
-              <ImageUploadField label="GAMBAR PRODUK" url={p.image} onChange={(url) => updateProduct(i, { image: url })} />
+              <ImageUploadField label="GAMBAR PRODUK (thumbnail)" url={p.image} onChange={(url) => updateProduct(i, { image: url })} />
               <div className="grid grid-cols-[2fr_1fr] gap-3">
                 <Field label="LINK BELI (Lynk / Gumroad / dll)" value={p.buyLink || ""} onChange={(v) => updateProduct(i, { buyLink: v })} />
                 <Field label="LABEL TOMBOL" value={p.linkLabel || ""} onChange={(v) => updateProduct(i, { linkLabel: v })} />
+              </div>
+              <ImageUploadField
+                label="COVER HALAMAN DETAIL (opsional, tampil lebih besar)"
+                url={(data.detail.prod ?? {})[p.idx]?.cover}
+                onChange={(url) => updateProdDetail(p.idx, { cover: url })}
+              />
+              <div>
+                <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">BODY (deskripsi panjang di halaman detail)</span>
+                <BlockEditor
+                  blocks={(data.detail.prod ?? {})[p.idx]?.body || []}
+                  onChange={(body) => updateProdDetail(p.idx, { body })}
+                />
               </div>
               <div className="flex justify-end">
                 <GhostButton danger onClick={() => removeProduct(i)}>
