@@ -12,6 +12,23 @@ export async function generateStaticParams() {
   return S.products.map((p) => ({ idx: p.idx.toLowerCase() }));
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ idx: string }> }) {
+  const { idx } = await params;
+  const S = await getData();
+  const product = S.products.find((p) => p.idx.toLowerCase() === idx);
+  if (!product) return {};
+  const D = (S.detail.prod ?? {})[product.idx] || {};
+  return {
+    title: product.title,
+    description: product.desc.slice(0, 160),
+    openGraph: {
+      title: product.title,
+      description: product.desc.slice(0, 160),
+      images: D.cover ? [{ url: D.cover }] : product.image ? [{ url: product.image }] : [],
+    },
+  };
+}
+
 export default async function ProductDetailPage({ params }: { params: Promise<{ idx: string }> }) {
   const { idx } = await params;
   const S = await getData();

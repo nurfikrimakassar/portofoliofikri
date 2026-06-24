@@ -13,6 +13,25 @@ export async function generateStaticParams() {
   return S.blog.posts.map((p) => ({ id: p.id }));
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const S = await getData();
+  const post = S.blog.posts.find((p) => p.id === id);
+  if (!post) return {};
+  const D = S.detail.blog[id] || {};
+  const desc = post.excerpt || D.body?.find((b) => b.type === "para")?.text?.slice(0, 160) || "";
+  return {
+    title: post.title,
+    description: desc,
+    openGraph: {
+      title: post.title,
+      description: desc,
+      type: "article",
+      images: D.cover ? [{ url: D.cover }] : [],
+    },
+  };
+}
+
 export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const S = await getData();

@@ -14,10 +14,39 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500", "600", "700"],
 });
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://portofoliofikri-ebon.vercel.app";
+
 export const metadata: Metadata = {
-  title: "Fikri — Web, Automation & Graphic Design",
+  metadataBase: new URL(BASE_URL),
+  title: {
+    default: "Fikri — Web, Automation & Graphic Design",
+    template: "%s — Fikri",
+  },
   description:
-    "Mahasiswa Teknik Informatika Universitas Hasanuddin. Membangun produk web, sistem automation, dan identitas visual.",
+    "Mahasiswa Teknik Informatika Universitas Hasanuddin, Makassar. Membangun produk web, sistem automation, dan identitas visual.",
+  keywords: ["web developer", "automation", "graphic design", "Makassar", "Fikri", "portfolio", "Notion template"],
+  authors: [{ name: "Nurfikri" }],
+  creator: "Nurfikri",
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: BASE_URL,
+    siteName: "Fikri — Portfolio",
+    title: "Fikri — Web, Automation & Graphic Design",
+    description:
+      "Mahasiswa Teknik Informatika Universitas Hasanuddin, Makassar. Membangun produk web, sistem automation, dan identitas visual.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fikri — Web, Automation & Graphic Design",
+    description:
+      "Mahasiswa Teknik Informatika Universitas Hasanuddin, Makassar. Membangun produk web, sistem automation, dan identitas visual.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
 };
 
 export default function RootLayout({

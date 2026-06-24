@@ -34,8 +34,22 @@ export default async function HomePage() {
   const featured = blog.posts.find((p) => p.id === blog.featuredId) || blog.posts[0];
   const blogPreview = [featured, ...blog.posts.filter((p) => p.id !== featured?.id)].filter(Boolean).slice(0, 3) as typeof blog.posts;
 
+  const BASE = process.env.NEXT_PUBLIC_SITE_URL || "https://portofoliofikri-ebon.vercel.app";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: P.name || "Nurfikri",
+    url: BASE,
+    jobTitle: "Web Developer & Automation Engineer",
+    description: P.tagline,
+    address: { "@type": "PostalAddress", addressLocality: "Makassar", addressCountry: "ID" },
+    sameAs: [P.linkedinUrl, P.githubUrl, P.instagramUrl, P.tiktokUrl].filter(Boolean),
+    knowsAbout: ["Web Development", "Automation", "Graphic Design", "Notion", "Next.js"],
+  };
+
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] text-[#f5f5f5] font-sans overflow-x-hidden">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <GridBackground />
       <Nav active="/" />
 

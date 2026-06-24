@@ -13,6 +13,24 @@ export async function generateStaticParams() {
   return S.automation.map((a) => ({ id: a.id }));
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const S = await getData();
+  const item = S.automation.find((a) => a.id === id);
+  if (!item) return {};
+  const C = S.detail.cs[id] || {};
+  const desc = C.summary || `${item.problem} — ${item.result}`;
+  return {
+    title: item.title,
+    description: desc.slice(0, 160),
+    openGraph: {
+      title: item.title,
+      description: desc.slice(0, 160),
+      images: C.cover ? [{ url: C.cover }] : [],
+    },
+  };
+}
+
 export default async function CaseStudyPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const S = await getData();

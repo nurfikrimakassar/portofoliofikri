@@ -10,6 +10,23 @@ export async function generateStaticParams() {
   return S.graphicWorks.map((g) => ({ id: g.id }));
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const S = await getData();
+  const item = S.graphicWorks.find((g) => g.id === id);
+  if (!item) return {};
+  const G = S.detail.graphic[id] || {};
+  return {
+    title: item.title,
+    description: G.desc?.slice(0, 160) || `${item.title} — Graphic Design oleh Fikri`,
+    openGraph: {
+      title: item.title,
+      description: G.desc?.slice(0, 160) || `${item.title} — Graphic Design oleh Fikri`,
+      images: G.cover ? [{ url: G.cover }] : G.gallery?.[0]?.url ? [{ url: G.gallery[0].url }] : [],
+    },
+  };
+}
+
 export default async function GraphicDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const S = await getData();

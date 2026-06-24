@@ -13,6 +13,23 @@ export async function generateStaticParams() {
   return S.webWorks.map((w) => ({ id: w.id }));
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const S = await getData();
+  const item = S.webWorks.find((w) => w.id === id);
+  if (!item) return {};
+  const D = S.detail.project[id] || {};
+  return {
+    title: item.title,
+    description: D.body?.find((b) => b.type === "para")?.text?.slice(0, 160) || item.desc,
+    openGraph: {
+      title: item.title,
+      description: D.body?.find((b) => b.type === "para")?.text?.slice(0, 160) || item.desc,
+      images: D.cover ? [{ url: D.cover }] : [],
+    },
+  };
+}
+
 export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const S = await getData();
