@@ -96,7 +96,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         {/* Body blocks below split */}
         {D.body && D.body.length > 0 && (
           <div className="mt-20 border-t border-white/10 pt-14 max-w-[720px]">
-            <BlockBody blocks={D.body} />
+            <BlockBody body={D.body} />
           </div>
         )}
       </div>
