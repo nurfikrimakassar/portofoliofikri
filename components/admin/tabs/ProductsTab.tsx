@@ -76,7 +76,10 @@ export default function ProductsTab({
                 onChange={(v) => updateProduct(i, { tags: v.split(",").map((s) => s.trim()).filter(Boolean) })}
               />
               <ImageUploadField label="GAMBAR PRODUK" url={p.image} onChange={(url) => updateProduct(i, { image: url })} />
-              <Field label="LINK BELI (Lynk / Gumroad / dll)" value={p.link || ""} onChange={(v) => updateProduct(i, { link: v })} />
+              <div className="grid grid-cols-[2fr_1fr] gap-3">
+                <Field label="LINK BELI (Lynk / Gumroad / dll)" value={p.buyLink || ""} onChange={(v) => updateProduct(i, { buyLink: v })} />
+                <Field label="LABEL TOMBOL" value={p.linkLabel || ""} onChange={(v) => updateProduct(i, { linkLabel: v })} />
+              </div>
               <div className="flex justify-end">
                 <GhostButton danger onClick={() => removeProduct(i)}>
                   HAPUS

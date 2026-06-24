@@ -148,6 +148,7 @@ export const defaultData: PortfolioData = {
         ],
       },
     },
+    prod: {},
     blog: {
       feat: {
         body: [

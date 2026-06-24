@@ -64,7 +64,13 @@ export type Product = {
   stat: string;
   tags: string[];
   image?: string;
-  link?: string;
+  buyLink?: string;
+  linkLabel?: string;
+};
+
+export type ProductDetail = {
+  cover?: string;
+  body?: Block[];
 };
 
 export type Automation = {
@@ -133,5 +139,6 @@ export type PortfolioData = {
     graphic: Record<string, GraphicDetail>;
     cs: Record<string, CaseStudyDetail>;
     blog: Record<string, BlogDetail>;
+    prod: Record<string, ProductDetail>;
   };
 };
