@@ -241,16 +241,16 @@ export default async function HomePage() {
           </div>
           <div data-r="three" className="grid grid-cols-3 gap-5 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1">
             {products.slice(0, 3).map((p, i) => (
-              <div key={i} className="hover-card flex flex-col border border-black/14 bg-white p-[26px] min-h-[260px] transition-colors">
+              <div key={i} className="hover-card flex flex-col border border-black/14 bg-white p-[26px] h-[300px] transition-colors">
                 <div className="flex justify-between items-center mb-5 font-mono text-[11.5px] text-[#737373]">
                   <span>{p.idx}</span>
                   <span className="px-2.5 py-1 bg-[#0a0a0a] text-[#f5f5f5]">{p.stat}</span>
                 </div>
                 <h3 className="text-[21px] font-bold tracking-[-0.01em] mb-2.5">{p.title}</h3>
-                <p className="text-sm leading-[1.6] text-[#404040] flex-1">{p.desc}</p>
+                <p className="text-sm leading-[1.6] text-[#404040] flex-1 overflow-hidden line-clamp-3">{p.desc}</p>
                 <div className="flex justify-between items-center pt-[18px] mt-[18px] border-t border-black/10">
                   <span className="text-[19px] font-bold">{p.price}</span>
-                  <Link href="/products" className="font-mono text-xs px-3.5 py-2.5 bg-[#0a0a0a] text-[#f5f5f5] no-underline">
+                  <Link href={`/products/digital/${p.idx.toLowerCase()}`} className="font-mono text-xs px-3.5 py-2.5 bg-[#0a0a0a] text-[#f5f5f5] no-underline">
                     GET →
                   </Link>
                 </div>
