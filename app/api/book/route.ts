@@ -62,10 +62,9 @@ export async function POST(req: NextRequest) {
         },
         body: JSON.stringify({
           summary: `📞 Book a Call — ${name}`,
-          description: `Booking dari portfolio\n\nNama: ${name}\nEmail: ${email}`,
+          description: `Booking dari portfolio\n\nNama: ${name}\nEmail: ${email}\n\nBalas ke: ${email}`,
           start: { dateTime: startISO, timeZone: "Asia/Makassar" },
           end: { dateTime: endISO, timeZone: "Asia/Makassar" },
-          attendees: [{ email }],
         }),
       }
     );
