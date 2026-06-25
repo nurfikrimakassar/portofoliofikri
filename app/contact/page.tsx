@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
@@ -25,7 +26,9 @@ export default async function ContactPage() {
       </header>
 
       <section className="relative z-10 max-w-[1100px] mx-auto px-8 py-9 max-[640px]:px-5">
-        <ContactClient profile={S.profile} />
+        <Suspense>
+          <ContactClient profile={S.profile} />
+        </Suspense>
       </section>
 
       <footer className="relative z-10 max-w-[1100px] mx-auto px-8 pt-[60px] pb-10 max-[640px]:px-5">
