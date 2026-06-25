@@ -33,8 +33,35 @@ export default function ContactClient({ profile }: { profile: Profile }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [sendError, setSendError] = useState("");
   const [callDay, setCallDay] = useState("");
   const [callTime, setCallTime] = useState("");
+
+  async function handleSend() {
+    if (!name || !email || !msg) {
+      setSendError("Nama, email, dan pesan wajib diisi.");
+      return;
+    }
+    setSending(true);
+    setSendError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, service, message: msg }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Gagal");
+      setSent(true);
+      setName(""); setEmail(""); setService(""); setMsg("");
+    } catch (e: unknown) {
+      setSendError(e instanceof Error ? e.message : "Gagal mengirim. Coba lagi.");
+    } finally {
+      setSending(false);
+    }
+  }
 
   const days = useMemo(() => buildDays(), []);
   const dayObj = days.find((d) => d.id === callDay);
@@ -58,9 +85,6 @@ export default function ContactClient({ profile }: { profile: Profile }) {
     ? `Halo Fikri, aku mau book a call: ${dayObj ? dayObj.label : ""} jam ${callTime} WITA.`
     : "";
 
-  const mailLink = `mailto:${profile.email}?subject=${encodeURIComponent(
-    `[Project] ${service || "(belum dipilih)"}`
-  )}&body=${encodeURIComponent(body)}`;
   const waLink = `https://wa.me/${num}?text=${encodeURIComponent(waText)}`;
   const bookLink = ready ? `https://wa.me/${num}?text=${encodeURIComponent(bookText)}` : "#";
 
@@ -125,12 +149,24 @@ export default function ContactClient({ profile }: { profile: Profile }) {
                 rows={5}
                 className="w-full bg-white/[0.03] border border-white/14 text-[#f5f5f5] text-sm px-4 py-3.5 resize-y outline-none"
               />
-              <a
-                href={mailLink}
-                className="inline-flex items-center gap-2.5 px-[26px] py-[15px] bg-[#f5f5f5] text-[#0a0a0a] no-underline font-mono text-[13px] font-semibold tracking-[0.04em] w-fit hover-fill"
-              >
-                KIRIM EMAIL →
-              </a>
+              {sent ? (
+                <div className="px-[26px] py-[15px] bg-[#16a34a]/20 border border-[#16a34a]/40 font-mono text-[13px] text-[#4ade80] w-fit">
+                  ✓ Pesan terkirim! Aku akan balas secepatnya.
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={handleSend}
+                    disabled={sending}
+                    className="inline-flex items-center gap-2.5 px-[26px] py-[15px] bg-[#f5f5f5] text-[#0a0a0a] font-mono text-[13px] font-semibold tracking-[0.04em] w-fit hover-fill disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border-0"
+                  >
+                    {sending ? "MENGIRIM..." : "KIRIM EMAIL →"}
+                  </button>
+                  {sendError && (
+                    <p className="font-mono text-[12px] text-red-400 mt-2">{sendError}</p>
+                  )}
+                </>
+              )}
             </div>
           </div>
           <div className="border border-white/10 bg-white/[0.02] p-[26px]">
