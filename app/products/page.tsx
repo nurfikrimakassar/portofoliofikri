@@ -10,6 +10,7 @@ export const metadata = { title: "Products — Fikri" };
 export default async function ProductsPage() {
   const S = await getData();
   const delivered = S.webWorks.slice(0, 3).map((w) => ({
+    id: w.id,
     title: w.title,
     cat: w.cat,
     year: w.year,
@@ -79,7 +80,7 @@ export default async function ProductsPage() {
           {delivered.map((d, i) => (
             <Link
               key={i}
-              href="/contact"
+              href={`/work/${d.id}`}
               className="hover-card flex flex-col border border-black/14 bg-white p-6 min-h-[180px] no-underline text-[#0a0a0a]"
             >
               <div className="flex justify-between font-mono text-[11px] text-[#737373] mb-auto">
