@@ -38,6 +38,11 @@ export default function ContactClient({ profile }: { profile: Profile }) {
   const [sendError, setSendError] = useState("");
   const [callDay, setCallDay] = useState("");
   const [callTime, setCallTime] = useState("");
+  const [bookName, setBookName] = useState("");
+  const [bookEmail, setBookEmail] = useState("");
+  const [booking, setBooking] = useState(false);
+  const [booked, setBooked] = useState(false);
+  const [bookError, setBookError] = useState("");
 
   async function handleSend() {
     if (!name || !email || !msg) {
@@ -63,6 +68,29 @@ export default function ContactClient({ profile }: { profile: Profile }) {
     }
   }
 
+  async function handleBook() {
+    if (!bookName || !bookEmail || !callDay || !callTime) {
+      setBookError("Semua field wajib diisi.");
+      return;
+    }
+    setBooking(true);
+    setBookError("");
+    try {
+      const res = await fetch("/api/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: bookName, email: bookEmail, date: callDay, time: callTime }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Gagal");
+      setBooked(true);
+    } catch (e: unknown) {
+      setBookError(e instanceof Error ? e.message : "Gagal booking. Coba lagi.");
+    } finally {
+      setBooking(false);
+    }
+  }
+
   const days = useMemo(() => buildDays(), []);
   const dayObj = days.find((d) => d.id === callDay);
   const num = (profile.whatsapp || "6281234567890").replace(/[^0-9]/g, "");
@@ -80,13 +108,7 @@ export default function ContactClient({ profile }: { profile: Profile }) {
   waLines.push("Halo Fikri, aku mau diskusi project.");
   const waText = waLines.join("\n");
 
-  const ready = Boolean(callDay && callTime);
-  const bookText = ready
-    ? `Halo Fikri, aku mau book a call: ${dayObj ? dayObj.label : ""} jam ${callTime} WITA.`
-    : "";
-
   const waLink = `https://wa.me/${num}?text=${encodeURIComponent(waText)}`;
-  const bookLink = ready ? `https://wa.me/${num}?text=${encodeURIComponent(bookText)}` : "#";
 
   const tabBtn = (id: "form" | "wa" | "call", label: string) => (
     <button
@@ -246,36 +268,54 @@ export default function ContactClient({ profile }: { profile: Profile }) {
             </div>
           </div>
           <div className="border border-white/10 bg-white/[0.02] p-[26px]">
-            <div className="font-mono text-[11.5px] tracking-[0.12em] text-[#737373] mb-4">RINGKASAN BOOKING</div>
-            <div className="flex flex-col gap-3.5 font-mono text-[13px]">
-              <div className="flex justify-between">
-                <span className="text-[#737373]">Tanggal</span>
-                <span className="text-[#f5f5f5]">{dayObj ? dayObj.label : "—"}</span>
+            {booked ? (
+              <div className="flex flex-col gap-3">
+                <div className="font-mono text-[11.5px] tracking-[0.12em] text-[#737373] mb-2">BOOKING TERKONFIRMASI</div>
+                <div className="px-4 py-4 bg-[#16a34a]/20 border border-[#16a34a]/40 font-mono text-[13px] text-[#4ade80]">
+                  ✓ Event sudah ditambahkan ke Google Calendar Fikri.
+                </div>
+                <div className="flex flex-col gap-2 font-mono text-[12px] text-[#737373] mt-2">
+                  <div className="flex justify-between"><span>Tanggal</span><span className="text-[#d4d4d4]">{dayObj?.label}</span></div>
+                  <div className="flex justify-between"><span>Jam</span><span className="text-[#d4d4d4]">{callTime} WITA</span></div>
+                  <div className="flex justify-between"><span>Durasi</span><span className="text-[#d4d4d4]">15 menit</span></div>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-[#737373]">Jam</span>
-                <span className="text-[#f5f5f5]">{callTime || "—"}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#737373]">Durasi</span>
-                <span className="text-[#f5f5f5]">15 menit</span>
-              </div>
-            </div>
-            <a
-              href={bookLink}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 flex items-center justify-center gap-2.5 px-[22px] py-[15px] text-[#0a0a0a] no-underline font-mono text-[13px] font-semibold tracking-[0.04em] hover-fill"
-              style={{
-                background: ready ? "#f5f5f5" : "#525252",
-                pointerEvents: ready ? "auto" : "none",
-              }}
-            >
-              {ready ? "KONFIRMASI VIA WHATSAPP →" : "PILIH TANGGAL & JAM"}
-            </a>
-            <div className="mt-3.5 font-mono text-[11px] text-[#525252] leading-[1.5]">
-              Konfirmasi jadwal akan dikirim via WhatsApp.
-            </div>
+            ) : (
+              <>
+                <div className="font-mono text-[11.5px] tracking-[0.12em] text-[#737373] mb-4">DATA KAMU</div>
+                <div className="flex flex-col gap-3 mb-5">
+                  <input
+                    value={bookName}
+                    onChange={(e) => setBookName(e.target.value)}
+                    placeholder="Nama kamu"
+                    className="w-full bg-white/[0.03] border border-white/14 text-[#f5f5f5] text-sm px-4 py-3 outline-none"
+                  />
+                  <input
+                    value={bookEmail}
+                    onChange={(e) => setBookEmail(e.target.value)}
+                    placeholder="Email kamu"
+                    className="w-full bg-white/[0.03] border border-white/14 text-[#f5f5f5] text-sm px-4 py-3 outline-none"
+                  />
+                </div>
+                <div className="flex flex-col gap-2 font-mono text-[12px] text-[#737373] mb-5">
+                  <div className="flex justify-between"><span>Tanggal</span><span className="text-[#d4d4d4]">{dayObj ? dayObj.label : "—"}</span></div>
+                  <div className="flex justify-between"><span>Jam</span><span className="text-[#d4d4d4]">{callTime ? `${callTime} WITA` : "—"}</span></div>
+                  <div className="flex justify-between"><span>Durasi</span><span className="text-[#d4d4d4]">15 menit</span></div>
+                </div>
+                <button
+                  onClick={handleBook}
+                  disabled={booking || !callDay || !callTime}
+                  className="w-full flex items-center justify-center gap-2.5 px-[22px] py-[15px] font-mono text-[13px] font-semibold tracking-[0.04em] cursor-pointer border-0 disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{ background: "#f5f5f5", color: "#0a0a0a" }}
+                >
+                  {booking ? "MEMPROSES..." : "KONFIRMASI BOOKING →"}
+                </button>
+                {bookError && <p className="font-mono text-[11px] text-red-400 mt-2">{bookError}</p>}
+                <div className="mt-3 font-mono text-[11px] text-[#525252]">
+                  Event akan langsung masuk ke Google Calendar Fikri.
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
