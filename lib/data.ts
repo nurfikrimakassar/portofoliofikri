@@ -1,6 +1,7 @@
 import "server-only";
 import { promises as fs } from "fs";
 import path from "path";
+import { unstable_cache } from "next/cache";
 import { PortfolioData } from "./types";
 import { defaultData } from "./default-data";
 
@@ -68,8 +69,14 @@ async function saveToJson(data: PortfolioData): Promise<void> {
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
+const getCachedData = unstable_cache(
+  async () => (process.env.DATABASE_URL ? getFromDb() : getFromJson()),
+  ["portfolio"],
+  { tags: ["portfolio"] }
+);
+
 export async function getData(): Promise<PortfolioData> {
-  return process.env.DATABASE_URL ? getFromDb() : getFromJson();
+  return getCachedData();
 }
 
 export async function saveData(data: PortfolioData): Promise<void> {
