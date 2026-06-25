@@ -10,6 +10,6 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const data = await req.json();
   await saveData(data);
-  revalidateTag("portfolio");
+  revalidateTag("portfolio", {});
   return NextResponse.json({ ok: true });
 }
