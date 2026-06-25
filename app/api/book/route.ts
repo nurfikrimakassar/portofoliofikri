@@ -71,14 +71,14 @@ export async function POST(req: NextRequest) {
     );
 
     if (!res.ok) {
-      const err = await res.json();
-      console.error("Calendar API error:", err);
-      return NextResponse.json({ error: "Gagal membuat event kalender." }, { status: 500 });
+      const err = await res.json() as { error?: { message?: string; status?: string } };
+      const msg = err?.error?.message || err?.error?.status || "Calendar API error";
+      return NextResponse.json({ error: msg }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });
   } catch (e) {
-    console.error(e);
-    return NextResponse.json({ error: "Terjadi kesalahan." }, { status: 500 });
+    const msg = e instanceof Error ? e.message : "Terjadi kesalahan.";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
