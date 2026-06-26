@@ -166,10 +166,10 @@ export default async function HomePage() {
         <div className="font-mono text-[13px] tracking-[0.15em] text-[#737373] mb-9">{`// ABOUT`}</div>
         <div data-r="intro" className="grid grid-cols-[1.35fr_1fr] gap-14 items-start max-[980px]:grid-cols-1 max-[980px]:gap-9">
           <div>
-            <h2 className="text-[clamp(24px,2.8vw,36px)] font-semibold leading-[1.35] tracking-[-0.01em] mb-6">
+            <h2 className="text-[clamp(26px,3.2vw,42px)] font-semibold leading-[1.35] tracking-[-0.01em] mb-6">
               Bringing together an engineer&apos;s precision and a designer&apos;s eye, while automation handles the rest.
             </h2>
-            <p className="text-base leading-[1.7] text-[#a3a3a3]">
+            <p className="text-[17px] leading-[1.7] text-[#a3a3a3]">
               Informatics Engineering student at Hasanuddin University, Makassar, who has gained diverse experience over the past few years as a <span className="text-[#f5f5f5] font-semibold">developer</span>, <span className="text-[#f5f5f5] font-semibold">product management</span>, <span className="text-[#f5f5f5] font-semibold">designer</span>, <span className="text-[#f5f5f5] font-semibold">teacher</span>, and <span className="text-[#f5f5f5] font-semibold">journalist</span>. The common thread is simple: solving problems through well-structured systems.
             </p>
           </div>
