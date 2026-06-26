@@ -72,7 +72,7 @@ export default async function HomePage() {
           <h1 className="text-[clamp(48px,7vw,104px)] leading-[0.95] font-bold tracking-[-0.03em] mb-6">
             {P.name}
           </h1>
-          <div className="h-[38px] overflow-hidden mb-7 font-mono text-[clamp(16px,2.2vw,22px)] text-[#d4d4d4]">
+          <div className="h-[38px] overflow-hidden mb-7 max-[640px]:mb-4 font-mono text-[clamp(16px,2.2vw,22px)] text-[#d4d4d4]">
             <span className="text-[#525252]">&gt;</span> <RoleTyping roles={P.roles} />
           </div>
           <p className="max-w-[520px] text-[clamp(15px,1.5vw,18px)] leading-[1.6] text-[#a3a3a3]">
