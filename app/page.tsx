@@ -170,7 +170,7 @@ export default async function HomePage() {
               Bringing together an engineer&apos;s precision and a designer&apos;s eye, while automation handles the rest.
             </h2>
             <p className="text-base leading-[1.7] text-[#a3a3a3]">
-              Mahasiswa Teknik Informatika Universitas Hasanuddin, Makassar. Selama beberapa tahun terakhir aku mengenakan lima topi berbeda — web developer, product &amp; growth, graphic designer, math tutor, dan jurnalis kampus. Benang merahnya satu: <span className="text-[#f5f5f5]">menyelesaikan masalah dengan sistem yang rapi.</span>
+              Informatics Engineering student at Hasanuddin University, Makassar, who has gained diverse experience over the past few years as a <span className="text-[#f5f5f5] font-semibold">developer</span>, <span className="text-[#f5f5f5] font-semibold">product management specialist</span>, <span className="text-[#f5f5f5] font-semibold">designer</span>, <span className="text-[#f5f5f5] font-semibold">teacher</span>, and <span className="text-[#f5f5f5] font-semibold">journalist</span>. The common thread is simple: solving problems through well-structured systems.
             </p>
           </div>
           <div data-r="stats" className="grid grid-cols-2 gap-px bg-white/8 border border-white/8">
