@@ -3,12 +3,38 @@ import Link from "next/link";
 import Image from "next/image";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
+import Pagination from "@/components/Pagination";
 import { getData } from "@/lib/data";
 
 export const metadata = { title: "Work — Fikri" };
 
-export default async function WorkPage() {
+const PER_PAGE_WEB = 6;
+const PER_PAGE_GRAPHIC = 6;
+
+export default async function WorkPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const S = await getData();
+  const sp = await searchParams;
+
+  const raw: Record<string, string> = {};
+  for (const [k, v] of Object.entries(sp)) {
+    if (typeof v === "string") raw[k] = v;
+  }
+
+  const wp = Math.max(1, parseInt((sp.wp as string) || "1", 10));
+  const gp = Math.max(1, parseInt((sp.gp as string) || "1", 10));
+
+  const totalWebPages = Math.ceil(S.webWorks.length / PER_PAGE_WEB);
+  const totalGraphicPages = Math.ceil(S.graphicWorks.length / PER_PAGE_GRAPHIC);
+
+  const webSlice = S.webWorks.slice((wp - 1) * PER_PAGE_WEB, wp * PER_PAGE_WEB);
+  const graphicSlice = S.graphicWorks.slice(
+    (gp - 1) * PER_PAGE_GRAPHIC,
+    gp * PER_PAGE_GRAPHIC
+  );
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] text-[#f5f5f5] font-sans overflow-x-hidden">
@@ -30,11 +56,13 @@ export default async function WorkPage() {
       </header>
 
       <section className="relative z-10 max-w-[1280px] mx-auto px-8 py-10 max-[640px]:px-5">
+        {/* WEB & ENGINEERING */}
         <div className="flex items-baseline gap-3.5 mb-2 font-mono">
           <span className="text-[13px] tracking-[0.15em] text-[#737373]">{`// WEB & ENGINEERING`}</span>
           <div className="flex-1 h-px bg-white/8" />
+          <span className="text-[11.5px] text-[#525252]">{S.webWorks.length} projects</span>
         </div>
-        {S.webWorks.map((w) => (
+        {webSlice.map((w) => (
           <Link
             key={w.id}
             href={`/work/${w.id}`}
@@ -56,14 +84,22 @@ export default async function WorkPage() {
           </Link>
         ))}
         <div className="border-t border-white/10" />
+        <Pagination
+          page={wp}
+          totalPages={totalWebPages}
+          paramName="wp"
+          currentParams={raw}
+          basePath="/work"
+        />
 
+        {/* GRAPHIC DESIGN */}
         <div className="flex items-baseline gap-3.5 mt-[72px] mb-7 font-mono">
           <span className="text-[13px] tracking-[0.15em] text-[#737373]">{`// GRAPHIC DESIGN`}</span>
           <div className="flex-1 h-px bg-white/8" />
           <span className="text-[11.5px] text-[#525252]">{S.graphicWorks.length} pieces</span>
         </div>
         <div className="grid grid-cols-3 gap-px bg-white/8 border border-white/8 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1">
-          {S.graphicWorks.map((g) => (
+          {graphicSlice.map((g) => (
             <Link
               key={g.id}
               href={`/graphic/${g.id}`}
@@ -96,6 +132,13 @@ export default async function WorkPage() {
             </Link>
           ))}
         </div>
+        <Pagination
+          page={gp}
+          totalPages={totalGraphicPages}
+          paramName="gp"
+          currentParams={raw}
+          basePath="/work"
+        />
       </section>
 
       <footer className="relative z-10 max-w-[1280px] mx-auto px-8 pt-[60px] pb-10 mt-10 max-[640px]:px-5">
