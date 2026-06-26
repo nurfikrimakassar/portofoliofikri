@@ -100,8 +100,10 @@ body {
 .ticker-track {
   animation: marquee 32s linear infinite;
 }
-.ticker-track:hover {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
 }
 
 .hover-fill {
