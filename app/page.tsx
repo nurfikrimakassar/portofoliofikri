@@ -314,9 +314,9 @@ export default async function HomePage() {
           <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-xs text-[#525252] pt-6 border-t border-white/8">
             <span>© 2024 FIKRI · MAKASSAR, ID</span>
             <span>DESIGNED &amp; BUILT WITH INTENT · NEXT.JS</span>
-            <Link href="/" className="text-[#a3a3a3] no-underline hover-link">
+            <a href="#" className="text-[#a3a3a3] no-underline hover-link">
               BACK TO TOP ↑
-            </Link>
+            </a>
           </div>
         </div>
       </footer>
