@@ -170,15 +170,15 @@ export default async function HomePage() {
               Bringing together an engineer&apos;s precision and a designer&apos;s eye, while automation handles the rest.
             </h2>
             <p className="text-base leading-[1.7] text-[#a3a3a3]">
-              Informatics Engineering student at Hasanuddin University, Makassar, who has gained diverse experience over the past few years as a <span className="text-[#f5f5f5] font-semibold">developer</span>, <span className="text-[#f5f5f5] font-semibold">product management specialist</span>, <span className="text-[#f5f5f5] font-semibold">designer</span>, <span className="text-[#f5f5f5] font-semibold">teacher</span>, and <span className="text-[#f5f5f5] font-semibold">journalist</span>. The common thread is simple: solving problems through well-structured systems.
+              Informatics Engineering student at Hasanuddin University, Makassar, who has gained diverse experience over the past few years as a <span className="text-[#f5f5f5] font-semibold">developer</span>, <span className="text-[#f5f5f5] font-semibold">product management</span>, <span className="text-[#f5f5f5] font-semibold">designer</span>, <span className="text-[#f5f5f5] font-semibold">teacher</span>, and <span className="text-[#f5f5f5] font-semibold">journalist</span>. The common thread is simple: solving problems through well-structured systems.
             </p>
           </div>
           <div data-r="stats" className="grid grid-cols-2 gap-px bg-white/8 border border-white/8">
             {[
-              [ST.roles, "PERAN PROFESIONAL"],
-              [ST.projects, "PROYEK SELESAI"],
-              [ST.automations, "AUTOMASI BERJALAN"],
-              [ST.products, "DIGITAL PRODUCT"],
+              [ST.roles, "PROFESSIONAL ROLES"],
+              [ST.projects, "COMPLETED PROJECTS"],
+              [ST.automations, "ACTIVE AUTOMATIONS"],
+              [ST.products, "DIGITAL PRODUCTS"],
             ].map(([val, label]) => (
               <div key={label} className="bg-[#0a0a0a] px-[30px] py-[34px]">
                 <div className="text-[clamp(44px,5vw,60px)] font-bold tracking-[-0.03em] leading-none">{val}</div>
