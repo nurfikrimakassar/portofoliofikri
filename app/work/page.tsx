@@ -51,7 +51,7 @@ export default async function WorkPage() {
             </div>
             <div className="flex items-center gap-5">
               <span className="font-mono text-xs text-[#737373]">{w.year}</span>
-              <span className="text-[22px] text-[#737373]">↗</span>
+              <span className="text-[22px] text-[#737373]">↗︎</span>
             </div>
           </Link>
         ))}

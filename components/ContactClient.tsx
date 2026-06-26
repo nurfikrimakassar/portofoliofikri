@@ -328,19 +328,19 @@ export default function ContactClient({ profile }: { profile: Profile }) {
         </a>
         <a href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="hover-panel min-w-0 bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5] md:col-span-3">
           <div className="font-mono text-[11px] text-[#525252] mb-2">LINKEDIN</div>
-          <div className="text-[15px]">{profile.linkedin} ↗</div>
+          <div className="text-[15px]">{profile.linkedin} ↗︎</div>
         </a>
         <a href={profile.tiktokUrl} target="_blank" rel="noreferrer" className="hover-panel min-w-0 bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5] md:col-span-2">
           <div className="font-mono text-[11px] text-[#525252] mb-2">TIKTOK</div>
-          <div className="text-[15px]">{profile.tiktok} ↗</div>
+          <div className="text-[15px]">{profile.tiktok} ↗︎</div>
         </a>
         <a href={profile.instagramUrl} target="_blank" rel="noreferrer" className="hover-panel min-w-0 bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5] md:col-span-2">
           <div className="font-mono text-[11px] text-[#525252] mb-2">INSTAGRAM</div>
-          <div className="text-[15px]">{profile.instagram} ↗</div>
+          <div className="text-[15px]">{profile.instagram} ↗︎</div>
         </a>
         <a href={profile.githubUrl} target="_blank" rel="noreferrer" className="hover-panel min-w-0 bg-[#0a0a0a] p-6 no-underline text-[#f5f5f5] md:col-span-2">
           <div className="font-mono text-[11px] text-[#525252] mb-2">GITHUB</div>
-          <div className="text-[15px]">{profile.github} ↗</div>
+          <div className="text-[15px]">{profile.github} ↗︎</div>
         </a>
       </div>
     </>

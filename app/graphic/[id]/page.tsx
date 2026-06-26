@@ -70,7 +70,7 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
               rel="noreferrer"
               className="inline-flex items-center gap-2.5 mt-6 px-[22px] py-[13px] bg-[#f5f5f5] text-[#0a0a0a] no-underline font-mono text-[12.5px] font-semibold tracking-[0.04em] hover-fill"
             >
-              {G.linkLabel || "LIHAT PORTO LENGKAP"} ↗
+              {G.linkLabel || "LIHAT PORTO LENGKAP"} ↗︎
             </a>
           </div>
           <div className="flex flex-col gap-px bg-white/8 border border-white/8">

@@ -234,7 +234,7 @@ export default async function HomePage() {
               </div>
               <p className="text-[14.5px] text-[#a3a3a3] mt-1.5 max-w-[540px]">{w.desc}</p>
             </div>
-            <span className="text-[22px] text-[#737373]">↗</span>
+            <span className="text-[22px] text-[#737373]">↗︎</span>
           </Link>
         ))}
         <div className="border-t border-white/10" />

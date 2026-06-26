@@ -71,7 +71,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             rel="noreferrer"
             className="justify-self-end font-mono text-[12.5px] px-[18px] py-[11px] border border-white/25 text-[#f5f5f5] no-underline whitespace-nowrap hover-fill"
           >
-            {detail.linkLabel || "LIHAT LIVE SITE"} ↗
+            {detail.linkLabel || "LIHAT LIVE SITE"} ↗︎
           </a>
         </div>
       </header>
