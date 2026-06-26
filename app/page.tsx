@@ -278,7 +278,7 @@ export default async function HomePage() {
         <div className="flex justify-between items-end flex-wrap gap-4 mb-2">
           <div>
             <div className="font-mono text-[13px] tracking-[0.15em] text-[#737373] mb-3.5">{`// LATEST WRITING`}</div>
-            <h2 className="text-[clamp(28px,3.4vw,44px)] font-bold tracking-[-0.03em]">Dari Blog</h2>
+            <h2 className="text-[clamp(28px,3.4vw,44px)] font-bold tracking-[-0.03em]">Some Blogs</h2>
           </div>
           <Link href="/blog" className="font-mono text-[12.5px] text-[#a3a3a3] no-underline border-b border-white/20 pb-1 hover-link">
             READ THE BLOG →
