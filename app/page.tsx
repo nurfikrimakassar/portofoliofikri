@@ -167,7 +167,7 @@ export default async function HomePage() {
         <div data-r="intro" className="grid grid-cols-[1.35fr_1fr] gap-14 items-start max-[980px]:grid-cols-1 max-[980px]:gap-9">
           <div>
             <h2 className="text-[clamp(24px,2.8vw,36px)] font-semibold leading-[1.35] tracking-[-0.01em] mb-6">
-              Aku menggabungkan ketelitian seorang <span className="text-[#737373]">engineer</span> dengan mata seorang <span className="text-[#737373]">designer</span> — lalu mengotomasi sisanya.
+              Bringing together an engineer&apos;s precision and a designer&apos;s eye, while automation handles the rest.
             </h2>
             <p className="text-base leading-[1.7] text-[#a3a3a3]">
               Mahasiswa Teknik Informatika Universitas Hasanuddin, Makassar. Selama beberapa tahun terakhir aku mengenakan lima topi berbeda — web developer, product &amp; growth, graphic designer, math tutor, dan jurnalis kampus. Benang merahnya satu: <span className="text-[#f5f5f5]">menyelesaikan masalah dengan sistem yang rapi.</span>
