@@ -47,7 +47,7 @@ export default async function ProductsPage() {
           <div className="flex-1 h-px bg-black/12" />
           <span className="text-[11.5px] text-[#a3a3a3]">{S.automation.length} cases</span>
         </div>
-        <PaginatedAutomation items={S.automation} perPage={3} />
+        <PaginatedAutomation items={S.automation} perPage={6} />
 
         <div className="mt-[72px] flex items-baseline gap-3.5 mb-8 font-mono">
           <span className="text-[13px] tracking-[0.15em] text-[#525252]">{`// WEBSITES & PROJECTS DELIVERED`}</span>
