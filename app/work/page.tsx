@@ -41,7 +41,7 @@ export default async function WorkPage() {
           <div className="flex-1 h-px bg-white/8" />
           <span className="text-[11.5px] text-[#525252]">{S.webWorks.length} projects</span>
         </div>
-        <PaginatedWebWorks items={S.webWorks} perPage={6} />
+        <PaginatedWebWorks items={S.webWorks} perPage={3} />
 
         <div className="flex items-baseline gap-3.5 mt-[72px] mb-7 font-mono">
           <span className="text-[13px] tracking-[0.15em] text-[#737373]">{`// GRAPHIC DESIGN`}</span>
