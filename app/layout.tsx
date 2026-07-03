@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   verification: {
-    google: "nWfSBDrKC_wMLUYAxFQh9E9tGQ2ICQH1YpYXGSrVLiA",
+    google: "NPvTov4TFqKGmSsFGMaSh7OMc9Ock_QC6Kwe43fvPBQ",
   },
 };
 
