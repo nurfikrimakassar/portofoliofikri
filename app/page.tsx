@@ -162,8 +162,8 @@ export default async function HomePage() {
       </section>
 
       {/* ABOUT */}
-      <section className="relative z-10 max-w-[1280px] mx-auto px-8 py-[72px] max-[640px]:px-6 max-[640px]:py-14">
-        <div className="font-mono text-[13px] tracking-[0.15em] text-[#737373] mb-9">{`// ABOUT`}</div>
+      <section className="relative z-10 max-w-[1280px] mx-auto px-8 py-[72px] max-[640px]:px-6 max-[640px]:py-10">
+        <div className="font-mono text-[13px] tracking-[0.15em] text-[#737373] mb-9 max-[640px]:mb-5">{`// ABOUT`}</div>
         <div data-r="intro" className="grid grid-cols-[1.35fr_1fr] gap-14 items-start max-[980px]:grid-cols-1 max-[980px]:gap-9">
           <div>
             <h2 className="text-[clamp(25px,3vw,38px)] font-semibold leading-[1.35] tracking-[-0.01em] mb-6">
