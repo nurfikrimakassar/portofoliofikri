@@ -222,12 +222,16 @@ function GraphicDetailEditor({
   return (
     <div className="flex flex-col gap-5 border-t border-white/10 pt-6">
       <ImageUploadField label="COVER (ratio bebas)" url={detail.cover} onChange={(url) => update({ cover: url })} />
-      <TextAreaField label="DESKRIPSI" value={detail.desc || ""} onChange={(v) => update({ desc: v })} rows={3} />
+      <TextAreaField label="DESKRIPSI (ringkasan 1-2 kalimat / summary)" value={detail.desc || ""} onChange={(v) => update({ desc: v })} rows={3} />
+      <div>
+        <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">META (TYPE / TEAM / ROLE / YEAR / LINK — isi URL penuh untuk jadi link)</span>
+        <MetaEditor meta={detail.meta || []} onChange={(meta) => update({ meta })} />
+      </div>
       <div className="grid grid-cols-2 gap-3">
         <Field label="LINK PORTO" value={detail.link || ""} onChange={(v) => update({ link: v })} />
         <Field label="LABEL TOMBOL" value={detail.linkLabel || ""} onChange={(v) => update({ linkLabel: v })} />
       </div>
-      <TextAreaField label="TENTANG KARYA (imageNote)" value={detail.imageNote || ""} onChange={(v) => update({ imageNote: v })} rows={3} />
+      <TextAreaField label="APPROACH / IMPACT / WHAT I LEARNED (imageNote)" value={detail.imageNote || ""} onChange={(v) => update({ imageNote: v })} rows={5} />
       <div>
         <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">GALERI</span>
         <GalleryEditor gallery={detail.gallery || []} onChange={(gallery) => update({ gallery })} />

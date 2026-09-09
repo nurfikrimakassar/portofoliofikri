@@ -105,6 +105,7 @@ export type GraphicDetail = {
   linkLabel?: string;
   imageNote?: string;
   cover?: string;
+  meta?: MetaPair[];
   gallery?: { id: string; cap: string; url?: string }[];
 };
 
