@@ -67,7 +67,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           {metaRows.map((row, ri) => (
             <dl
               key={ri}
-              className="grid grid-cols-3 gap-x-10 py-5 min-h-[128px] content-center border-t border-white/[0.08] max-[720px]:grid-cols-2 max-[480px]:grid-cols-1 max-[480px]:min-h-0 max-[480px]:gap-y-6"
+              className="grid grid-cols-3 gap-x-10 gap-y-6 py-6 border-t border-white/[0.08] max-[720px]:grid-cols-2 max-[480px]:grid-cols-1"
             >
               {row.map((m) => {
                 const isLink = /^https?:\/\//i.test(m.v);
@@ -110,7 +110,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           placeholder="Cover image · 1600×900 (16:9)"
           className="block w-full aspect-video my-14"
         />
-        <article className="flex flex-col gap-6 text-[17.5px] leading-[1.8] text-[#d4d4d4] max-w-[720px] mx-auto">
+        <article className="flex flex-col gap-6 text-[17.5px] leading-[1.8] text-[#d4d4d4]">
           <BlockBody body={detail.body || []} />
         </article>
       </div>
