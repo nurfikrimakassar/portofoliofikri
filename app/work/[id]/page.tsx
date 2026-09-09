@@ -42,6 +42,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         { k: "ROLE", v: "—" },
         { k: "YEAR", v: item.year },
       ];
+  const metaRows: typeof meta[] = [];
+  for (let i = 0; i < meta.length; i += 3) metaRows.push(meta.slice(i, i + 3));
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] text-[#f5f5f5] font-sans overflow-x-hidden">
@@ -61,25 +63,33 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         <p className="text-[clamp(17px,2vw,21px)] leading-[1.6] text-[#a3a3a3] mt-6">{item.desc}</p>
 
         {/* PROJECT FACTS */}
-        <dl className="grid grid-cols-3 gap-x-10 gap-y-7 mt-12 pt-10 border-t border-white/[0.08] max-[720px]:grid-cols-2 max-[480px]:grid-cols-1">
-          {meta.map((m) => {
-            const isLink = /^https?:\/\//i.test(m.v);
-            return (
-              <div key={m.k}>
-                <dt className="font-mono text-[10.5px] tracking-[0.16em] text-[#525252] mb-1.5">{m.k}</dt>
-                <dd className="text-[14.5px] text-[#d4d4d4] leading-[1.5]">
-                  {isLink ? (
-                    <a href={m.v} target="_blank" rel="noreferrer" className="text-[#f5f5f5] no-underline border-b border-white/25 hover-link">
-                      {m.v.replace(/^https?:\/\//, "").replace(/\/$/, "")} ↗
-                    </a>
-                  ) : (
-                    m.v
-                  )}
-                </dd>
-              </div>
-            );
-          })}
-        </dl>
+        <div className="mt-12">
+          {metaRows.map((row, ri) => (
+            <dl
+              key={ri}
+              className="grid grid-cols-3 gap-x-10 gap-y-6 py-6 border-t border-white/[0.08] max-[720px]:grid-cols-2 max-[480px]:grid-cols-1"
+            >
+              {row.map((m) => {
+                const isLink = /^https?:\/\//i.test(m.v);
+                return (
+                  <div key={m.k}>
+                    <dt className="font-mono text-[10.5px] tracking-[0.16em] text-[#525252] mb-1.5">{m.k}</dt>
+                    <dd className="text-[14.5px] text-[#d4d4d4] leading-[1.5]">
+                      {isLink ? (
+                        <a href={m.v} target="_blank" rel="noreferrer" className="text-[#f5f5f5] no-underline border-b border-white/25 hover-link">
+                          {m.v.replace(/^https?:\/\//, "").replace(/\/$/, "")} ↗
+                        </a>
+                      ) : (
+                        m.v
+                      )}
+                    </dd>
+                  </div>
+                );
+              })}
+            </dl>
+          ))}
+          <div className="border-t border-white/[0.08]" />
+        </div>
 
         {detail.link && detail.link !== "#" && (
           <a
