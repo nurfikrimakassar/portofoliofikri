@@ -274,7 +274,7 @@ export default async function HomePage() {
 
       {/* DIGITAL PRODUCTS (light) */}
       <section className="relative z-10 bg-[#f5f5f5] text-[#0a0a0a]">
-        <div className="max-w-[1180px] mx-auto px-8 py-28 max-[640px]:px-5 max-[640px]:py-16">
+        <div className="max-w-[1180px] mx-auto px-8 py-20 max-[640px]:px-5 max-[640px]:py-14">
           <div className="flex justify-between items-end flex-wrap gap-4 mb-12">
             <div>
               <div className="font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-4">{`// DIGITAL PRODUCTS`}</div>
