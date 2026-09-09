@@ -67,7 +67,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           {metaRows.map((row, ri) => (
             <dl
               key={ri}
-              className="grid grid-cols-3 gap-x-10 gap-y-6 py-6 border-t border-white/[0.08] max-[720px]:grid-cols-2 max-[480px]:grid-cols-1"
+              className="grid grid-cols-3 gap-x-10 py-5 min-h-[128px] content-center border-t border-white/[0.08] max-[720px]:grid-cols-2 max-[480px]:grid-cols-1 max-[480px]:min-h-0 max-[480px]:gap-y-6"
             >
               {row.map((m) => {
                 const isLink = /^https?:\/\//i.test(m.v);
