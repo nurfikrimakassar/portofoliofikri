@@ -152,8 +152,8 @@ export default async function HomePage() {
               </span>
             ))}
           </div>
-          <div className="absolute left-0 top-0 bottom-0 w-[22vw] max-w-[280px] min-w-[120px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 30%,rgba(10,10,10,0) 100%)" }} />
-          <div className="absolute right-0 top-0 bottom-0 w-[22vw] max-w-[280px] min-w-[120px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 30%,rgba(10,10,10,0) 100%)" }} />
+          <div className="absolute left-0 top-0 bottom-0 w-[34vw] max-w-[420px] min-w-[150px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 45%,rgba(10,10,10,0) 100%)" }} />
+          <div className="absolute right-0 top-0 bottom-0 w-[34vw] max-w-[420px] min-w-[150px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 45%,rgba(10,10,10,0) 100%)" }} />
         </div>
       </section>
 
@@ -169,14 +169,17 @@ export default async function HomePage() {
               Informatics Engineering student at Hasanuddin University, Makassar, who has gained diverse experience over the past few years as a <span className="text-[#f5f5f5] font-semibold">developer</span>, <span className="text-[#f5f5f5] font-semibold">product management</span>, <span className="text-[#f5f5f5] font-semibold">designer</span>, <span className="text-[#f5f5f5] font-semibold">teacher</span>, and <span className="text-[#f5f5f5] font-semibold">journalist</span>. The common thread is simple: solving problems through well-structured systems.
             </p>
           </div>
-          <div data-r="stats" className="grid grid-cols-2 gap-x-8 gap-y-10">
+          <div data-r="stats" className="grid grid-cols-2 border border-white/10">
             {[
               [ST.roles, "PROFESSIONAL ROLES"],
               [ST.projects, "COMPLETED PROJECTS"],
               [ST.automations, "ACTIVE AUTOMATIONS"],
               [ST.products, "DIGITAL PRODUCTS"],
-            ].map(([val, label]) => (
-              <div key={label}>
+            ].map(([val, label], i) => (
+              <div
+                key={label}
+                className={`px-7 py-8 ${i % 2 === 0 ? "border-r border-white/10" : ""} ${i < 2 ? "border-b border-white/10" : ""}`}
+              >
                 <div className="text-[clamp(40px,5vw,56px)] font-bold tracking-[-0.03em] leading-none">{val}</div>
                 <div className="font-mono text-[11px] tracking-[0.12em] text-[#737373] mt-3.5">{label}</div>
               </div>
