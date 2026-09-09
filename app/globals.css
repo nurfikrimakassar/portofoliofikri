@@ -75,6 +75,26 @@ body {
     radial-gradient(50% 50% at 100% 100%, rgba(255, 255, 255, 0.025) 0%, transparent 70%);
 }
 
+/* Subtle small-square texture — opt-in per section, softly masked so it fades out */
+.grid-texture {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 42px 42px;
+  -webkit-mask-image: radial-gradient(ellipse 78% 62% at 50% 42%, #000 0%, rgba(0, 0, 0, 0.35) 55%, transparent 78%);
+  mask-image: radial-gradient(ellipse 78% 62% at 50% 42%, #000 0%, rgba(0, 0, 0, 0.35) 55%, transparent 78%);
+}
+
+.grid-texture--light {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
 .blink {
   animation: blink 1s step-end infinite;
 }

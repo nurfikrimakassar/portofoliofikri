@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
+import GridTexture from "@/components/GridTexture";
 import { LiveClock, RoleTyping } from "@/components/HeroBits";
 import { getData } from "@/lib/data";
 
@@ -57,8 +58,10 @@ export default async function HomePage() {
       {/* HERO */}
       <header
         data-r="hero"
-        className={`${container} pt-36 pb-24 grid grid-cols-[1.5fr_0.85fr] gap-16 items-center max-[980px]:grid-cols-1 max-[980px]:gap-12 max-[640px]:pt-28 max-[640px]:pb-16`}
+        className={`${container} pt-36 pb-24 max-[640px]:pt-28 max-[640px]:pb-16`}
       >
+        <GridTexture />
+        <div className="relative z-10 grid grid-cols-[1.5fr_0.85fr] gap-16 items-center max-[980px]:grid-cols-1 max-[980px]:gap-12">
         <div>
           <div className="flex items-center gap-2.5 font-mono text-[12px] text-[#737373] mb-8 flex-wrap">
             <span
@@ -110,6 +113,7 @@ export default async function HomePage() {
             <span>FIKRI.JPG</span>
             <span>MAKASSAR · ID</span>
           </div>
+        </div>
         </div>
       </header>
 
@@ -300,8 +304,9 @@ export default async function HomePage() {
       </section>
 
       {/* FOOTER CTA */}
-      <footer data-r="cta" className="relative z-10 border-t border-white/[0.07]">
-        <div className="max-w-[1180px] mx-auto px-8 pt-28 pb-10 max-[640px]:px-5 max-[640px]:pt-16">
+      <footer data-r="cta" className="relative z-10 border-t border-white/[0.07] overflow-hidden">
+        <GridTexture />
+        <div className="relative z-10 max-w-[1180px] mx-auto px-8 pt-28 pb-10 max-[640px]:px-5 max-[640px]:pt-16">
           <div className="font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-7">{`// LET'S BUILD SOMETHING`}</div>
           <h2 className="text-[clamp(44px,9vw,128px)] font-bold tracking-[-0.045em] leading-[0.92] mb-10">
             GET IN
