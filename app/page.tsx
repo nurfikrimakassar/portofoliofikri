@@ -115,16 +115,16 @@ export default async function HomePage() {
 
       {/* INFO STRIP */}
       <section className={container}>
-        <div data-r="strip" className="flex flex-wrap gap-x-20 gap-y-7 pt-9 border-t border-white/10 font-mono">
-          <div>
+        <div data-r="strip" className="grid grid-cols-3 border border-white/10 font-mono max-[640px]:grid-cols-1">
+          <div className="px-6 py-6 border-r border-white/10 max-[640px]:border-r-0 max-[640px]:border-b">
             <div className="text-[11px] tracking-[0.16em] text-[#525252] mb-2">BASED IN</div>
             <div className="text-[15px] text-[#d4d4d4]">{P.location}</div>
           </div>
-          <div>
+          <div className="px-6 py-6 border-r border-white/10 max-[640px]:border-r-0 max-[640px]:border-b">
             <div className="text-[11px] tracking-[0.16em] text-[#525252] mb-2">STUDY</div>
             <div className="text-[15px] text-[#d4d4d4]">{P.study}</div>
           </div>
-          <div>
+          <div className="px-6 py-6">
             <div className="text-[11px] tracking-[0.16em] text-[#525252] mb-2">STATUS</div>
             <div className="text-[15px] text-[#d4d4d4]">{P.status}</div>
           </div>
@@ -152,8 +152,8 @@ export default async function HomePage() {
               </span>
             ))}
           </div>
-          <div className="absolute left-0 top-0 bottom-0 w-[90px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,0) 100%)" }} />
-          <div className="absolute right-0 top-0 bottom-0 w-[90px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,rgba(10,10,10,0) 100%)" }} />
+          <div className="absolute left-0 top-0 bottom-0 w-[22vw] max-w-[280px] min-w-[120px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 30%,rgba(10,10,10,0) 100%)" }} />
+          <div className="absolute right-0 top-0 bottom-0 w-[22vw] max-w-[280px] min-w-[120px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 30%,rgba(10,10,10,0) 100%)" }} />
         </div>
       </section>
 
