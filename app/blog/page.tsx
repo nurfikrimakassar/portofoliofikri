@@ -17,21 +17,21 @@ export default async function BlogPage() {
       <GridBackground />
       <Nav active="/blog" />
 
-      <header className="relative z-10 max-w-[1280px] mx-auto px-8 pt-[140px] pb-10 max-[640px]:px-5 max-[640px]:pt-[104px]">
-        <div className="font-mono text-[12.5px] text-[#525252] mb-5">
-          ~/fikri <span className="text-[#404040]">/</span> <span className="text-[#a3a3a3]">blog</span>
+      <header className="relative z-10 max-w-[1180px] mx-auto px-8 pt-36 pb-12 max-[640px]:px-5 max-[640px]:pt-28">
+        <div className="font-mono text-[12px] text-[#525252] mb-6">
+          ~/fikri <span className="text-[#3a3a3a]">/</span> <span className="text-[#a3a3a3]">blog</span>
         </div>
-        <h1 className="text-[clamp(44px,7vw,88px)] font-bold tracking-[-0.03em] leading-[0.95]">
+        <h1 className="text-[clamp(44px,7vw,88px)] font-bold tracking-[-0.035em] leading-[0.98]">
           WRITING
           <br />
           &amp; NOTES
         </h1>
-        <p className="max-w-[560px] text-base leading-[1.6] text-[#a3a3a3] mt-6">
-          Catatan soal automation, desain, dan perjalanan karier. Studi kasus dan hal-hal yang kupelajari sambil jalan.
+        <p className="max-w-[560px] text-[16px] leading-[1.65] text-[#a3a3a3] mt-7">
+          Notes on automation, design, and the career path so far — case studies and the things I picked up along the way.
         </p>
       </header>
 
-      <section className="relative z-10 max-w-[1280px] mx-auto px-8 py-10 max-[640px]:px-5">
+      <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5">
         {featured && (
           <Link
             href={`/blog/${featured.id}`}
@@ -59,31 +59,22 @@ export default async function BlogPage() {
                   style={{ objectFit: "cover" }}
                   className="opacity-70"
                 />
-              ) : (
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px)",
-                    backgroundSize: "28px 28px",
-                  }}
-                />
-              )}
+              ) : null}
               <span className="relative font-mono text-[13px] text-[#525252]">{featured.cat}</span>
             </div>
           </Link>
         )}
 
-        <div className="flex items-baseline gap-3.5 mb-2 font-mono">
-          <span className="text-[13px] tracking-[0.15em] text-[#737373]">{`// ALL POSTS`}</span>
-          <div className="flex-1 h-px bg-white/8" />
-          <span className="text-[11.5px] text-[#525252]">{rest.length} posts</span>
+        <div className="flex items-baseline gap-4 mb-2 font-mono">
+          <span className="text-[12px] tracking-[0.2em] text-[#737373]">{`// ALL POSTS`}</span>
+          <div className="flex-1 h-px bg-white/[0.07]" />
+          <span className="text-[11px] text-[#525252]">{String(rest.length).padStart(2, "0")} posts</span>
         </div>
         <PaginatedBlog items={rest} perPage={10} />
       </section>
 
-      <footer className="relative z-10 max-w-[1280px] mx-auto px-8 pt-[60px] pb-10 max-[640px]:px-5">
-        <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-xs text-[#525252] pt-6 border-t border-white/8">
+      <footer className="relative z-10 max-w-[1180px] mx-auto px-8 pt-16 pb-10 max-[640px]:px-5">
+        <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-[11px] text-[#525252] pt-7 border-t border-white/[0.07]">
           <span>© 2024 FIKRI · MAKASSAR, ID</span>
           <Link href="/" className="text-[#a3a3a3] no-underline hover-link">
             ← BACK HOME

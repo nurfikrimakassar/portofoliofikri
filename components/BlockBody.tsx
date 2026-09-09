@@ -9,7 +9,7 @@ export default function BlockBody({ body }: { body: Block[] }) {
           return (
             <h2
               key={blk.id}
-              className="text-[clamp(22px,2.6vw,28px)] font-semibold tracking-[-0.01em] text-[#f5f5f5] mt-4"
+              className="text-[clamp(20px,2.4vw,26px)] font-semibold tracking-[-0.01em] text-[#f5f5f5] mt-8"
             >
               {blk.text}
             </h2>

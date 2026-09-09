@@ -38,9 +38,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   const meta = detail.meta?.length
     ? detail.meta
     : [
-        { k: "ROLE", v: "Design & Development" },
+        { k: "TYPE", v: "—" },
+        { k: "ROLE", v: "—" },
         { k: "YEAR", v: item.year },
-        { k: "STACK", v: "Next.js · React" },
       ];
 
   return (
@@ -48,53 +48,70 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       <GridBackground />
       <Nav active="/work" />
 
-      <header className="relative z-10 max-w-[860px] mx-auto px-8 pt-[132px] max-[640px]:px-6 max-[640px]:pt-[104px]">
-        <Link href="/work" className="font-mono text-[12.5px] text-[#737373] no-underline hover-link">
+      <header className="relative z-10 max-w-[820px] mx-auto px-8 pt-36 max-[640px]:px-6 max-[640px]:pt-28">
+        <Link href="/work" className="font-mono text-[12px] text-[#737373] no-underline hover-link">
           ← ~/fikri / work
         </Link>
-        <div className="flex flex-wrap gap-3 items-center my-7 font-mono text-xs text-[#737373]">
-          <span className="px-[11px] py-[5px] border border-white/18 text-[#d4d4d4]">{item.cat}</span>
+        <div className="flex flex-wrap gap-3 items-center mt-8 mb-6 font-mono text-[11px] tracking-[0.1em] text-[#737373]">
+          <span className="text-[#d4d4d4]">{item.cat}</span>
+          <span className="text-[#3a3a3a]">/</span>
           <span>{item.year}</span>
         </div>
-        <h1 className="text-[clamp(32px,5vw,56px)] font-bold tracking-[-0.03em] leading-[1.05]">{item.title}</h1>
-        <p className="text-[clamp(17px,2vw,21px)] leading-[1.55] text-[#a3a3a3] mt-6">{item.desc}</p>
-        <div className="grid grid-cols-[repeat(3,auto)_1fr] gap-7 items-center mt-[34px] pt-[26px] border-t border-white/10 max-[980px]:grid-cols-2">
-          {meta.map((m) => (
-            <div key={m.k}>
-              <div className="font-mono text-[11px] text-[#525252] mb-1.5">{m.k}</div>
-              <div className="text-[14.5px] text-[#d4d4d4]">{m.v}</div>
-            </div>
-          ))}
+        <h1 className="text-[clamp(32px,5vw,54px)] font-bold tracking-[-0.035em] leading-[1.05]">{item.title}</h1>
+        <p className="text-[clamp(17px,2vw,21px)] leading-[1.6] text-[#a3a3a3] mt-6">{item.desc}</p>
+
+        {/* PROJECT FACTS */}
+        <dl className="grid grid-cols-2 gap-x-10 gap-y-6 mt-12 pt-10 border-t border-white/[0.08] max-[640px]:grid-cols-1">
+          {meta.map((m) => {
+            const isLink = /^https?:\/\//i.test(m.v);
+            return (
+              <div key={m.k}>
+                <dt className="font-mono text-[10.5px] tracking-[0.16em] text-[#525252] mb-1.5">{m.k}</dt>
+                <dd className="text-[14.5px] text-[#d4d4d4] leading-[1.5]">
+                  {isLink ? (
+                    <a href={m.v} target="_blank" rel="noreferrer" className="text-[#f5f5f5] no-underline border-b border-white/25 hover-link">
+                      {m.v.replace(/^https?:\/\//, "").replace(/\/$/, "")} ↗
+                    </a>
+                  ) : (
+                    m.v
+                  )}
+                </dd>
+              </div>
+            );
+          })}
+        </dl>
+
+        {detail.link && detail.link !== "#" && (
           <a
-            href={detail.link || "#"}
+            href={detail.link}
             target="_blank"
             rel="noreferrer"
-            className="justify-self-end font-mono text-[12.5px] px-[18px] py-[11px] border border-white/25 text-[#f5f5f5] no-underline whitespace-nowrap hover-fill"
+            className="inline-flex mt-9 font-mono text-[12px] px-5 py-3 border border-white/20 text-[#f5f5f5] no-underline whitespace-nowrap hover-fill"
           >
-            {detail.linkLabel || "LIHAT LIVE SITE"} ↗︎
+            {detail.linkLabel || "VIEW LIVE"} ↗
           </a>
-        </div>
+        )}
       </header>
 
-      <div className="relative z-10 max-w-[860px] mx-auto px-8 max-[640px]:px-6">
+      <div className="relative z-10 max-w-[820px] mx-auto px-8 max-[640px]:px-6">
         <ImageSlot
           url={detail.cover}
           alt={`Cover ${item.title}`}
-          placeholder="Gambar sampul · 1600×900 (16:9)"
-          className="block w-full aspect-video my-10"
+          placeholder="Cover image · 1600×900 (16:9)"
+          className="block w-full aspect-video my-14"
         />
-        <article className="flex flex-col gap-6 text-[17.5px] leading-[1.75] text-[#d4d4d4] max-w-[740px] mx-auto">
+        <article className="flex flex-col gap-6 text-[17.5px] leading-[1.8] text-[#d4d4d4] max-w-[720px] mx-auto">
           <BlockBody body={detail.body || []} />
         </article>
       </div>
 
-      <footer className="relative z-10 max-w-[860px] mx-auto mt-14 px-8 pb-10 max-[640px]:px-6">
-        <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-xs text-[#525252] pt-6 border-t border-white/10">
+      <footer className="relative z-10 max-w-[820px] mx-auto mt-20 px-8 pb-10 max-[640px]:px-6">
+        <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-[11px] text-[#525252] pt-7 border-t border-white/[0.08]">
           <Link href="/work" className="text-[#a3a3a3] no-underline hover-link">
-            ← SEMUA PROJECT
+            ← ALL PROJECTS
           </Link>
           <Link href="/contact" className="text-[#a3a3a3] no-underline hover-link">
-            DISKUSI PROJECT →
+            DISCUSS A PROJECT →
           </Link>
         </div>
       </footer>
