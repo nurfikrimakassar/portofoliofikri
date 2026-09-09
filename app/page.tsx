@@ -31,6 +31,12 @@ export default async function HomePage() {
   const S = await getData();
   const { profile: P, stats: ST, tools, webWorks, products, blog } = S;
   const experience = sortExperience(S.experience);
+  const graphicHighlights = S.graphicWorks.slice(0, 3).map((g) => ({
+    id: g.id,
+    title: g.title,
+    cat: g.cat,
+    cover: S.detail.graphic[g.id]?.cover ?? null,
+  }));
   const featured = blog.posts.find((p) => p.id === blog.featuredId) || blog.posts[0];
   const blogPreview = [featured, ...blog.posts.filter((p) => p.id !== featured?.id)].filter(Boolean).slice(0, 3) as typeof blog.posts;
 
@@ -240,6 +246,27 @@ export default async function HomePage() {
                 <p className="text-[14.5px] text-[#a3a3a3] mt-2 max-w-[560px]">{w.desc}</p>
               </div>
               <span className="text-[20px] text-[#737373]">↗︎</span>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-20 font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-6">{`// DESIGN & IDENTITY`}</div>
+        <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">
+          {graphicHighlights.map((g) => (
+            <Link
+              key={g.id}
+              href={`/graphic/${g.id}`}
+              className="hover-panel relative bg-[#101010] aspect-[4/3] flex flex-col justify-end p-5 no-underline text-[#f5f5f5] overflow-hidden"
+            >
+              {g.cover ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={g.cover} alt={g.title} className="absolute inset-0 w-full h-full object-cover opacity-55" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                </>
+              ) : null}
+              <div className="absolute top-[18px] left-5 font-mono text-[11px] tracking-[0.1em] text-[#666]">{g.cat}</div>
+              <div className="relative text-[17px] font-semibold tracking-[-0.01em]">{g.title}</div>
             </Link>
           ))}
         </div>
