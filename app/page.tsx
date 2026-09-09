@@ -64,7 +64,7 @@ export default async function HomePage() {
       {/* HERO */}
       <header
         data-r="hero"
-        className={`${container} pt-36 pb-28 max-[640px]:pt-28 max-[640px]:pb-16`}
+        className={`${container} pt-36 pb-24 max-[640px]:pt-28 max-[640px]:pb-16`}
       >
         <GridTexture />
         <div className="relative z-10 grid grid-cols-[1.5fr_0.85fr] gap-16 items-center max-[980px]:grid-cols-1 max-[980px]:gap-12">
@@ -142,7 +142,7 @@ export default async function HomePage() {
       </section>
 
       {/* TICKER */}
-      <section className="relative z-10 mt-28 max-[640px]:mt-16">
+      <section className="relative z-10 mt-20">
         <div className={container}>
           <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mb-5">STACK &amp; TOOLS</div>
         </div>
@@ -168,7 +168,7 @@ export default async function HomePage() {
       </section>
 
       {/* ABOUT */}
-      <section className={`${container} pt-28 max-[640px]:pt-16`}>
+      <section className={`${container} py-28 max-[640px]:py-16`}>
         <div className="font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-10 max-[640px]:mb-6">{`// ABOUT`}</div>
         <div data-r="intro" className="grid grid-cols-[1.4fr_1fr] gap-16 items-start max-[980px]:grid-cols-1 max-[980px]:gap-10">
           <div>
@@ -219,7 +219,7 @@ export default async function HomePage() {
       </section>
 
       {/* SELECTED WORK */}
-      <section className={`${container} pt-28 border-t border-white/[0.07] max-[640px]:pt-16`}>
+      <section className={`${container} py-28 border-t border-white/[0.07] max-[640px]:py-16`}>
         <div className="flex justify-between items-end flex-wrap gap-4 mb-12">
           <div>
             <div className="font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-4">{`// SELECTED WORK`}</div>
@@ -250,7 +250,7 @@ export default async function HomePage() {
           ))}
         </div>
 
-        <div className="mt-24 font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-6">{`// DESIGN & IDENTITY`}</div>
+        <div className="mt-20 font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-6">{`// DESIGN & IDENTITY`}</div>
         <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">
           {graphicHighlights.map((g) => (
             <Link
@@ -306,7 +306,7 @@ export default async function HomePage() {
       </section>
 
       {/* LATEST BLOG */}
-      <section className={`${container} pt-28 max-[640px]:pt-16`}>
+      <section className={`${container} py-28 max-[640px]:py-16`}>
         <div className="flex justify-between items-end flex-wrap gap-4 mb-10">
           <div>
             <div className="font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-4">{`// LATEST WRITING`}</div>
