@@ -48,7 +48,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       <GridBackground />
       <Nav active="/work" />
 
-      <header className="relative z-10 max-w-[820px] mx-auto px-8 pt-36 max-[640px]:px-6 max-[640px]:pt-28">
+      <header className="relative z-10 max-w-[1040px] mx-auto px-8 pt-36 max-[640px]:px-6 max-[640px]:pt-28">
         <Link href="/work" className="font-mono text-[12px] text-[#737373] no-underline hover-link">
           ← ~/fikri / work
         </Link>
@@ -61,7 +61,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         <p className="text-[clamp(17px,2vw,21px)] leading-[1.6] text-[#a3a3a3] mt-6">{item.desc}</p>
 
         {/* PROJECT FACTS */}
-        <dl className="grid grid-cols-2 gap-x-10 gap-y-6 mt-12 pt-10 border-t border-white/[0.08] max-[640px]:grid-cols-1">
+        <dl className="grid grid-cols-3 gap-x-10 gap-y-7 mt-12 pt-10 border-t border-white/[0.08] max-[720px]:grid-cols-2 max-[480px]:grid-cols-1">
           {meta.map((m) => {
             const isLink = /^https?:\/\//i.test(m.v);
             return (
@@ -93,7 +93,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         )}
       </header>
 
-      <div className="relative z-10 max-w-[820px] mx-auto px-8 max-[640px]:px-6">
+      <div className="relative z-10 max-w-[1040px] mx-auto px-8 max-[640px]:px-6">
         <ImageSlot
           url={detail.cover}
           alt={`Cover ${item.title}`}
@@ -105,7 +105,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         </article>
       </div>
 
-      <footer className="relative z-10 max-w-[820px] mx-auto mt-20 px-8 pb-10 max-[640px]:px-6">
+      <footer className="relative z-10 max-w-[1040px] mx-auto mt-20 px-8 pb-10 max-[640px]:px-6">
         <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-[11px] text-[#525252] pt-7 border-t border-white/[0.08]">
           <Link href="/work" className="text-[#a3a3a3] no-underline hover-link">
             ← ALL PROJECTS
