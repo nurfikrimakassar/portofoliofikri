@@ -106,7 +106,7 @@ export type GraphicDetail = {
   imageNote?: string;
   cover?: string;
   meta?: MetaPair[];
-  gallery?: { id: string; cap: string; url?: string }[];
+  gallery?: { id: string; cap: string; url?: string; href?: string }[];
 };
 
 export type CaseStudyDetail = {

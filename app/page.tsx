@@ -256,12 +256,16 @@ export default async function HomePage() {
             <Link
               key={g.id}
               href={`/graphic/${g.id}`}
-              className="hover-panel relative bg-[#101010] aspect-[4/3] flex flex-col justify-end p-5 no-underline text-[#f5f5f5] overflow-hidden"
+              className="group hover-panel relative bg-[#101010] aspect-[4/3] flex flex-col justify-end p-5 no-underline text-[#f5f5f5] overflow-hidden"
             >
               {g.cover ? (
                 <>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={g.cover} alt={g.title} className="absolute inset-0 w-full h-full object-cover opacity-55" />
+                  <img
+                    src={g.cover}
+                    alt={g.title}
+                    className="absolute inset-0 w-full h-full object-cover grayscale opacity-60 transition-[filter,opacity] duration-500 ease-out group-hover:grayscale-0 group-hover:opacity-85"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
                 </>
               ) : null}

@@ -7,6 +7,7 @@ export default function ImageSlot({
   fit = "cover",
   className = "",
   style,
+  grayscale = false,
 }: {
   url?: string;
   alt: string;
@@ -14,15 +15,17 @@ export default function ImageSlot({
   fit?: "cover" | "contain";
   className?: string;
   style?: React.CSSProperties;
+  grayscale?: boolean;
 }) {
   if (url) {
     return (
-      <div className={`relative overflow-hidden border border-white/12 ${className}`} style={style}>
+      <div className={`group relative overflow-hidden border border-white/12 ${className}`} style={style}>
         <Image
           src={url}
           alt={alt}
           fill
           sizes="(max-width: 768px) 100vw, 1080px"
+          className={grayscale ? "grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0" : ""}
           style={{ objectFit: fit }}
         />
       </div>

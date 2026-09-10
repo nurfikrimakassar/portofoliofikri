@@ -105,6 +105,7 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
           alt={`Cover ${item.title}`}
           placeholder="Cover · any ratio"
           fit="contain"
+          grayscale
           className="block w-full h-[520px] my-14"
         />
 
@@ -118,18 +119,33 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
         )}
 
         <div className="grid grid-cols-2 gap-6 mt-14 max-[720px]:grid-cols-1 pb-20">
-          {gallery.map((g) => (
-            <figure key={g.id} className="m-0">
+          {gallery.map((g) => {
+            const img = (
               <ImageSlot
                 url={g.url}
                 alt={g.cap}
                 placeholder="Image · any ratio"
                 fit="contain"
+                grayscale
                 className="block w-full h-[360px] bg-[#101010]"
               />
-              <figcaption className="font-mono text-[11px] text-[#525252] mt-3">{g.cap}</figcaption>
-            </figure>
-          ))}
+            );
+            return (
+              <figure key={g.id} className="m-0">
+                {g.href ? (
+                  <a href={g.href} target="_blank" rel="noreferrer" className="block" title="View on Instagram">
+                    {img}
+                  </a>
+                ) : (
+                  img
+                )}
+                <figcaption className="font-mono text-[11px] text-[#525252] mt-3">
+                  {g.cap}
+                  {g.href && <span className="text-[#a3a3a3]"> · Instagram ↗</span>}
+                </figcaption>
+              </figure>
+            );
+          })}
         </div>
       </div>
 

@@ -34,7 +34,7 @@ export function MetaEditor({ meta, onChange }: { meta: MetaPair[]; onChange: (m:
   );
 }
 
-export type GalleryItem = { id: string; cap: string; url?: string };
+export type GalleryItem = { id: string; cap: string; url?: string; href?: string };
 
 let counter = 0;
 function newId() {
@@ -67,6 +67,11 @@ export function GalleryEditor({
         <div key={g.id} className="border border-white/12 bg-white/[0.02] p-4 flex flex-col gap-3">
           <ImageUploadField label={`GAMBAR ${i + 1}`} url={g.url} onChange={(url) => update(i, { url })} />
           <Field label="CAPTION" value={g.cap} onChange={(v) => update(i, { cap: v })} />
+          <Field
+            label="LINK INSTAGRAM (opsional — gambar jadi bisa diklik)"
+            value={g.href || ""}
+            onChange={(v) => update(i, { href: v })}
+          />
           <div className="flex justify-end">
             <GhostButton danger onClick={() => remove(i)}>
               HAPUS
