@@ -232,8 +232,24 @@ function GraphicDetailEditor({
         <Field label="LABEL TOMBOL" value={detail.linkLabel || ""} onChange={(v) => update({ linkLabel: v })} />
       </div>
       <TextAreaField label="APPROACH / IMPACT / WHAT I LEARNED (imageNote)" value={detail.imageNote || ""} onChange={(v) => update({ imageNote: v })} rows={5} />
+      <label className="flex flex-col gap-1.5 max-w-[220px]">
+        <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373]">KOLOM GALERI (foto per baris)</span>
+        <select
+          value={detail.cols || 2}
+          onChange={(e) => update({ cols: Number(e.target.value) })}
+          className="w-full bg-white/[0.03] border border-white/14 text-[#f5f5f5] text-sm px-3.5 py-2.5 outline-none"
+        >
+          {[1, 2, 3, 4].map((n) => (
+            <option key={n} value={n} className="bg-[#0a0a0a]">
+              {n} kolom
+            </option>
+          ))}
+        </select>
+      </label>
       <div>
-        <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">GALERI</span>
+        <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">
+          GALERI — semua foto pas lebar kolom, tinggi mengikuti rasio aslinya
+        </span>
         <GalleryEditor gallery={detail.gallery || []} onChange={(gallery) => update({ gallery })} />
       </div>
     </div>

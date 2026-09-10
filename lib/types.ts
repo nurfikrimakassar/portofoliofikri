@@ -106,6 +106,7 @@ export type GraphicDetail = {
   imageNote?: string;
   cover?: string;
   meta?: MetaPair[];
+  cols?: number; // gallery columns per row (1–4)
   gallery?: { id: string; cap: string; url?: string; href?: string }[];
 };
 

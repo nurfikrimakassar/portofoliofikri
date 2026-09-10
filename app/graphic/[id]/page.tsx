@@ -2,8 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
-import ImageSlot from "@/components/ImageSlot";
 import { getData } from "@/lib/data";
+
+const COLS_CLASS: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2 max-[560px]:grid-cols-1",
+  3: "grid-cols-3 max-[860px]:grid-cols-2 max-[520px]:grid-cols-1",
+  4: "grid-cols-4 max-[980px]:grid-cols-3 max-[720px]:grid-cols-2 max-[460px]:grid-cols-1",
+};
 
 export async function generateStaticParams() {
   const S = await getData();
@@ -50,6 +56,7 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
         { k: "ROLE", v: "—" },
         { k: "YEAR", v: "2024" },
       ];
+  const cols = Math.min(4, Math.max(1, Math.round(G.cols || 2)));
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] text-[#f5f5f5] font-sans overflow-x-hidden">
@@ -100,14 +107,20 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
       </header>
 
       <div className="relative z-10 max-w-[1040px] mx-auto px-8 max-[640px]:px-6">
-        <ImageSlot
-          url={G.cover}
-          alt={`Cover ${item.title}`}
-          placeholder="Cover · any ratio"
-          fit="contain"
-          grayscale
-          className="block w-full h-[520px] my-14"
-        />
+        {G.cover ? (
+          <figure className="group m-0 my-14">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={G.cover}
+              alt={`Cover ${item.title}`}
+              className="block w-full h-auto grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
+            />
+          </figure>
+        ) : (
+          <div className="my-14 flex aspect-video items-center justify-center border border-dashed border-white/15 bg-white/[0.02] font-mono text-[12px] text-[#525252]">
+            Cover · any ratio
+          </div>
+        )}
 
         {G.imageNote && (
           <div className="max-w-[720px] mx-auto py-4">
@@ -118,26 +131,29 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-6 mt-14 max-[720px]:grid-cols-1 pb-20">
+        <div className={`grid ${COLS_CLASS[cols]} gap-4 mt-14 pb-20`}>
           {gallery.map((g) => {
-            const img = (
-              <ImageSlot
-                url={g.url}
+            const media = g.url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={g.url}
                 alt={g.cap}
-                placeholder="Image · any ratio"
-                fit="contain"
-                grayscale
-                className="block w-full h-[360px] bg-[#101010]"
+                loading="lazy"
+                className="block w-full h-auto grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
               />
+            ) : (
+              <div className="flex aspect-[4/3] items-center justify-center border border-dashed border-white/15 bg-white/[0.02] font-mono text-[11px] text-[#525252]">
+                Image
+              </div>
             );
             return (
-              <figure key={g.id} className="m-0">
+              <figure key={g.id} className="group m-0">
                 {g.href ? (
                   <a href={g.href} target="_blank" rel="noreferrer" className="block" title="View on Instagram">
-                    {img}
+                    {media}
                   </a>
                 ) : (
-                  img
+                  media
                 )}
                 <figcaption className="font-mono text-[11px] text-[#525252] mt-3">
                   {g.cap}
