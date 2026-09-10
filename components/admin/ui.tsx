@@ -123,16 +123,27 @@ export function ImageUploadField({
   async function handleFile(file: File) {
     setBusy(true);
     setError("");
-    const form = new FormData();
-    form.append("file", file);
-    const res = await fetch("/api/admin/upload", { method: "POST", body: form });
-    setBusy(false);
-    if (res.ok) {
-      const data = await res.json();
-      onChange(data.url);
-    } else {
-      const data = await res.json().catch(() => ({ error: "Upload gagal." }));
-      setError(data.error || "Upload gagal.");
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/admin/upload", { method: "POST", body: form });
+      const raw = await res.text();
+      let data: { url?: string; error?: string } = {};
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        // non-JSON response = platform error page (timeout, crash, body too large…)
+        data = { error: `Upload gagal (HTTP ${res.status}). ${raw.slice(0, 200).replace(/<[^>]*>/g, " ").trim()}` };
+      }
+      if (res.ok && data.url) {
+        onChange(data.url);
+      } else {
+        setError(data.error || `Upload gagal (HTTP ${res.status}).`);
+      }
+    } catch (e) {
+      setError(`Upload gagal: ${e instanceof Error ? e.message : String(e)}`);
+    } finally {
+      setBusy(false);
     }
   }
 
