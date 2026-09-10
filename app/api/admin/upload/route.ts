@@ -4,9 +4,6 @@ import path from "path";
 import crypto from "crypto";
 import { put } from "@vercel/blob";
 
-export const runtime = "nodejs";
-export const maxDuration = 60;
-
 const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
 const ALLOWED = new Set(["image/png", "image/jpeg", "image/webp", "image/gif", "image/svg+xml"]);
 const EXT: Record<string, string> = {
