@@ -114,12 +114,6 @@ body {
 .photo-row-b {
   animation: marquee 30s linear infinite;
 }
-@media (hover: hover) and (pointer: fine) {
-  .photo-row-a:hover,
-  .photo-row-b:hover {
-    animation-play-state: paused;
-  }
-}
 
 .hover-fill {
   transition: background 0.15s ease, color 0.15s ease;

@@ -286,7 +286,7 @@ export default async function HomePage() {
       )}
 
       {/* SELECTED WORK */}
-      <section className={`${container} py-28 border-t border-white/[0.07] max-[640px]:py-16`}>
+      <section className={`${container} py-28 max-[640px]:py-16`}>
         <div className="flex justify-between items-end flex-wrap gap-4 mb-12">
           <div>
             <div className="font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-4">{`// SELECTED WORK`}</div>
