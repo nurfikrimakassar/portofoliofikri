@@ -27,6 +27,7 @@ export const defaultData: PortfolioData = {
     ],
   },
   stats: { roles: "5", projects: "20+", automations: "∞", products: "3" },
+  photoStrip: ["/fikri.jpg"],
   tools: [
     "Next.js",
     "React",

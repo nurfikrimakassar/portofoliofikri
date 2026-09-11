@@ -108,6 +108,15 @@ body {
   }
 }
 
+.photo-ticker-track {
+  animation: marquee 46s linear infinite;
+}
+@media (hover: hover) and (pointer: fine) {
+  .photo-ticker-track:hover {
+    animation-play-state: paused;
+  }
+}
+
 .hover-fill {
   transition: background 0.15s ease, color 0.15s ease;
 }

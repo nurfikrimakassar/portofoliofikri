@@ -2,6 +2,7 @@
 
 import { PortfolioData } from "@/lib/types";
 import { Field, TextAreaField, SectionTitle } from "../ui";
+import { PhotoStripEditor } from "../MetaAndGallery";
 
 export default function ProfileTab({
   data,
@@ -63,6 +64,9 @@ export default function ProfileTab({
         <Field label="TIKTOK HANDLE" value={P.tiktok} onChange={(v) => update({ tiktok: v })} />
         <Field label="TIKTOK URL" value={P.tiktokUrl} onChange={(v) => update({ tiktokUrl: v })} />
       </div>
+
+      <SectionTitle>FOTO STRIP (bergerak otomatis di homepage, antara Experience &amp; Selected Work)</SectionTitle>
+      <PhotoStripEditor photos={data.photoStrip || []} onChange={(photoStrip) => setData({ ...data, photoStrip })} />
 
       <SectionTitle>STACK &amp; TOOLS (ticker, pisahkan dengan koma)</SectionTitle>
       <TextAreaField

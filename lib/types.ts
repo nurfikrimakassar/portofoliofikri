@@ -133,6 +133,7 @@ export type PortfolioData = {
   profile: Profile;
   stats: Stats;
   tools: string[];
+  photoStrip: string[]; // scrolling photo ticker on the homepage, between Experience & Selected Work
   experience: Experience[];
   webWorks: WebWork[];
   graphicWorks: GraphicWork[];

@@ -35,6 +35,38 @@ export function MetaEditor({ meta, onChange }: { meta: MetaPair[]; onChange: (m:
   );
 }
 
+export function PhotoStripEditor({ photos, onChange }: { photos: string[]; onChange: (p: string[]) => void }) {
+  function update(i: number, url: string) {
+    const next = photos.slice();
+    next[i] = url;
+    onChange(next);
+  }
+  function remove(i: number) {
+    onChange(photos.filter((_, idx) => idx !== i));
+  }
+  function add() {
+    onChange([...photos, ""]);
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-4 gap-3 max-[720px]:grid-cols-2">
+        {photos.map((url, i) => (
+          <div key={i} className="border border-white/12 bg-white/[0.02] p-3 flex flex-col gap-2">
+            <ImageUploadField label={`FOTO ${i + 1}`} url={url} onChange={(u) => update(i, u)} />
+            <GhostButton danger onClick={() => remove(i)}>
+              HAPUS
+            </GhostButton>
+          </div>
+        ))}
+      </div>
+      <div>
+        <PrimaryButton onClick={add}>+ TAMBAH FOTO</PrimaryButton>
+      </div>
+    </div>
+  );
+}
+
 export type GalleryItem = { id: string; cap: string; url?: string; href?: string };
 
 let counter = 0;

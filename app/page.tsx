@@ -4,6 +4,7 @@ import Image from "next/image";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
 import GridTexture from "@/components/GridTexture";
+import BlogCarousel from "@/components/BlogCarousel";
 import { LiveClock, RoleTyping } from "@/components/HeroBits";
 import { getData } from "@/lib/data";
 
@@ -39,6 +40,17 @@ export default async function HomePage() {
   }));
   const featured = blog.posts.find((p) => p.id === blog.featuredId) || blog.posts[0];
   const blogPreview = [featured, ...blog.posts.filter((p) => p.id !== featured?.id)].filter(Boolean).slice(0, 3) as typeof blog.posts;
+  const blogCards = blogPreview.map((b) => ({
+    id: b.id,
+    title: b.title,
+    excerpt: b.excerpt,
+    date: b.date,
+    read: b.read,
+    cat: b.cat,
+    cover: S.detail.blog[b.id]?.cover ?? null,
+    featured: b.id === featured?.id,
+  }));
+  const photos = (S.photoStrip || []).filter(Boolean);
 
   const BASE = process.env.NEXT_PUBLIC_SITE_URL || "https://portofoliofikri-ebon.vercel.app";
   const jsonLd = {
@@ -218,6 +230,38 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* PHOTO STRIP */}
+      {photos.length > 0 && (
+        <section className="relative z-10 mb-4">
+          <div className={container}>
+            <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mb-5">{`// IN FRAME`}</div>
+          </div>
+          <div className="relative overflow-hidden border-y border-white/[0.07]">
+            <div className="photo-ticker-track flex w-max">
+              {[0, 1].map((dup) => (
+                <span key={dup} className="flex">
+                  {photos.map((src, i) => (
+                    <span
+                      key={`${dup}-${i}`}
+                      className="group relative block w-[220px] h-[280px] mx-2 overflow-hidden max-[640px]:w-[160px] max-[640px]:h-[210px]"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={src}
+                        alt=""
+                        className="absolute inset-0 w-full h-full object-cover grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
+                      />
+                    </span>
+                  ))}
+                </span>
+              ))}
+            </div>
+            <div className="absolute left-0 top-0 bottom-0 w-[20vw] max-w-[260px] min-w-[100px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 35%,rgba(10,10,10,0) 100%)" }} />
+            <div className="absolute right-0 top-0 bottom-0 w-[20vw] max-w-[260px] min-w-[100px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 35%,rgba(10,10,10,0) 100%)" }} />
+          </div>
+        </section>
+      )}
+
       {/* SELECTED WORK */}
       <section className={`${container} py-28 border-t border-white/[0.07] max-[640px]:py-16`}>
         <div className="flex justify-between items-end flex-wrap gap-4 mb-12">
@@ -320,18 +364,7 @@ export default async function HomePage() {
             READ THE BLOG →
           </Link>
         </div>
-        <div className="divide-y divide-white/[0.07]">
-          {blogPreview.map((b) => (
-            <Link
-              key={b.id}
-              href={`/blog/${b.id}`}
-              className="hover-row-tight flex justify-between gap-5 items-baseline py-6 no-underline text-[#f5f5f5]"
-            >
-              <span className="text-[clamp(17px,2vw,22px)] font-medium tracking-[-0.01em]">{b.title}</span>
-              <span className="font-mono text-[11px] text-[#525252] whitespace-nowrap">{b.date}</span>
-            </Link>
-          ))}
-        </div>
+        <BlogCarousel posts={blogCards} />
       </section>
 
       {/* FOOTER CTA */}
