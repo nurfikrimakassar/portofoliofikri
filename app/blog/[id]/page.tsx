@@ -43,7 +43,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
       <GridBackground />
       <Nav active="/blog" />
 
-      <header className="relative z-10 max-w-[760px] mx-auto px-8 pt-[132px] max-[640px]:px-6 max-[640px]:pt-[104px]">
+      <header className="relative z-10 max-w-[1040px] mx-auto px-8 pt-[132px] max-[640px]:px-6 max-[640px]:pt-[104px]">
         <Link href="/blog" className="font-mono text-[12.5px] text-[#737373] no-underline hover-link">
           ← ~/fikri / blog
         </Link>
@@ -57,7 +57,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
         <p className="text-[clamp(17px,2vw,21px)] leading-[1.55] text-[#a3a3a3] mt-6">{post.excerpt}</p>
       </header>
 
-      <div className="relative z-10 max-w-[760px] mx-auto px-8 max-[640px]:px-6">
+      <div className="relative z-10 max-w-[1040px] mx-auto px-8 max-[640px]:px-6">
         <ImageSlot
           url={DB.cover}
           alt={`Cover ${post.title}`}
@@ -69,7 +69,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
         </article>
       </div>
 
-      <footer className="relative z-10 max-w-[760px] mx-auto px-8 pb-10 max-[640px]:px-6">
+      <footer className="relative z-10 max-w-[1040px] mx-auto px-8 pb-10 max-[640px]:px-6">
         <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-xs text-[#525252] pt-6 border-t border-white/10">
           <Link href="/blog" className="text-[#a3a3a3] no-underline hover-link">
             ← SEMUA TULISAN
