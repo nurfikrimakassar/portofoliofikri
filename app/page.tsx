@@ -279,8 +279,8 @@ export default async function HomePage() {
                   "linear-gradient(180deg,rgba(10,10,10,0.6) 0%,rgba(10,10,10,0) 28%,rgba(10,10,10,0) 72%,rgba(10,10,10,0.6) 100%)",
               }}
             />
-            <div className="absolute left-0 top-0 bottom-0 w-[34vw] max-w-[420px] min-w-[150px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 45%,rgba(10,10,10,0) 100%)" }} />
-            <div className="absolute right-0 top-0 bottom-0 w-[34vw] max-w-[420px] min-w-[150px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 45%,rgba(10,10,10,0) 100%)" }} />
+            <div className="absolute left-0 top-0 bottom-0 w-[40vw] max-w-[500px] min-w-[170px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 50%,rgba(10,10,10,0) 100%)" }} />
+            <div className="absolute right-0 top-0 bottom-0 w-[40vw] max-w-[500px] min-w-[170px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 50%,rgba(10,10,10,0) 100%)" }} />
           </div>
         </section>
       )}
