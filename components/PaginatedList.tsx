@@ -126,7 +126,7 @@ export function PaginatedGraphics({
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
               </>
             ) : null}
-            <div className="absolute top-[18px] left-5 font-mono text-[11px] tracking-[0.1em] text-[#666]">{g.cat}</div>
+            <div className="absolute top-[18px] left-5 font-mono text-[11px] tracking-[0.1em] text-[#0a0a0a] bg-[#f5f5f5] px-2 py-1">{g.cat}</div>
             <div className="relative text-[17px] font-semibold tracking-[-0.01em]">{g.title}</div>
           </Link>
         ))}
