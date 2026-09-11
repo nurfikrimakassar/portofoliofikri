@@ -240,32 +240,32 @@ export default async function HomePage() {
             <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mb-5">{`// IN FRAME`}</div>
           </div>
           <div className="relative overflow-hidden">
-            <div className="flex flex-col gap-1">
-              <div className="photo-row-a flex w-max gap-1">
+            <div className="flex flex-col gap-4">
+              <div className="photo-row-a flex w-max gap-4">
                 {[0, 1].map((dup) => (
-                  <span key={dup} className="flex gap-1">
+                  <span key={dup} className="flex gap-4">
                     {photoRowA.map((src, i) => (
                       <span
                         key={`a-${dup}-${i}`}
                         className="block w-[300px] h-[220px] shrink-0 overflow-hidden max-[640px]:w-[200px] max-[640px]:h-[150px]"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={src} alt="" className="w-full h-full object-cover grayscale contrast-[1.05]" />
+                        <img src={src} alt="" className="block w-full h-full object-cover grayscale contrast-[1.05]" />
                       </span>
                     ))}
                   </span>
                 ))}
               </div>
-              <div className="photo-row-b flex w-max gap-1">
+              <div className="photo-row-b flex w-max gap-4">
                 {[0, 1].map((dup) => (
-                  <span key={dup} className="flex gap-1">
+                  <span key={dup} className="flex gap-4">
                     {photoRowB.map((src, i) => (
                       <span
                         key={`b-${dup}-${i}`}
                         className="block w-[300px] h-[220px] shrink-0 overflow-hidden max-[640px]:w-[200px] max-[640px]:h-[150px]"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={src} alt="" className="w-full h-full object-cover grayscale contrast-[1.05]" />
+                        <img src={src} alt="" className="block w-full h-full object-cover grayscale contrast-[1.05]" />
                       </span>
                     ))}
                   </span>
@@ -276,10 +276,11 @@ export default async function HomePage() {
               className="absolute inset-0 pointer-events-none z-10"
               style={{
                 background:
-                  "linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,0) 18%,rgba(10,10,10,0) 82%,#0a0a0a 100%)," +
                   "linear-gradient(180deg,rgba(10,10,10,0.6) 0%,rgba(10,10,10,0) 28%,rgba(10,10,10,0) 72%,rgba(10,10,10,0.6) 100%)",
               }}
             />
+            <div className="absolute left-0 top-0 bottom-0 w-[34vw] max-w-[420px] min-w-[150px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 45%,rgba(10,10,10,0) 100%)" }} />
+            <div className="absolute right-0 top-0 bottom-0 w-[34vw] max-w-[420px] min-w-[150px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 45%,rgba(10,10,10,0) 100%)" }} />
           </div>
         </section>
       )}
