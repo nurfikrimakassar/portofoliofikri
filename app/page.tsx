@@ -79,7 +79,7 @@ export default async function HomePage() {
       {/* HERO */}
       <header
         data-r="hero"
-        className={`${container} pt-36 pb-24 max-[640px]:pt-28 max-[640px]:pb-16`}
+        className={`${container} pt-36 pb-16 max-[640px]:pt-28 max-[640px]:pb-12`}
       >
         <GridTexture />
         <div className="relative z-10 grid grid-cols-[1.5fr_0.85fr] gap-16 items-center max-[980px]:grid-cols-1 max-[980px]:gap-12">
