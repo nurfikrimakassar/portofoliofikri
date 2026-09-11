@@ -3,13 +3,33 @@ import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
+import { GalleryRow } from "@/lib/types";
 
-const COLS_CLASS: Record<number, string> = {
-  1: "grid-cols-1",
-  2: "grid-cols-2 max-[560px]:grid-cols-1",
-  3: "grid-cols-3 max-[860px]:grid-cols-2 max-[520px]:grid-cols-1",
-  4: "grid-cols-4 max-[980px]:grid-cols-3 max-[720px]:grid-cols-2 max-[460px]:grid-cols-1",
+// Every image in a row renders at this height; width follows its own aspect ratio.
+const ROW_HEIGHT: Record<number, string> = {
+  1: "h-[460px] max-[720px]:h-[320px] max-[480px]:h-[220px]",
+  2: "h-[380px] max-[720px]:h-[280px] max-[480px]:h-[200px]",
+  3: "h-[300px] max-[720px]:h-[220px] max-[480px]:h-[170px]",
+  4: "h-[240px] max-[720px]:h-[180px] max-[480px]:h-[140px]",
 };
+
+const DEMO_ROWS: GalleryRow[] = [
+  {
+    id: "demo-1",
+    images: [
+      { id: "d1", cap: "Logo & wordmark" },
+      { id: "d2", cap: "Palette & type" },
+    ],
+  },
+  {
+    id: "demo-2",
+    images: [
+      { id: "d3", cap: "Application" },
+      { id: "d4", cap: "Social material" },
+      { id: "d5", cap: "Final mockup" },
+    ],
+  },
+];
 
 export async function generateStaticParams() {
   const S = await getData();
@@ -28,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title: item.title,
       description: G.desc?.slice(0, 160) || `${item.title} — Graphic design by Fikri`,
-      images: G.cover ? [{ url: G.cover }] : G.gallery?.[0]?.url ? [{ url: G.gallery[0].url }] : [],
+      images: G.cover ? [{ url: G.cover }] : G.galleryRows?.[0]?.images?.[0]?.url ? [{ url: G.galleryRows[0].images[0].url }] : [],
     },
   };
 }
@@ -39,15 +59,7 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
   const item = S.graphicWorks.find((g) => g.id === id);
   if (!item) notFound();
   const G = S.detail.graphic[id] || {};
-  const gallery = G.gallery?.length
-    ? G.gallery
-    : [
-        { id: "gg-1", cap: "Logo & wordmark" },
-        { id: "gg-2", cap: "Palette & type" },
-        { id: "gg-3", cap: "Application / packaging" },
-        { id: "gg-4", cap: "Social material" },
-        { id: "gg-5", cap: "Final mockup" },
-      ];
+  const rows = G.galleryRows?.length ? G.galleryRows : DEMO_ROWS;
   const meta = G.meta?.length
     ? G.meta
     : [
@@ -56,7 +68,6 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
         { k: "ROLE", v: "—" },
         { k: "YEAR", v: "2024" },
       ];
-  const cols = Math.min(4, Math.max(1, Math.round(G.cols || 2)));
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] text-[#f5f5f5] font-sans overflow-x-hidden">
@@ -131,35 +142,47 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
           </div>
         )}
 
-        <div className={`grid ${COLS_CLASS[cols]} gap-4 mt-14 pb-20`}>
-          {gallery.map((g) => {
-            const media = g.url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={g.url}
-                alt={g.cap}
-                loading="lazy"
-                className="block w-full h-auto grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
-              />
-            ) : (
-              <div className="flex aspect-[4/3] items-center justify-center border border-dashed border-white/15 bg-white/[0.02] font-mono text-[11px] text-[#525252]">
-                Image
-              </div>
-            );
+        <div className="flex flex-col gap-8 mt-14 pb-20">
+          {rows.map((row) => {
+            const count = Math.min(4, Math.max(1, row.images.length));
+            const heightClass = ROW_HEIGHT[count];
             return (
-              <figure key={g.id} className="group m-0">
-                {g.href ? (
-                  <a href={g.href} target="_blank" rel="noreferrer" className="block" title="View on Instagram">
-                    {media}
-                  </a>
-                ) : (
-                  media
-                )}
-                <figcaption className="font-mono text-[11px] text-[#525252] mt-3">
-                  {g.cap}
-                  {g.href && <span className="text-[#a3a3a3]"> · Instagram ↗</span>}
-                </figcaption>
-              </figure>
+              <div key={row.id} className="flex flex-wrap gap-4">
+                {row.images.map((img) => {
+                  const media = img.url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={img.url}
+                      alt={img.cap || ""}
+                      loading="lazy"
+                      className={`block w-auto max-w-full grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0 ${heightClass}`}
+                    />
+                  ) : (
+                    <div
+                      className={`w-[260px] max-w-full flex items-center justify-center border border-dashed border-white/15 bg-white/[0.02] font-mono text-[11px] text-[#525252] ${heightClass}`}
+                    >
+                      Image
+                    </div>
+                  );
+                  return (
+                    <figure key={img.id} className="group m-0 flex flex-col">
+                      {img.href ? (
+                        <a href={img.href} target="_blank" rel="noreferrer" className="block" title="View on Instagram">
+                          {media}
+                        </a>
+                      ) : (
+                        media
+                      )}
+                      {img.cap && (
+                        <figcaption className="font-mono text-[11px] text-[#525252] mt-3">
+                          {img.cap}
+                          {img.href && <span className="text-[#a3a3a3]"> · Instagram ↗</span>}
+                        </figcaption>
+                      )}
+                    </figure>
+                  );
+                })}
+              </div>
             );
           })}
         </div>

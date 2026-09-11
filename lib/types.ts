@@ -99,6 +99,9 @@ export type ProjectDetail = {
   body?: Block[];
 };
 
+export type GalleryImage = { id: string; cap?: string; url?: string; href?: string };
+export type GalleryRow = { id: string; images: GalleryImage[] }; // 1–4 images, all shown at the same height
+
 export type GraphicDetail = {
   desc?: string;
   link?: string;
@@ -106,7 +109,10 @@ export type GraphicDetail = {
   imageNote?: string;
   cover?: string;
   meta?: MetaPair[];
-  cols?: number; // gallery columns per row (1–4)
+  galleryRows?: GalleryRow[];
+  /** @deprecated superseded by galleryRows; kept so older content still renders */
+  cols?: number;
+  /** @deprecated superseded by galleryRows; kept so older content still renders */
   gallery?: { id: string; cap: string; url?: string; href?: string }[];
 };
 
