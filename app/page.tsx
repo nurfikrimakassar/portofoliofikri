@@ -32,7 +32,7 @@ export default async function HomePage() {
   const S = await getData();
   const { profile: P, stats: ST, tools, webWorks, products, blog } = S;
   const experience = sortExperience(S.experience);
-  const graphicHighlights = S.graphicWorks.slice(0, 3).map((g) => ({
+  const graphicHighlights = S.graphicWorks.slice(0, 6).map((g) => ({
     id: g.id,
     title: g.title,
     cat: g.cat,

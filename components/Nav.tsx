@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const LINKS = [
   { href: "/", label: "01_home" },
@@ -18,7 +18,29 @@ export default function Nav({
   active?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
   const isLight = theme === "light";
+
+  useEffect(() => {
+    lastY.current = window.scrollY;
+    function onScroll() {
+      const y = window.scrollY;
+      const diff = y - lastY.current;
+      if (open) {
+        // keep the bar visible while the mobile menu is open
+      } else if (y < 80) {
+        setHidden(false);
+      } else if (diff > 6) {
+        setHidden(true);
+      } else if (diff < -6) {
+        setHidden(false);
+      }
+      lastY.current = y;
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [open]);
 
   const navBg = isLight ? "rgba(245,245,245,0.7)" : "rgba(10,10,10,0.6)";
   const borderColor = isLight ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.08)";
@@ -30,8 +52,8 @@ export default function Nav({
     <>
       <nav
         data-r="nav"
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-[18px] backdrop-blur-[10px] border-b max-[640px]:px-[18px] max-[640px]:py-3.5"
-        style={{ background: navBg, borderColor }}
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-[18px] backdrop-blur-[10px] border-b transition-transform duration-300 ease-out max-[640px]:px-[18px] max-[640px]:py-3.5"
+        style={{ background: navBg, borderColor, transform: hidden && !open ? "translateY(-100%)" : "translateY(0)" }}
       >
         <Link href="/" className="flex items-center gap-2.5 no-underline" style={{ color: ink }}>
           <span
