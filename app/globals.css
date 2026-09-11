@@ -108,11 +108,15 @@ body {
   }
 }
 
-.photo-ticker-track {
-  animation: marquee 46s linear infinite;
+.photo-row-a {
+  animation: marquee 30s linear infinite reverse;
+}
+.photo-row-b {
+  animation: marquee 30s linear infinite;
 }
 @media (hover: hover) and (pointer: fine) {
-  .photo-ticker-track:hover {
+  .photo-row-a:hover,
+  .photo-row-b:hover {
     animation-play-state: paused;
   }
 }

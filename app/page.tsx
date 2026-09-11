@@ -51,6 +51,9 @@ export default async function HomePage() {
     featured: b.id === featured?.id,
   }));
   const photos = (S.photoStrip || []).filter(Boolean);
+  const photoMid = Math.ceil(photos.length / 2);
+  const photoRowA = photos.slice(0, photoMid);
+  const photoRowB = photos.slice(photoMid).length ? photos.slice(photoMid) : photoRowA;
 
   const BASE = process.env.NEXT_PUBLIC_SITE_URL || "https://portofoliofikri-ebon.vercel.app";
   const jsonLd = {
@@ -236,28 +239,47 @@ export default async function HomePage() {
           <div className={container}>
             <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mb-5">{`// IN FRAME`}</div>
           </div>
-          <div className="relative overflow-hidden border-y border-white/[0.07]">
-            <div className="photo-ticker-track flex w-max">
-              {[0, 1].map((dup) => (
-                <span key={dup} className="flex">
-                  {photos.map((src, i) => (
-                    <span
-                      key={`${dup}-${i}`}
-                      className="group relative block w-[220px] h-[280px] mx-2 overflow-hidden max-[640px]:w-[160px] max-[640px]:h-[210px]"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={src}
-                        alt=""
-                        className="absolute inset-0 w-full h-full object-cover grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
-                      />
-                    </span>
-                  ))}
-                </span>
-              ))}
+          <div className="relative overflow-hidden">
+            <div className="flex flex-col gap-1">
+              <div className="photo-row-a flex w-max gap-1">
+                {[0, 1].map((dup) => (
+                  <span key={dup} className="flex gap-1">
+                    {photoRowA.map((src, i) => (
+                      <span
+                        key={`a-${dup}-${i}`}
+                        className="block w-[300px] h-[220px] shrink-0 overflow-hidden max-[640px]:w-[200px] max-[640px]:h-[150px]"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={src} alt="" className="w-full h-full object-cover grayscale contrast-[1.05]" />
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </div>
+              <div className="photo-row-b flex w-max gap-1">
+                {[0, 1].map((dup) => (
+                  <span key={dup} className="flex gap-1">
+                    {photoRowB.map((src, i) => (
+                      <span
+                        key={`b-${dup}-${i}`}
+                        className="block w-[300px] h-[220px] shrink-0 overflow-hidden max-[640px]:w-[200px] max-[640px]:h-[150px]"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={src} alt="" className="w-full h-full object-cover grayscale contrast-[1.05]" />
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className="absolute left-0 top-0 bottom-0 w-[20vw] max-w-[260px] min-w-[100px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 35%,rgba(10,10,10,0) 100%)" }} />
-            <div className="absolute right-0 top-0 bottom-0 w-[20vw] max-w-[260px] min-w-[100px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 35%,rgba(10,10,10,0) 100%)" }} />
+            <div
+              className="absolute inset-0 pointer-events-none z-10"
+              style={{
+                background:
+                  "linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,0) 18%,rgba(10,10,10,0) 82%,#0a0a0a 100%)," +
+                  "linear-gradient(180deg,rgba(10,10,10,0.6) 0%,rgba(10,10,10,0) 28%,rgba(10,10,10,0) 72%,rgba(10,10,10,0.6) 100%)",
+              }}
+            />
           </div>
         </section>
       )}
