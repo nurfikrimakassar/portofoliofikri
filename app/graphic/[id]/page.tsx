@@ -5,12 +5,14 @@ import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
 import { GalleryRow } from "@/lib/types";
 
-// Every image in a row renders at this height; width follows its own aspect ratio.
-const ROW_HEIGHT: Record<number, string> = {
-  1: "h-[460px] max-[720px]:h-[320px] max-[480px]:h-[220px]",
-  2: "h-[380px] max-[720px]:h-[280px] max-[480px]:h-[200px]",
-  3: "h-[300px] max-[720px]:h-[220px] max-[480px]:h-[170px]",
-  4: "h-[240px] max-[720px]:h-[180px] max-[480px]:h-[140px]",
+// Each row is a CSS grid with N equal-width columns, so the row always spans
+// edge to edge; every image is w-full/h-auto, so its height simply follows
+// from that shared width and its own aspect ratio.
+const GRID_COLS: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2 max-[560px]:grid-cols-1",
+  3: "grid-cols-3 max-[860px]:grid-cols-2 max-[520px]:grid-cols-1",
+  4: "grid-cols-4 max-[980px]:grid-cols-3 max-[720px]:grid-cols-2 max-[460px]:grid-cols-1",
 };
 
 const DEMO_ROWS: GalleryRow[] = [
@@ -145,9 +147,9 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
         <div className="flex flex-col gap-8 mt-14 pb-20">
           {rows.map((row) => {
             const count = Math.min(4, Math.max(1, row.images.length));
-            const heightClass = ROW_HEIGHT[count];
+            const gridClass = GRID_COLS[count];
             return (
-              <div key={row.id} className="flex flex-wrap gap-4">
+              <div key={row.id} className={`grid ${gridClass} gap-4`}>
                 {row.images.map((img) => {
                   const media = img.url ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -155,12 +157,10 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
                       src={img.url}
                       alt={img.cap || ""}
                       loading="lazy"
-                      className={`block w-auto max-w-full grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0 ${heightClass}`}
+                      className="block w-full h-auto grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
                     />
                   ) : (
-                    <div
-                      className={`w-[260px] max-w-full flex items-center justify-center border border-dashed border-white/15 bg-white/[0.02] font-mono text-[11px] text-[#525252] ${heightClass}`}
-                    >
+                    <div className="aspect-[4/3] w-full flex items-center justify-center border border-dashed border-white/15 bg-white/[0.02] font-mono text-[11px] text-[#525252]">
                       Image
                     </div>
                   );
