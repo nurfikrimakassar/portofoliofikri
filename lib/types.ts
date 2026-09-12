@@ -140,11 +140,23 @@ export type BlogDetail = {
   body?: Block[];
 };
 
+export type LinkHubLink = { id: string; label: string; url: string };
+export type LinkHubGroup = { id: string; title: string; links: LinkHubLink[] };
+/** The single-link hub served at portofolio.nurfikri.com — one page collecting
+ * every case-study/reference link (grouped per employer or project) behind
+ * one URL, for places (like an Apple Academy application) that only take one link. */
+export type LinkHub = {
+  headline: string;
+  description: string;
+  groups: LinkHubGroup[];
+};
+
 export type PortfolioData = {
   profile: Profile;
   stats: Stats;
   tools: string[];
   photoStrip: string[]; // scrolling photo ticker on the homepage, between Experience & Selected Work
+  linkHub: LinkHub;
   experience: Experience[];
   webWorks: WebWork[];
   graphicWorks: GraphicWork[];

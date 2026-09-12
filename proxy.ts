@@ -55,8 +55,21 @@ const SECURITY_HEADERS = {
   "X-XSS-Protection": "1; mode=block",
 };
 
+const HUB_HOST = "portofolio.nurfikri.com";
+
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const host = req.headers.get("host") || "";
+
+  // portofolio.nurfikri.com is a single "link hub" page — every path there
+  // (except admin/api, kept as a safety net) resolves to /link-hub, so the
+  // subdomain always shows the same one-link page regardless of the path.
+  if (host === HUB_HOST && !pathname.startsWith("/admin") && !pathname.startsWith("/api") && pathname !== "/link-hub") {
+    const url = req.nextUrl.clone();
+    url.pathname = "/link-hub";
+    return NextResponse.rewrite(url);
+  }
+
   const secret = process.env.SESSION_SECRET || "dev-secret-change-in-prod";
   const authDisabled = process.env.ADMIN_AUTH_DISABLED === "true";
 
@@ -86,5 +99,12 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/api/admin/:path*",
+    {
+      source: "/((?!_next/static|_next/image|favicon.ico|icon.png|apple-icon.png|robots.txt|sitemap.xml).*)",
+      has: [{ type: "header", key: "host", value: "portofolio.nurfikri.com" }],
+    },
+  ],
 };

@@ -28,6 +28,12 @@ export const defaultData: PortfolioData = {
   },
   stats: { roles: "5", projects: "20+", automations: "∞", products: "3" },
   photoStrip: Array.from({ length: 12 }, () => "/fikri.jpg"),
+  linkHub: {
+    headline: "NURFIKRI — SELECTED LINKS",
+    description:
+      "One link collecting the projects and case studies referenced across my applications and profiles.",
+    groups: [],
+  },
   tools: [
     "Next.js",
     "React",

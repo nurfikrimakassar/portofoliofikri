@@ -10,6 +10,7 @@ import WorksTab from "./admin/tabs/WorksTab";
 import ProductsTab from "./admin/tabs/ProductsTab";
 import BlogTab from "./admin/tabs/BlogTab";
 import DetailTab from "./admin/tabs/DetailTab";
+import LinkHubTab from "./admin/tabs/LinkHubTab";
 
 const TABS = [
   { id: "profile", label: "PROFIL & KONTAK" },
@@ -18,6 +19,7 @@ const TABS = [
   { id: "products", label: "PRODUCTS" },
   { id: "blog", label: "BLOG" },
   { id: "detail", label: "DETAIL" },
+  { id: "linkhub", label: "LINK HUB" },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
@@ -101,6 +103,7 @@ export default function AdminClient({ initialData }: { initialData: PortfolioDat
           {tab === "products" && <ProductsTab data={data} setData={setData} />}
           {tab === "blog" && <BlogTab data={data} setData={setData} />}
           {tab === "detail" && <DetailTab data={data} setData={setData} />}
+          {tab === "linkhub" && <LinkHubTab data={data} setData={setData} />}
         </div>
       </div>
     </div>
