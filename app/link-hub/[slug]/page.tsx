@@ -86,16 +86,17 @@ export default async function LinkHubGroupPage({ params }: { params: Promise<{ s
           ) : (
             <div className="divide-y divide-white/[0.08] border-t border-b border-white/[0.08]">
               {g.links.map((l) => (
-                <a
-                  key={l.id}
-                  href={l.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover-row-tight flex justify-between items-center gap-5 py-5 no-underline text-[#f5f5f5]"
-                >
-                  <span className="text-[16px] font-medium tracking-[-0.005em]">{l.label}</span>
-                  <span className="text-[16px] text-[#525252]">↗</span>
-                </a>
+                <div key={l.id} className="py-8 flex items-center justify-between gap-6 flex-wrap">
+                  <span className="text-[21px] font-semibold tracking-[-0.01em]">{l.label}</span>
+                  <a
+                    href={l.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="shrink-0 font-mono text-[12px] px-5 py-3 border border-white/20 text-[#f5f5f5] no-underline whitespace-nowrap hover-fill"
+                  >
+                    VISIT LINK ↗
+                  </a>
+                </div>
               ))}
             </div>
           )}
