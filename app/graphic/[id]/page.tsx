@@ -17,6 +17,7 @@ const GRID_COLS: Record<number, string> = {
 };
 
 const DEMO_CONTENT: GraphicContentBlock[] = [
+  { id: "demo-heading", type: "heading", text: "Overview" },
   {
     id: "demo-text",
     type: "text",
@@ -138,6 +139,14 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
                 <p key={blk.id} className="text-[clamp(16px,1.7vw,18px)] leading-[1.8] text-[#d4d4d4] text-balance-pretty">
                   {blk.text}
                 </p>
+              ) : null;
+            }
+
+            if (blk.type === "heading") {
+              return blk.text ? (
+                <h2 key={blk.id} className="text-[clamp(22px,2.6vw,30px)] font-semibold tracking-[-0.015em] text-[#f5f5f5]">
+                  {blk.text}
+                </h2>
               ) : null;
             }
 

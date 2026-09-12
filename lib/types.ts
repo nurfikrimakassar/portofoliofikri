@@ -102,9 +102,10 @@ export type ProjectDetail = {
 export type GalleryImage = { id: string; cap?: string; url?: string; href?: string };
 export type GalleryRow = { id: string; images: GalleryImage[] }; // 1–4 images, all shown at the same height
 
-/** One item in a graphic project's story: a paragraph or a photo-row, freely reorderable. */
+/** One item in a graphic project's story: a paragraph, a heading, or a photo-row, freely reorderable. */
 export type GraphicContentBlock =
   | { id: string; type: "text"; text?: string }
+  | { id: string; type: "heading"; text?: string }
   | { id: string; type: "row"; images: GalleryImage[] };
 
 export type GraphicDetail = {

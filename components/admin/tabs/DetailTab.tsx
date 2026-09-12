@@ -288,7 +288,7 @@ function GraphicDetailEditor({
       </div>
       <div>
         <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">
-          CERITA — paragraf &amp; baris foto, urutannya bisa diatur naik/turun (↑↓) kayak di Web Project. Baris foto: tentukan dulu berapa foto (maks 4), semua tampil dengan tinggi sama.
+          CERITA — heading, paragraf &amp; baris foto, urutannya bisa diatur naik/turun (↑↓) kayak di Web Project. Baris foto: tentukan dulu berapa foto (maks 4), semua tampil dengan tinggi sama.
         </span>
         <GraphicContentEditor content={content} onChange={updateContent} />
       </div>

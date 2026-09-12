@@ -270,6 +270,9 @@ export function GraphicContentEditor({
   function addText() {
     onChange((prev) => [...prev, { id: newContentId(), type: "text", text: "" }]);
   }
+  function addHeading() {
+    onChange((prev) => [...prev, { id: newContentId(), type: "heading", text: "" }]);
+  }
   function addRow() {
     const images: GalleryImage[] = Array.from({ length: newRowCount }, () => ({ id: newId() }));
     onChange((prev) => [...prev, { id: newContentId(), type: "row", images }]);
@@ -277,7 +280,7 @@ export function GraphicContentEditor({
   function updateText(i: number, text: string) {
     onChange((prev) => {
       const blk = prev[i];
-      if (blk.type !== "text") return prev;
+      if (blk.type === "row") return prev;
       const next = prev.slice();
       next[i] = { ...blk, text };
       return next;
@@ -321,7 +324,11 @@ export function GraphicContentEditor({
         <div key={blk.id} className="border border-white/12 bg-white/[0.02] p-4 flex flex-col gap-3">
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <span className="font-mono text-[10px] tracking-[0.1em] text-[#525252] uppercase">
-              {blk.type === "text" ? "Paragraf" : `Baris foto · ${blk.images.length} foto · tinggi sama`}
+              {blk.type === "text"
+                ? "Paragraf"
+                : blk.type === "heading"
+                ? "Heading"
+                : `Baris foto · ${blk.images.length} foto · tinggi sama`}
             </span>
             <div className="flex gap-1.5">
               <GhostButton onClick={() => move(i, -1)}>↑</GhostButton>
@@ -337,6 +344,8 @@ export function GraphicContentEditor({
 
           {blk.type === "text" ? (
             <TextAreaField label="TEKS PARAGRAF" value={blk.text || ""} onChange={(v) => updateText(i, v)} rows={4} />
+          ) : blk.type === "heading" ? (
+            <TextAreaField label="TEKS HEADING" value={blk.text || ""} onChange={(v) => updateText(i, v)} rows={2} />
           ) : (
             <div className="grid grid-cols-2 gap-3 max-[560px]:grid-cols-1">
               {blk.images.map((img, ii) => (
@@ -362,6 +371,7 @@ export function GraphicContentEditor({
 
       <div className="flex items-end gap-3 flex-wrap">
         <GhostButton onClick={addText}>+ PARAGRAF</GhostButton>
+        <GhostButton onClick={addHeading}>+ HEADING</GhostButton>
         <label className="flex flex-col gap-1.5">
           <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373]">FOTO PER BARIS BARU (maks 4)</span>
           <select
