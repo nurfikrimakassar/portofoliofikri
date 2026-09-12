@@ -59,8 +59,9 @@ export default async function BlogPage() {
                   style={{ objectFit: "cover" }}
                   className="opacity-70"
                 />
-              ) : null}
-              <span className="relative font-mono text-[13px] text-[#525252]">{featured.cat}</span>
+              ) : (
+                <span className="relative font-mono text-[13px] text-[#525252]">{featured.cat}</span>
+              )}
             </div>
           </Link>
         )}

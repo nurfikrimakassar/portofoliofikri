@@ -75,8 +75,9 @@ export default function BlogCarousel({ posts }: { posts: BlogCard[] }) {
                     style={{ objectFit: "cover" }}
                     className="opacity-70"
                   />
-                ) : null}
-                <span className="relative font-mono text-[13px] text-[#525252]">{b.cat}</span>
+                ) : (
+                  <span className="relative font-mono text-[13px] text-[#525252]">{b.cat}</span>
+                )}
               </div>
             </Link>
           ))}
