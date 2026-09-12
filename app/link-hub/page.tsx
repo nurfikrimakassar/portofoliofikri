@@ -1,5 +1,7 @@
+import Link from "next/link";
 import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
+import { getLinkHubPrefix } from "@/lib/linkHub";
 
 export async function generateMetadata() {
   const S = await getData();
@@ -17,6 +19,7 @@ export default async function LinkHubPage() {
   const S = await getData();
   const hub = S.linkHub;
   const P = S.profile;
+  const prefix = await getLinkHubPrefix();
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] text-[#f5f5f5] font-sans overflow-x-hidden">
@@ -44,33 +47,37 @@ export default async function LinkHubPage() {
 
         {hub.groups.length === 0 ? (
           <p className="font-mono text-[12px] text-[#525252]">
-            Belum ada link. Isi di Admin → nurfikri.com/admin → tab LINK HUB.
+            Belum ada group. Isi di Admin → nurfikri.com/admin → tab LINK HUB.
           </p>
         ) : (
-          <div className="flex flex-col gap-12">
-            {hub.groups.map((g) => (
-              <div key={g.id}>
-                <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mb-4 uppercase">{g.title}</div>
-                <div className="divide-y divide-white/[0.08] border-t border-white/[0.08]">
-                  {g.links.map((l) => (
-                    <a
-                      key={l.id}
-                      href={l.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover-row-tight flex justify-between items-center gap-5 py-5 no-underline text-[#f5f5f5]"
-                    >
-                      <span className="text-[16px] font-medium tracking-[-0.005em]">{l.label}</span>
-                      <span className="text-[16px] text-[#525252]">↗</span>
-                    </a>
-                  ))}
+          <div className="flex flex-col divide-y divide-white/[0.08] border-t border-b border-white/[0.08]">
+            {hub.groups.map((g) => {
+              const slug = g.slug?.trim() || g.id;
+              return (
+                <div key={g.id} className="py-8 flex items-start justify-between gap-6 flex-wrap">
+                  <div className="max-w-[440px]">
+                    {(g.type || g.location) && (
+                      <div className="flex items-center gap-2.5 flex-wrap font-mono text-[11px] tracking-[0.1em] text-[#737373] mb-3">
+                        {g.type && <span className="border border-white/18 text-[#d4d4d4] px-2 py-1">{g.type}</span>}
+                        {g.location && <span>{g.location}</span>}
+                      </div>
+                    )}
+                    <h2 className="text-[21px] font-semibold tracking-[-0.01em] mb-1.5">{g.title}</h2>
+                    {g.intro && <p className="text-[14px] leading-[1.6] text-[#a3a3a3]">{g.intro}</p>}
+                  </div>
+                  <Link
+                    href={`${prefix}/${slug}`}
+                    className="shrink-0 font-mono text-[12px] px-5 py-3 border border-white/20 text-[#f5f5f5] no-underline whitespace-nowrap hover-fill"
+                  >
+                    VISIT LINK →
+                  </Link>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
-        <div className="mt-20 pt-7 border-t border-white/[0.08] font-mono text-[11px] text-[#525252]">
+        <div className="mt-16 pt-7 border-t border-white/[0.08] font-mono text-[11px] text-[#525252]">
           {P.name} · {P.location}
         </div>
       </div>

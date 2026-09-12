@@ -27,15 +27,15 @@ export default function LinkHubTab({
   }
 
   function addGroup() {
-    updateGroups((prev) => [...prev, { id: newId("grp"), title: "Nama tempat / project", links: [] }]);
+    updateGroups((prev) => [...prev, { id: newId("grp"), slug: "", title: "Nama tempat / project", links: [] }]);
   }
   function removeGroup(gi: number) {
     updateGroups((prev) => prev.filter((_, i) => i !== gi));
   }
-  function updateGroupTitle(gi: number, title: string) {
+  function updateGroupField(gi: number, patch: Partial<LinkHubGroup>) {
     updateGroups((prev) => {
       const next = prev.slice();
-      next[gi] = { ...next[gi], title };
+      next[gi] = { ...next[gi], ...patch };
       return next;
     });
   }
@@ -67,9 +67,10 @@ export default function LinkHubTab({
     <div className="flex flex-col gap-8 max-w-[720px]">
       <SectionTitle>LINK HUB (portofolio.nurfikri.com)</SectionTitle>
       <p className="font-mono text-[11px] leading-[1.6] text-[#737373] -mt-4">
-        Satu halaman yang isinya kumpulan link — cocok dipakai kalau cuma boleh kasih satu link (misalnya form
-        pendaftaran). Style-nya ngikut situs utama, tapi halamannya sendiri berdiri sendiri di subdomain{" "}
-        <span className="text-[#a3a3a3]">portofolio.nurfikri.com</span>.
+        Halaman utama (portofolio.nurfikri.com) nampilin tiap group sebagai satu baris — judul, tipe, lokasi, intro
+        singkat, dan tombol VISIT LINK. Klik VISIT LINK buka halaman khusus group itu
+        (portofolio.nurfikri.com/&lt;slug&gt;) yang isinya link-link di dalamnya. Jadi tetap 1 link yang kamu kasih
+        keluar, tapi rapi per konteks.
       </p>
 
       <Field label="HEADLINE" value={hub.headline} onChange={(v) => update({ headline: v })} />
@@ -79,11 +80,30 @@ export default function LinkHubTab({
         {hub.groups.map((g, gi) => (
           <Card key={g.id}>
             <div className="flex items-end gap-2">
-              <Field label="NAMA GROUP (mis. Happy Kamper, Anak Teknik Indo)" value={g.title} onChange={(v) => updateGroupTitle(gi, v)} />
+              <Field
+                label="NAMA GROUP (mis. Happy Kamper, Anak Teknik Indo)"
+                value={g.title}
+                onChange={(v) => updateGroupField(gi, { title: v })}
+              />
               <GhostButton danger onClick={() => removeGroup(gi)}>
                 HAPUS GROUP
               </GhostButton>
             </div>
+            <Field
+              label="SLUG (bagian URL — portofolio.nurfikri.com/slug-ini, huruf kecil tanpa spasi)"
+              value={g.slug}
+              onChange={(v) => updateGroupField(gi, { slug: v.trim().toLowerCase().replace(/\s+/g, "-") })}
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="TIPE (Part-time, Internship, Full-time, dll)" value={g.type || ""} onChange={(v) => updateGroupField(gi, { type: v })} />
+              <Field label="LOKASI" value={g.location || ""} onChange={(v) => updateGroupField(gi, { location: v })} />
+            </div>
+            <TextAreaField
+              label="INTRO SINGKAT (1-2 kalimat)"
+              value={g.intro || ""}
+              onChange={(v) => updateGroupField(gi, { intro: v })}
+              rows={2}
+            />
 
             <div className="flex flex-col gap-2">
               {g.links.map((l, li) => (

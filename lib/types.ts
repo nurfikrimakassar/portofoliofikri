@@ -141,10 +141,23 @@ export type BlogDetail = {
 };
 
 export type LinkHubLink = { id: string; label: string; url: string };
-export type LinkHubGroup = { id: string; title: string; links: LinkHubLink[] };
-/** The single-link hub served at portofolio.nurfikri.com — one page collecting
- * every case-study/reference link (grouped per employer or project) behind
- * one URL, for places (like an Apple Academy application) that only take one link. */
+export type LinkHubGroup = {
+  id: string;
+  /** URL segment — portofolio.nurfikri.com/<slug> */
+  slug: string;
+  title: string;
+  /** Short one/two-sentence intro shown on both the index card and the group's own page. */
+  intro?: string;
+  /** e.g. "Part-time", "Internship", "Full-time" */
+  type?: string;
+  location?: string;
+  links: LinkHubLink[];
+};
+/** The single-link hub served at portofolio.nurfikri.com. The root page lists
+ * each employer/project as its own card (intro, type, location); each card's
+ * "VISIT LINK" opens portofolio.nurfikri.com/<slug>, a dedicated page listing
+ * just that group's links — so the whole thing is still one URL to hand out
+ * (e.g. for an Apple Academy application) while staying organised per context. */
 export type LinkHub = {
   headline: string;
   description: string;

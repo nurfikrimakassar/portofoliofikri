@@ -61,12 +61,14 @@ export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const host = req.headers.get("host") || "";
 
-  // portofolio.nurfikri.com is a single "link hub" page — every path there
-  // (except admin/api, kept as a safety net) resolves to /link-hub, so the
-  // subdomain always shows the same one-link page regardless of the path.
-  if (host === HUB_HOST && !pathname.startsWith("/admin") && !pathname.startsWith("/api") && pathname !== "/link-hub") {
+  // portofolio.nurfikri.com is the link-hub (except admin/api, kept as a
+  // safety net): "/" -> /link-hub (the index of groups), "/<slug>" ->
+  // /link-hub/<slug> (that group's own page), so URLs stay clean on the
+  // subdomain (portofolio.nurfikri.com/anakteknikindo) while both are real
+  // routes under /link-hub for previewing on the main domain too.
+  if (host === HUB_HOST && !pathname.startsWith("/admin") && !pathname.startsWith("/api") && !pathname.startsWith("/link-hub")) {
     const url = req.nextUrl.clone();
-    url.pathname = "/link-hub";
+    url.pathname = `/link-hub${pathname === "/" ? "" : pathname}`;
     return NextResponse.rewrite(url);
   }
 
