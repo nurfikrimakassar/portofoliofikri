@@ -1,8 +1,20 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
 import { getLinkHubPrefix } from "@/lib/linkHub";
+
+// Reading the Host header is a request-time API, so under Cache Components
+// it needs its own Suspense boundary rather than blocking the whole page.
+async function BackLink() {
+  const prefix = await getLinkHubPrefix();
+  return (
+    <Link href={prefix || "/"} className="font-mono text-[12px] text-[#737373] no-underline hover-link">
+      ← back
+    </Link>
+  );
+}
 
 export async function generateStaticParams() {
   const S = await getData();
@@ -31,16 +43,15 @@ export default async function LinkHubGroupPage({ params }: { params: Promise<{ s
   const S = await getData();
   const g = S.linkHub.groups.find((x) => (x.slug?.trim() || x.id) === slug);
   if (!g) notFound();
-  const prefix = await getLinkHubPrefix();
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] text-[#f5f5f5] font-sans overflow-x-hidden">
       <GridBackground />
 
       <div className="relative z-10 max-w-[720px] mx-auto px-8 py-20 max-[640px]:px-6 max-[640px]:py-14">
-        <Link href={prefix || "/"} className="font-mono text-[12px] text-[#737373] no-underline hover-link">
-          ← back
-        </Link>
+        <Suspense fallback={<span className="font-mono text-[12px] text-[#737373]">← back</span>}>
+          <BackLink />
+        </Suspense>
 
         {(g.type || g.location) && (
           <div className="flex items-center gap-2.5 flex-wrap font-mono text-[11px] tracking-[0.1em] text-[#737373] mt-8 mb-4">
