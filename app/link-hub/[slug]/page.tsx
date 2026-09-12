@@ -6,7 +6,12 @@ import { getLinkHubPrefix } from "@/lib/linkHub";
 
 export async function generateStaticParams() {
   const S = await getData();
-  return S.linkHub.groups.map((g) => ({ slug: g.slug?.trim() || g.id }));
+  const slugs = S.linkHub.groups.map((g) => ({ slug: g.slug?.trim() || g.id }));
+  // Cache Components requires at least one static param at build time. Before
+  // any group exists yet, fall back to a placeholder — real slugs still
+  // render fine on demand (dynamicParams defaults to true), this one just
+  // 404s via the lookup below if anyone ever hits it.
+  return slugs.length > 0 ? slugs : [{ slug: "_placeholder" }];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
