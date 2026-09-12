@@ -119,14 +119,14 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
-        <div className="max-[980px]:max-w-[300px]">
+        <div>
           <div className="relative w-full aspect-[4/5]">
             <Image
               src="/fikri.jpg"
               alt="Fikri"
               fill
               priority
-              sizes="(max-width: 980px) 300px, 28vw"
+              sizes="(max-width: 980px) 100vw, 28vw"
               style={{ objectFit: "cover", filter: "grayscale(1) contrast(1.03)" }}
             />
           </div>
