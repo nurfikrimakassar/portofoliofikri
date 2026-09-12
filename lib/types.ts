@@ -149,6 +149,8 @@ export type LinkHubGroup = {
   /** e.g. "Part-time", "Internship", "Full-time" */
   type?: string;
   location?: string;
+  /** Shown full-width on the group's own page, natural height (no crop). */
+  cover?: string;
   links: LinkHubLink[];
 };
 /** The single-link hub served at portofolio.nurfikri.com. The root page lists

@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { LinkHubGroup, LinkHubLink, PortfolioData } from "@/lib/types";
 import { groupSlug } from "@/lib/linkHub";
-import { Card, Field, GhostButton, PrimaryButton, SectionTitle, TextAreaField } from "../ui";
+import { Card, Field, GhostButton, ImageUploadField, PrimaryButton, SectionTitle, TextAreaField } from "../ui";
 
 let counter = 0;
 function newId(prefix: string) {
@@ -103,6 +103,11 @@ export default function LinkHubTab({
               value={g.intro || ""}
               onChange={(v) => updateGroupField(gi, { intro: v })}
               rows={2}
+            />
+            <ImageUploadField
+              label="GAMBAR (opsional — lebar penuh di halaman detail, tinggi ikut rasio asli)"
+              url={g.cover}
+              onChange={(url) => updateGroupField(gi, { cover: url })}
             />
 
             <div className="flex flex-col gap-2">
