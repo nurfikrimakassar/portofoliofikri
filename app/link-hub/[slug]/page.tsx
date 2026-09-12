@@ -3,6 +3,10 @@ import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
 import { findGroupBySlug, groupSlug } from "@/lib/linkHub";
 
+// Matches the grid-cols count to a literal Tailwind class so it's picked up
+// at build time (a template-literal class name wouldn't be).
+const FACT_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3" };
+
 export async function generateStaticParams() {
   const S = await getData();
   const slugs = S.linkHub.groups.map((_, i) => ({ slug: groupSlug(S.linkHub.groups, i) }));
@@ -37,28 +41,32 @@ export default async function LinkHubGroupPage({ params }: { params: Promise<{ s
       <GridBackground />
 
       <div className="relative z-10 max-w-[720px] mx-auto px-8 py-20 max-[640px]:px-6 max-[640px]:py-14">
-        {g.type && (
-          <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mb-4">{`// ${g.type.toUpperCase()}`}</div>
-        )}
         <h1 className="text-[clamp(30px,4.5vw,46px)] font-bold tracking-[-0.03em] leading-[1.1] mb-5">{g.title}</h1>
         {g.intro && <p className="text-[16px] leading-[1.65] text-[#a3a3a3]">{g.intro}</p>}
 
-        {(g.type || g.location) && (
-          <dl className="grid grid-cols-2 gap-x-10 gap-y-6 mt-10 pt-8 border-t border-white/[0.08] max-[480px]:grid-cols-1">
-            {g.type && (
-              <div>
-                <dt className="font-mono text-[10.5px] tracking-[0.16em] text-[#525252] mb-1.5">TYPE</dt>
-                <dd className="text-[14.5px] text-[#d4d4d4]">{g.type}</dd>
-              </div>
-            )}
-            {g.location && (
-              <div>
-                <dt className="font-mono text-[10.5px] tracking-[0.16em] text-[#525252] mb-1.5">LOCATION</dt>
-                <dd className="text-[14.5px] text-[#d4d4d4]">{g.location}</dd>
-              </div>
-            )}
-          </dl>
-        )}
+        {(() => {
+          const facts = [
+            g.type && { label: "TYPE", value: g.type },
+            g.location && { label: "LOCATION", value: g.location },
+            g.duration && { label: "DURATION", value: g.duration },
+          ].filter((f): f is { label: string; value: string } => Boolean(f));
+          if (facts.length === 0) return null;
+          return (
+            <div className={`grid ${FACT_COLS[facts.length]} border border-white/10 mt-10 max-[480px]:grid-cols-1`}>
+              {facts.map((f, i) => (
+                <div
+                  key={f.label}
+                  className={`px-6 py-6 ${
+                    i < facts.length - 1 ? "border-r border-white/10 max-[480px]:border-r-0 max-[480px]:border-b" : ""
+                  }`}
+                >
+                  <div className="font-mono text-[11px] tracking-[0.16em] text-[#525252] mb-2">{f.label}</div>
+                  <div className="text-[15px] text-[#d4d4d4]">{f.value}</div>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
 
         {g.cover && (
           // eslint-disable-next-line @next/next/no-img-element

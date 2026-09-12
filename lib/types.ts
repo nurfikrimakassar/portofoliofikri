@@ -149,6 +149,8 @@ export type LinkHubGroup = {
   /** e.g. "Part-time", "Internship", "Full-time" */
   type?: string;
   location?: string;
+  /** e.g. "6 bulan", "2023 — sekarang" */
+  duration?: string;
   /** Shown full-width on the group's own page, natural height (no crop). */
   cover?: string;
   links: LinkHubLink[];
