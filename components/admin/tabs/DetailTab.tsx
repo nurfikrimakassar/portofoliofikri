@@ -1,10 +1,11 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { Block, GalleryRow, PortfolioData } from "@/lib/types";
+import { Block, GraphicContentBlock, PortfolioData } from "@/lib/types";
+import { migrateGraphicContent } from "@/lib/graphicContent";
 import { Field, ImageUploadField, SectionTitle, TextAreaField } from "../ui";
 import BlockEditor from "../BlockEditor";
-import { MetaEditor, RowGalleryEditor } from "../MetaAndGallery";
+import { GraphicContentEditor, MetaEditor } from "../MetaAndGallery";
 
 type Kind = "project" | "blog" | "cs" | "graphic";
 type SetData = Dispatch<SetStateAction<PortfolioData>>;
@@ -258,22 +259,24 @@ function GraphicDetailEditor({
       detail: { ...prev.detail, graphic: { ...prev.detail.graphic, [id]: { ...(prev.detail.graphic[id] || {}), ...patch } } },
     }));
   }
-  function updateGalleryRows(updater: (prev: GalleryRow[]) => GalleryRow[]) {
+  function updateContent(updater: (prev: GraphicContentBlock[]) => GraphicContentBlock[]) {
     setData((prev) => {
       const prevDetail = prev.detail.graphic[id] || {};
+      const base = migrateGraphicContent(prevDetail);
       return {
         ...prev,
         detail: {
           ...prev.detail,
-          graphic: { ...prev.detail.graphic, [id]: { ...prevDetail, galleryRows: updater(prevDetail.galleryRows || []) } },
+          graphic: { ...prev.detail.graphic, [id]: { ...prevDetail, content: updater(base) } },
         },
       };
     });
   }
+  const content = migrateGraphicContent(detail);
 
   return (
     <div className="flex flex-col gap-5 border-t border-white/10 pt-6">
-      <ImageUploadField label="COVER (ratio bebas)" url={detail.cover} onChange={(url) => update({ cover: url })} />
+      <ImageUploadField label="COVER (thumbnail card — tidak tampil di halaman detail)" url={detail.cover} onChange={(url) => update({ cover: url })} />
       <TextAreaField label="DESKRIPSI (ringkasan 1-2 kalimat / summary)" value={detail.desc || ""} onChange={(v) => update({ desc: v })} rows={3} />
       <div>
         <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">META (TYPE / TEAM / ROLE / YEAR / LINK — isi URL penuh untuk jadi link)</span>
@@ -283,12 +286,11 @@ function GraphicDetailEditor({
         <Field label="LINK PORTO" value={detail.link || ""} onChange={(v) => update({ link: v })} />
         <Field label="LABEL TOMBOL" value={detail.linkLabel || ""} onChange={(v) => update({ linkLabel: v })} />
       </div>
-      <TextAreaField label="APPROACH / IMPACT / WHAT I LEARNED (imageNote)" value={detail.imageNote || ""} onChange={(v) => update({ imageNote: v })} rows={5} />
       <div>
         <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">
-          GALERI — tentukan dulu berapa foto dalam satu baris (maks 4), lalu upload. Semua foto dalam satu baris tampil dengan tinggi yang sama.
+          CERITA — paragraf &amp; baris foto, urutannya bisa diatur naik/turun (↑↓) kayak di Web Project. Baris foto: tentukan dulu berapa foto (maks 4), semua tampil dengan tinggi sama.
         </span>
-        <RowGalleryEditor rows={detail.galleryRows || []} onChange={updateGalleryRows} />
+        <GraphicContentEditor content={content} onChange={updateContent} />
       </div>
     </div>
   );

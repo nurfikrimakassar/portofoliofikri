@@ -3,11 +3,12 @@ import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
-import { GalleryRow } from "@/lib/types";
+import { GraphicContentBlock } from "@/lib/types";
+import { migrateGraphicContent } from "@/lib/graphicContent";
 
-// Each row is a CSS grid with N equal-width columns, so the row always spans
-// edge to edge; every image is w-full/h-auto, so its height simply follows
-// from that shared width and its own aspect ratio.
+// Each photo-row is a CSS grid with N equal-width columns, so the row always
+// spans edge to edge; every image is w-full/h-auto, so its height simply
+// follows from that shared width and its own aspect ratio.
 const GRID_COLS: Record<number, string> = {
   1: "grid-cols-1",
   2: "grid-cols-2 max-[560px]:grid-cols-1",
@@ -15,16 +16,23 @@ const GRID_COLS: Record<number, string> = {
   4: "grid-cols-4 max-[980px]:grid-cols-3 max-[720px]:grid-cols-2 max-[460px]:grid-cols-1",
 };
 
-const DEMO_ROWS: GalleryRow[] = [
+const DEMO_CONTENT: GraphicContentBlock[] = [
   {
-    id: "demo-1",
+    id: "demo-text",
+    type: "text",
+    text: "A short story about this piece — the brief, the concept, and the decisions behind it. Replace this in Admin → DETAIL → Graphic Design.",
+  },
+  {
+    id: "demo-row-1",
+    type: "row",
     images: [
       { id: "d1", cap: "Logo & wordmark" },
       { id: "d2", cap: "Palette & type" },
     ],
   },
   {
-    id: "demo-2",
+    id: "demo-row-2",
+    type: "row",
     images: [
       { id: "d3", cap: "Application" },
       { id: "d4", cap: "Social material" },
@@ -44,13 +52,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const item = S.graphicWorks.find((g) => g.id === id);
   if (!item) return {};
   const G = S.detail.graphic[id] || {};
+  const firstRowImage = migrateGraphicContent(G).find(
+    (b): b is Extract<GraphicContentBlock, { type: "row" }> => b.type === "row" && !!b.images[0]?.url,
+  )?.images[0]?.url;
   return {
     title: item.title,
     description: G.desc?.slice(0, 160) || `${item.title} — Graphic design by Fikri`,
     openGraph: {
       title: item.title,
       description: G.desc?.slice(0, 160) || `${item.title} — Graphic design by Fikri`,
-      images: G.cover ? [{ url: G.cover }] : G.galleryRows?.[0]?.images?.[0]?.url ? [{ url: G.galleryRows[0].images[0].url }] : [],
+      images: G.cover ? [{ url: G.cover }] : firstRowImage ? [{ url: firstRowImage }] : [],
     },
   };
 }
@@ -61,7 +72,7 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
   const item = S.graphicWorks.find((g) => g.id === id);
   if (!item) notFound();
   const G = S.detail.graphic[id] || {};
-  const rows = G.galleryRows?.length ? G.galleryRows : DEMO_ROWS;
+  const content = G.content?.length || G.imageNote || G.galleryRows?.length ? migrateGraphicContent(G) : DEMO_CONTENT;
   const meta = G.meta?.length
     ? G.meta
     : [
@@ -82,7 +93,7 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
         </Link>
         <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mt-8 mb-4">{`// ${item.cat.toUpperCase()}`}</div>
         <h1 className="text-[clamp(34px,5.5vw,60px)] font-bold tracking-[-0.035em] leading-[1.03]">{item.title}</h1>
-        <p className="text-[clamp(16px,1.8vw,20px)] leading-[1.6] text-[#a3a3a3] mt-6 max-w-[560px]">
+        <p className="text-[clamp(16px,1.8vw,20px)] leading-[1.6] text-[#a3a3a3] mt-6">
           {G.desc || "One or two sentences describing this piece — what it was for and what it involved."}
         </p>
 
@@ -120,37 +131,21 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
       </header>
 
       <div className="relative z-10 max-w-[1040px] mx-auto px-8 max-[640px]:px-6">
-        {G.cover ? (
-          <figure className="group m-0 my-14">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={G.cover}
-              alt={`Cover ${item.title}`}
-              className="block w-full h-auto grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
-            />
-          </figure>
-        ) : (
-          <div className="my-14 flex aspect-video items-center justify-center border border-dashed border-white/15 bg-white/[0.02] font-mono text-[12px] text-[#525252]">
-            Cover · any ratio
-          </div>
-        )}
+        <div className="flex flex-col gap-10 mt-14 pb-20">
+          {content.map((blk) => {
+            if (blk.type === "text") {
+              return blk.text ? (
+                <p key={blk.id} className="text-[clamp(16px,1.7vw,18px)] leading-[1.8] text-[#d4d4d4] text-balance-pretty">
+                  {blk.text}
+                </p>
+              ) : null;
+            }
 
-        {G.imageNote && (
-          <div className="max-w-[720px] mx-auto py-4">
-            <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mb-4">{`// APPROACH`}</div>
-            <p className="text-[clamp(16px,1.7vw,18px)] leading-[1.8] text-[#d4d4d4] text-balance-pretty">
-              {G.imageNote}
-            </p>
-          </div>
-        )}
-
-        <div className="flex flex-col gap-8 mt-14 pb-20">
-          {rows.map((row) => {
-            const count = Math.min(4, Math.max(1, row.images.length));
+            const count = Math.min(4, Math.max(1, blk.images.length));
             const gridClass = GRID_COLS[count];
             return (
-              <div key={row.id} className={`grid ${gridClass} gap-4`}>
-                {row.images.map((img) => {
+              <div key={blk.id} className={`grid ${gridClass} gap-4`}>
+                {blk.images.map((img) => {
                   const media = img.url ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
