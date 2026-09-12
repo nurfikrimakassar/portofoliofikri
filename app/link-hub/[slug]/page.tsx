@@ -45,9 +45,8 @@ export default async function LinkHubGroupPage({ params }: { params: Promise<{ s
     <div className="relative min-h-screen bg-[#0a0a0a] text-[#f5f5f5] font-sans overflow-x-hidden">
       <GridBackground />
 
-      <div className="relative z-10 max-w-[720px] mx-auto px-8 py-20 max-[640px]:px-6 max-[640px]:py-14">
-        <h1 className="text-[clamp(30px,4.5vw,46px)] font-bold tracking-[-0.03em] leading-[1.1] mb-5">{g.title}</h1>
-        {g.intro && <p className="text-[16px] leading-[1.65] text-[#a3a3a3]">{g.intro}</p>}
+      <div className="relative z-10 max-w-[1040px] mx-auto px-8 py-20 max-[640px]:px-6 max-[640px]:py-14">
+        <h1 className="text-[clamp(30px,4.5vw,46px)] font-bold tracking-[-0.03em] leading-[1.1]">{g.title}</h1>
 
         {(() => {
           const facts = [
@@ -78,6 +77,8 @@ export default async function LinkHubGroupPage({ params }: { params: Promise<{ s
           // eslint-disable-next-line @next/next/no-img-element
           <img src={g.cover} alt={g.title} className="block w-full h-auto mt-12" />
         )}
+
+        {g.intro && <p className="text-[16px] leading-[1.65] text-[#a3a3a3] mt-12">{g.intro}</p>}
 
         <div className="mt-14">
           {g.links.length === 0 ? (
