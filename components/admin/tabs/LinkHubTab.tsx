@@ -2,6 +2,7 @@
 
 import { Dispatch, SetStateAction } from "react";
 import { LinkHubGroup, LinkHubLink, PortfolioData } from "@/lib/types";
+import { groupSlug } from "@/lib/linkHub";
 import { Card, Field, GhostButton, PrimaryButton, SectionTitle, TextAreaField } from "../ui";
 
 let counter = 0;
@@ -27,7 +28,7 @@ export default function LinkHubTab({
   }
 
   function addGroup() {
-    updateGroups((prev) => [...prev, { id: newId("grp"), slug: "", title: "Nama tempat / project", links: [] }]);
+    updateGroups((prev) => [...prev, { id: newId("grp"), title: "Nama tempat / project", links: [] }]);
   }
   function removeGroup(gi: number) {
     updateGroups((prev) => prev.filter((_, i) => i !== gi));
@@ -89,11 +90,10 @@ export default function LinkHubTab({
                 HAPUS GROUP
               </GhostButton>
             </div>
-            <Field
-              label="SLUG (bagian URL — portofolio.nurfikri.com/slug-ini, huruf kecil tanpa spasi)"
-              value={g.slug}
-              onChange={(v) => updateGroupField(gi, { slug: v.trim().toLowerCase().replace(/\s+/g, "-") })}
-            />
+            <div className="font-mono text-[11px] text-[#525252] -mt-2">
+              URL: portofolio.nurfikri.com/<span className="text-[#a3a3a3]">{groupSlug(hub.groups, gi)}</span>{" "}
+              (otomatis ngikutin nama group)
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <Field label="TIPE (Part-time, Internship, Full-time, dll)" value={g.type || ""} onChange={(v) => updateGroupField(gi, { type: v })} />
               <Field label="LOKASI" value={g.location || ""} onChange={(v) => updateGroupField(gi, { location: v })} />

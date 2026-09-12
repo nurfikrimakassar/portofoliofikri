@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
-import { getLinkHubPrefix } from "@/lib/linkHub";
+import { findGroupBySlug, groupSlug } from "@/lib/linkHub";
+import { getLinkHubPrefix } from "@/lib/linkHubHost";
 
 // Reading the Host header is a request-time API, so under Cache Components
 // it needs its own Suspense boundary rather than blocking the whole page.
@@ -18,7 +19,7 @@ async function BackLink() {
 
 export async function generateStaticParams() {
   const S = await getData();
-  const slugs = S.linkHub.groups.map((g) => ({ slug: g.slug?.trim() || g.id }));
+  const slugs = S.linkHub.groups.map((_, i) => ({ slug: groupSlug(S.linkHub.groups, i) }));
   // Cache Components requires at least one static param at build time. Before
   // any group exists yet, fall back to a placeholder — real slugs still
   // render fine on demand (dynamicParams defaults to true), this one just
@@ -29,7 +30,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const S = await getData();
-  const g = S.linkHub.groups.find((x) => (x.slug?.trim() || x.id) === slug);
+  const g = findGroupBySlug(S.linkHub.groups, slug);
   if (!g) return {};
   return {
     title: `${g.title} — ${S.linkHub.headline}`,
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function LinkHubGroupPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const S = await getData();
-  const g = S.linkHub.groups.find((x) => (x.slug?.trim() || x.id) === slug);
+  const g = findGroupBySlug(S.linkHub.groups, slug);
   if (!g) notFound();
 
   return (

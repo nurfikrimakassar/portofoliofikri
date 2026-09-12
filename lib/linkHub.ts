@@ -1,17 +1,25 @@
-import { headers } from "next/headers";
+import { LinkHubGroup } from "./types";
 
 export const LINK_HUB_HOST = "portofolio.nurfikri.com";
 
-/**
- * Internal hub links need a different prefix depending on where the page is
- * actually being served from: "" when the request really came in on
- * portofolio.nurfikri.com (proxy.ts already rewrote the path to /link-hub/...
- * behind the scenes, so a bare "/<slug>" keeps the clean subdomain URL), or
- * "/link-hub" when previewing the same content directly on the main domain
- * (nurfikri.com/link-hub) before the subdomain is set up.
- */
-export async function getLinkHubPrefix(): Promise<string> {
-  const h = await headers();
-  const host = h.get("host") || "";
-  return host === LINK_HUB_HOST ? "" : "/link-hub";
+/** "Anak Teknik Indo" -> "anakteknikindo" — no manual slug field, the URL
+ * segment always follows the group's name automatically. */
+function slugifyTitle(title: string): string {
+  return title.toLowerCase().replace(/[^a-z0-9]/g, "") || "group";
+}
+
+/** The slug for groups[index], de-duplicated against earlier groups that
+ * would otherwise produce the same slug (2nd "Happy Kamper" -> happykamper-2). */
+export function groupSlug(groups: LinkHubGroup[], index: number): string {
+  const base = slugifyTitle(groups[index]?.title || "");
+  let count = 0;
+  for (let i = 0; i < index; i++) {
+    if (slugifyTitle(groups[i].title) === base) count++;
+  }
+  return count === 0 ? base : `${base}-${count + 1}`;
+}
+
+/** Find a group by its (derived) slug. */
+export function findGroupBySlug(groups: LinkHubGroup[], slug: string): LinkHubGroup | undefined {
+  return groups.find((_, i) => groupSlug(groups, i) === slug);
 }

@@ -2,7 +2,8 @@ import { Suspense } from "react";
 import Link from "next/link";
 import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
-import { getLinkHubPrefix } from "@/lib/linkHub";
+import { groupSlug } from "@/lib/linkHub";
+import { getLinkHubPrefix } from "@/lib/linkHubHost";
 import { LinkHubGroup } from "@/lib/types";
 
 export async function generateMetadata() {
@@ -25,8 +26,8 @@ async function GroupRows({ groups }: { groups: LinkHubGroup[] }) {
   const prefix = await getLinkHubPrefix();
   return (
     <div className="flex flex-col divide-y divide-white/[0.08] border-t border-b border-white/[0.08]">
-      {groups.map((g) => {
-        const slug = g.slug?.trim() || g.id;
+      {groups.map((g, i) => {
+        const slug = groupSlug(groups, i);
         return (
           <div key={g.id} className="py-8 flex items-start justify-between gap-6 flex-wrap">
             <div className="max-w-[440px]">

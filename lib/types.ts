@@ -143,8 +143,6 @@ export type BlogDetail = {
 export type LinkHubLink = { id: string; label: string; url: string };
 export type LinkHubGroup = {
   id: string;
-  /** URL segment — portofolio.nurfikri.com/<slug> */
-  slug: string;
   title: string;
   /** Short one/two-sentence intro shown on both the index card and the group's own page. */
   intro?: string;
