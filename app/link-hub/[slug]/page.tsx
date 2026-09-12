@@ -78,7 +78,9 @@ export default async function LinkHubGroupPage({ params }: { params: Promise<{ s
           <img src={g.cover} alt={g.title} className="block w-full h-auto mt-12" />
         )}
 
-        {g.intro && <p className="text-[16px] leading-[1.65] text-[#a3a3a3] mt-12">{g.intro}</p>}
+        {g.intro && (
+          <p className="text-[16px] leading-[1.65] text-[#a3a3a3] mt-12 whitespace-pre-line">{g.intro}</p>
+        )}
 
         <div className="mt-14">
           {g.links.length === 0 ? (

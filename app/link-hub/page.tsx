@@ -29,17 +29,8 @@ async function GroupRows({ groups }: { groups: LinkHubGroup[] }) {
       {groups.map((g, i) => {
         const slug = groupSlug(groups, i);
         return (
-          <div key={g.id} className="py-8 flex items-start justify-between gap-6 flex-wrap">
-            <div className="max-w-[440px]">
-              {(g.type || g.location) && (
-                <div className="flex items-center gap-2.5 flex-wrap font-mono text-[11px] tracking-[0.1em] text-[#737373] mb-3">
-                  {g.type && <span className="border border-white/18 text-[#d4d4d4] px-2 py-1">{g.type}</span>}
-                  {g.location && <span>{g.location}</span>}
-                </div>
-              )}
-              <h2 className="text-[21px] font-semibold tracking-[-0.01em] mb-1.5">{g.title}</h2>
-              {g.intro && <p className="text-[14px] leading-[1.6] text-[#a3a3a3]">{g.intro}</p>}
-            </div>
+          <div key={g.id} className="py-8 flex items-center justify-between gap-6 flex-wrap">
+            <h2 className="text-[21px] font-semibold tracking-[-0.01em]">{g.title}</h2>
             <Link
               href={`${prefix}/${slug}`}
               className="shrink-0 font-mono text-[12px] px-5 py-3 border border-white/20 text-[#f5f5f5] no-underline whitespace-nowrap hover-fill"
@@ -77,7 +68,7 @@ export default async function LinkHubPage() {
           {hub.headline}
         </h1>
         {hub.description && (
-          <p className="text-[16px] leading-[1.65] text-[#a3a3a3] max-w-[560px] mb-16 max-[640px]:mb-12">
+          <p className="text-[16px] leading-[1.65] text-[#a3a3a3] max-w-[560px] mb-16 max-[640px]:mb-12 whitespace-pre-line">
             {hub.description}
           </p>
         )}
