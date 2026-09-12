@@ -146,6 +146,8 @@ export type LinkHubGroup = {
   title: string;
   /** Short one/two-sentence intro shown on both the index card and the group's own page. */
   intro?: string;
+  /** e.g. "Frontend Developer", "Content Designer" */
+  role?: string;
   /** e.g. "Part-time", "Internship", "Full-time" */
   type?: string;
   location?: string;

@@ -5,7 +5,12 @@ import { findGroupBySlug, groupSlug } from "@/lib/linkHub";
 
 // Matches the grid-cols count to a literal Tailwind class so it's picked up
 // at build time (a template-literal class name wouldn't be).
-const FACT_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3" };
+const FACT_COLS: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-3",
+  4: "grid-cols-4",
+};
 
 export async function generateStaticParams() {
   const S = await getData();
@@ -46,6 +51,7 @@ export default async function LinkHubGroupPage({ params }: { params: Promise<{ s
 
         {(() => {
           const facts = [
+            g.role && { label: "ROLE", value: g.role },
             g.type && { label: "TYPE", value: g.type },
             g.location && { label: "LOCATION", value: g.location },
             g.duration && { label: "DURATION", value: g.duration },

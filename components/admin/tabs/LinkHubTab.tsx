@@ -94,7 +94,8 @@ export default function LinkHubTab({
               URL: portofolio.nurfikri.com/<span className="text-[#a3a3a3]">{groupSlug(hub.groups, gi)}</span>{" "}
               (otomatis ngikutin nama group)
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="ROLE (mis. Frontend Developer)" value={g.role || ""} onChange={(v) => updateGroupField(gi, { role: v })} />
               <Field label="TIPE (Part-time, Internship, Full-time, dll)" value={g.type || ""} onChange={(v) => updateGroupField(gi, { type: v })} />
               <Field label="LOKASI" value={g.location || ""} onChange={(v) => updateGroupField(gi, { location: v })} />
               <Field label="LAMA BEKERJA (mis. 6 bulan, 2023 — sekarang)" value={g.duration || ""} onChange={(v) => updateGroupField(gi, { duration: v })} />
