@@ -35,6 +35,13 @@ export default function ProductsTab({
       return { ...prev, detail: { ...prev.detail, prod: { ...prod, [idx]: { ...cur, ...patch } } } };
     });
   }
+  function updateProdBody(idx: string, updater: (prev: Block[]) => Block[]) {
+    setData((prev) => {
+      const prod = prev.detail.prod ?? {};
+      const cur = prod[idx] || {};
+      return { ...prev, detail: { ...prev.detail, prod: { ...prod, [idx]: { ...cur, body: updater(cur.body || []) } } } };
+    });
+  }
   function removeProduct(i: number) {
     setData((prev) => ({ ...prev, products: prev.products.filter((_, idx) => idx !== i) }));
   }
@@ -102,7 +109,7 @@ export default function ProductsTab({
                 <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">BODY (deskripsi panjang di halaman detail)</span>
                 <BlockEditor
                   blocks={(data.detail.prod ?? {})[p.idx]?.body || []}
-                  onChange={(body) => updateProdDetail(p.idx, { body })}
+                  onChange={(updater) => updateProdBody(p.idx, updater)}
                 />
               </div>
               <div className="flex justify-end">

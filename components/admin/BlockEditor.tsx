@@ -14,25 +14,31 @@ export default function BlockEditor({
   onChange,
 }: {
   blocks: Block[];
-  onChange: (blocks: Block[]) => void;
+  /** Always given the freshest blocks (not a stale render-time snapshot) so
+   * concurrent async edits — e.g. two image uploads — never clobber each other. */
+  onChange: (updater: (prev: Block[]) => Block[]) => void;
 }) {
   function update(i: number, patch: Partial<Block>) {
-    const next = blocks.slice();
-    next[i] = { ...next[i], ...patch };
-    onChange(next);
+    onChange((prev) => {
+      const next = prev.slice();
+      next[i] = { ...next[i], ...patch };
+      return next;
+    });
   }
   function remove(i: number) {
-    onChange(blocks.filter((_, idx) => idx !== i));
+    onChange((prev) => prev.filter((_, idx) => idx !== i));
   }
   function move(i: number, dir: -1 | 1) {
-    const j = i + dir;
-    if (j < 0 || j >= blocks.length) return;
-    const next = blocks.slice();
-    [next[i], next[j]] = [next[j], next[i]];
-    onChange(next);
+    onChange((prev) => {
+      const j = i + dir;
+      if (j < 0 || j >= prev.length) return prev;
+      const next = prev.slice();
+      [next[i], next[j]] = [next[j], next[i]];
+      return next;
+    });
   }
   function add(type: Block["type"]) {
-    onChange([...blocks, { id: newId("bk"), type, text: type === "image" ? undefined : "" }]);
+    onChange((prev) => [...prev, { id: newId("bk"), type, text: type === "image" ? undefined : "" }]);
   }
 
   return (

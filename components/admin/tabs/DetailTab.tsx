@@ -1,7 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { PortfolioData } from "@/lib/types";
+import { Block, GalleryRow, PortfolioData } from "@/lib/types";
 import { Field, ImageUploadField, SectionTitle, TextAreaField } from "../ui";
 import BlockEditor from "../BlockEditor";
 import { MetaEditor, RowGalleryEditor } from "../MetaAndGallery";
@@ -109,6 +109,15 @@ function ProjectDetailEditor({
       detail: { ...prev.detail, project: { ...prev.detail.project, [id]: { ...(prev.detail.project[id] || {}), ...patch } } },
     }));
   }
+  function updateBody(updater: (prev: Block[]) => Block[]) {
+    setData((prev) => {
+      const prevDetail = prev.detail.project[id] || {};
+      return {
+        ...prev,
+        detail: { ...prev.detail, project: { ...prev.detail.project, [id]: { ...prevDetail, body: updater(prevDetail.body || []) } } },
+      };
+    });
+  }
 
   return (
     <div className="flex flex-col gap-5 border-t border-white/10 pt-6">
@@ -123,7 +132,7 @@ function ProjectDetailEditor({
       </div>
       <div>
         <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">BODY</span>
-        <BlockEditor blocks={detail.body || []} onChange={(body) => update({ body })} />
+        <BlockEditor blocks={detail.body || []} onChange={updateBody} />
       </div>
     </div>
   );
@@ -145,13 +154,22 @@ function BlogDetailEditor({
       detail: { ...prev.detail, blog: { ...prev.detail.blog, [id]: { ...(prev.detail.blog[id] || {}), ...patch } } },
     }));
   }
+  function updateBody(updater: (prev: Block[]) => Block[]) {
+    setData((prev) => {
+      const prevDetail = prev.detail.blog[id] || {};
+      return {
+        ...prev,
+        detail: { ...prev.detail, blog: { ...prev.detail.blog, [id]: { ...prevDetail, body: updater(prevDetail.body || []) } } },
+      };
+    });
+  }
 
   return (
     <div className="flex flex-col gap-5 border-t border-white/10 pt-6">
       <ImageUploadField label="COVER" url={detail.cover} onChange={(url) => update({ cover: url })} />
       <div>
         <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">BODY</span>
-        <BlockEditor blocks={detail.body || []} onChange={(body) => update({ body })} />
+        <BlockEditor blocks={detail.body || []} onChange={updateBody} />
       </div>
     </div>
   );
@@ -172,6 +190,15 @@ function CsDetailEditor({
       ...prev,
       detail: { ...prev.detail, cs: { ...prev.detail.cs, [id]: { ...(prev.detail.cs[id] || {}), ...patch } } },
     }));
+  }
+  function updateBody(updater: (prev: Block[]) => Block[]) {
+    setData((prev) => {
+      const prevDetail = prev.detail.cs[id] || {};
+      return {
+        ...prev,
+        detail: { ...prev.detail, cs: { ...prev.detail.cs, [id]: { ...prevDetail, body: updater(prevDetail.body || []) } } },
+      };
+    });
   }
 
   return (
@@ -209,7 +236,7 @@ function CsDetailEditor({
       </div>
       <div>
         <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">BODY</span>
-        <BlockEditor blocks={detail.body || []} onChange={(body) => update({ body })} />
+        <BlockEditor blocks={detail.body || []} onChange={updateBody} />
       </div>
     </div>
   );
@@ -231,6 +258,18 @@ function GraphicDetailEditor({
       detail: { ...prev.detail, graphic: { ...prev.detail.graphic, [id]: { ...(prev.detail.graphic[id] || {}), ...patch } } },
     }));
   }
+  function updateGalleryRows(updater: (prev: GalleryRow[]) => GalleryRow[]) {
+    setData((prev) => {
+      const prevDetail = prev.detail.graphic[id] || {};
+      return {
+        ...prev,
+        detail: {
+          ...prev.detail,
+          graphic: { ...prev.detail.graphic, [id]: { ...prevDetail, galleryRows: updater(prevDetail.galleryRows || []) } },
+        },
+      };
+    });
+  }
 
   return (
     <div className="flex flex-col gap-5 border-t border-white/10 pt-6">
@@ -249,7 +288,7 @@ function GraphicDetailEditor({
         <span className="font-mono text-[11px] tracking-[0.08em] text-[#737373] block mb-2">
           GALERI — tentukan dulu berapa foto dalam satu baris (maks 4), lalu upload. Semua foto dalam satu baris tampil dengan tinggi yang sama.
         </span>
-        <RowGalleryEditor rows={detail.galleryRows || []} onChange={(galleryRows) => update({ galleryRows })} />
+        <RowGalleryEditor rows={detail.galleryRows || []} onChange={updateGalleryRows} />
       </div>
     </div>
   );

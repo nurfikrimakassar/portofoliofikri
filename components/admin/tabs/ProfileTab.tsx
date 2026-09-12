@@ -69,7 +69,7 @@ export default function ProfileTab({
       <SectionTitle>FOTO STRIP (bergerak otomatis di homepage, antara Experience &amp; Selected Work)</SectionTitle>
       <PhotoStripEditor
         photos={data.photoStrip || []}
-        onChange={(photoStrip) => setData((prev) => ({ ...prev, photoStrip }))}
+        onChange={(updater) => setData((prev) => ({ ...prev, photoStrip: updater(prev.photoStrip || []) }))}
       />
 
       <SectionTitle>STACK &amp; TOOLS (ticker, pisahkan dengan koma)</SectionTitle>

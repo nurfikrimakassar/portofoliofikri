@@ -35,17 +35,26 @@ export function MetaEditor({ meta, onChange }: { meta: MetaPair[]; onChange: (m:
   );
 }
 
-export function PhotoStripEditor({ photos, onChange }: { photos: string[]; onChange: (p: string[]) => void }) {
+export function PhotoStripEditor({
+  photos,
+  onChange,
+}: {
+  photos: string[];
+  /** Always given the freshest photo list — see BlockEditor's onChange for why. */
+  onChange: (updater: (prev: string[]) => string[]) => void;
+}) {
   function update(i: number, url: string) {
-    const next = photos.slice();
-    next[i] = url;
-    onChange(next);
+    onChange((prev) => {
+      const next = prev.slice();
+      next[i] = url;
+      return next;
+    });
   }
   function remove(i: number) {
-    onChange(photos.filter((_, idx) => idx !== i));
+    onChange((prev) => prev.filter((_, idx) => idx !== i));
   }
   function add() {
-    onChange([...photos, ""]);
+    onChange((prev) => [...prev, ""]);
   }
 
   return (
@@ -132,39 +141,43 @@ export function RowGalleryEditor({
   onChange,
 }: {
   rows: GalleryRow[];
-  onChange: (rows: GalleryRow[]) => void;
+  /** Always given the freshest rows — see BlockEditor's onChange for why. */
+  onChange: (updater: (prev: GalleryRow[]) => GalleryRow[]) => void;
 }) {
   const [newCount, setNewCount] = useState(2);
 
   function addRow() {
     const images = Array.from({ length: newCount }, () => ({ id: newId() }));
-    onChange([...rows, { id: newRowId(), images }]);
+    onChange((prev) => [...prev, { id: newRowId(), images }]);
   }
   function removeRow(ri: number) {
-    onChange(rows.filter((_, i) => i !== ri));
+    onChange((prev) => prev.filter((_, i) => i !== ri));
   }
   function updateImage(ri: number, ii: number, patch: Partial<GalleryRow["images"][number]>) {
-    const next = rows.slice();
-    const images = next[ri].images.slice();
-    images[ii] = { ...images[ii], ...patch };
-    next[ri] = { ...next[ri], images };
-    onChange(next);
+    onChange((prev) => {
+      const next = prev.slice();
+      const images = next[ri].images.slice();
+      images[ii] = { ...images[ii], ...patch };
+      next[ri] = { ...next[ri], images };
+      return next;
+    });
   }
   function addImageToRow(ri: number) {
-    if (rows[ri].images.length >= 4) return;
-    const next = rows.slice();
-    next[ri] = { ...next[ri], images: [...next[ri].images, { id: newId() }] };
-    onChange(next);
+    onChange((prev) => {
+      if (prev[ri].images.length >= 4) return prev;
+      const next = prev.slice();
+      next[ri] = { ...next[ri], images: [...next[ri].images, { id: newId() }] };
+      return next;
+    });
   }
   function removeImageFromRow(ri: number, ii: number) {
-    const images = rows[ri].images.filter((_, i) => i !== ii);
-    if (images.length === 0) {
-      removeRow(ri);
-      return;
-    }
-    const next = rows.slice();
-    next[ri] = { ...next[ri], images };
-    onChange(next);
+    onChange((prev) => {
+      const images = prev[ri].images.filter((_, i) => i !== ii);
+      if (images.length === 0) return prev.filter((_, i) => i !== ri);
+      const next = prev.slice();
+      next[ri] = { ...next[ri], images };
+      return next;
+    });
   }
 
   return (
