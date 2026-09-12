@@ -3,14 +3,15 @@ import GridBackground from "@/components/GridBackground";
 import { getData } from "@/lib/data";
 import { findGroupBySlug, groupSlug } from "@/lib/linkHub";
 
-// Matches the grid-cols count to a literal Tailwind class so it's picked up
-// at build time (a template-literal class name wouldn't be).
-const FACT_COLS: Record<number, string> = {
-  1: "grid-cols-1",
-  2: "grid-cols-2",
-  3: "grid-cols-3",
-  4: "grid-cols-4",
-};
+// Literal Tailwind classes per fact count (a template-literal class name
+// wouldn't be picked up at build time) — each with its own responsive
+// step-down so the box never gets cramped on a phone.
+function factGridClass(count: number): string {
+  if (count <= 1) return "grid-cols-1";
+  if (count === 2) return "grid-cols-2 max-[380px]:grid-cols-1";
+  if (count === 3) return "grid-cols-3 max-[560px]:grid-cols-2 max-[380px]:grid-cols-1";
+  return "grid-cols-4 max-[640px]:grid-cols-2 max-[380px]:grid-cols-1";
+}
 
 export async function generateStaticParams() {
   const S = await getData();
@@ -57,14 +58,13 @@ export default async function LinkHubGroupPage({ params }: { params: Promise<{ s
           ].filter((f): f is { label: string; value: string } => Boolean(f));
           if (facts.length === 0) return null;
           return (
-            <div className={`grid ${FACT_COLS[facts.length]} border border-white/10 mt-10 max-[480px]:grid-cols-1`}>
-              {facts.map((f, i) => (
-                <div
-                  key={f.label}
-                  className={`px-6 py-6 ${
-                    i < facts.length - 1 ? "border-r border-white/10 max-[480px]:border-r-0 max-[480px]:border-b" : ""
-                  }`}
-                >
+            // gap-px + bg draws the dividing lines as seams instead of
+            // per-cell borders, so it stays correct no matter how the grid
+            // wraps at each breakpoint (a border-right approach breaks the
+            // moment a row wraps to fewer columns on a phone).
+            <div className={`grid ${factGridClass(facts.length)} gap-px bg-white/10 border border-white/10 mt-10`}>
+              {facts.map((f) => (
+                <div key={f.label} className="bg-[#0a0a0a] px-6 py-6">
                   <div className="font-mono text-[11px] tracking-[0.16em] text-[#525252] mb-2">{f.label}</div>
                   <div className="text-[15px] text-[#d4d4d4]">{f.value}</div>
                 </div>
