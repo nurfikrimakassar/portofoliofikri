@@ -1,6 +1,7 @@
 "use client";
 
-import { Automation, PortfolioData, Product } from "@/lib/types";
+import { Dispatch, SetStateAction } from "react";
+import { Automation, Block, PortfolioData, Product } from "@/lib/types";
 import { Card, Field, GhostButton, ImageUploadField, PrimaryButton, SectionTitle, TextAreaField } from "../ui";
 import BlockEditor from "../BlockEditor";
 
@@ -15,51 +16,57 @@ export default function ProductsTab({
   setData,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: Dispatch<SetStateAction<PortfolioData>>;
 }) {
   const products = data.products;
   const automation = data.automation;
 
   function updateProduct(i: number, patch: Partial<Product>) {
-    const next = products.slice();
-    next[i] = { ...next[i], ...patch };
-    setData({ ...data, products: next });
+    setData((prev) => {
+      const next = prev.products.slice();
+      next[i] = { ...next[i], ...patch };
+      return { ...prev, products: next };
+    });
   }
-  function updateProdDetail(idx: string, patch: Partial<{ cover?: string; body?: import("@/lib/types").Block[] }>) {
-    const prod = data.detail.prod ?? {};
-    const cur = prod[idx] || {};
-    setData({ ...data, detail: { ...data.detail, prod: { ...prod, [idx]: { ...cur, ...patch } } } });
+  function updateProdDetail(idx: string, patch: Partial<{ cover?: string; body?: Block[] }>) {
+    setData((prev) => {
+      const prod = prev.detail.prod ?? {};
+      const cur = prod[idx] || {};
+      return { ...prev, detail: { ...prev.detail, prod: { ...prod, [idx]: { ...cur, ...patch } } } };
+    });
   }
   function removeProduct(i: number) {
-    setData({ ...data, products: products.filter((_, idx) => idx !== i) });
+    setData((prev) => ({ ...prev, products: prev.products.filter((_, idx) => idx !== i) }));
   }
   function addProduct() {
-    setData({
-      ...data,
+    setData((prev) => ({
+      ...prev,
       products: [
-        ...products,
-        { idx: `P0${products.length + 1}`, title: "Produk baru", price: "Rp 0", desc: "Deskripsi produk.", stat: "New", tags: [] },
+        ...prev.products,
+        { idx: `P0${prev.products.length + 1}`, title: "Produk baru", price: "Rp 0", desc: "Deskripsi produk.", stat: "New", tags: [] },
       ],
-    });
+    }));
   }
 
   function updateAuto(i: number, patch: Partial<Automation>) {
-    const next = automation.slice();
-    next[i] = { ...next[i], ...patch };
-    setData({ ...data, automation: next });
+    setData((prev) => {
+      const next = prev.automation.slice();
+      next[i] = { ...next[i], ...patch };
+      return { ...prev, automation: next };
+    });
   }
   function removeAuto(i: number) {
-    setData({ ...data, automation: automation.filter((_, idx) => idx !== i) });
+    setData((prev) => ({ ...prev, automation: prev.automation.filter((_, idx) => idx !== i) }));
   }
   function addAuto() {
     const id = slugId("a", automation.map((a) => a.id));
-    setData({
-      ...data,
+    setData((prev) => ({
+      ...prev,
       automation: [
-        ...automation,
-        { id, idx: `A0${automation.length + 1}`, title: "Automation baru", stack: "Stack", problem: "Problem.", result: "Hasil." },
+        ...prev.automation,
+        { id, idx: `A0${prev.automation.length + 1}`, title: "Automation baru", stack: "Stack", problem: "Problem.", result: "Hasil." },
       ],
-    });
+    }));
   }
 
   return (

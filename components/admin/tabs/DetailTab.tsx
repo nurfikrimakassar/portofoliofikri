@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { PortfolioData } from "@/lib/types";
 import { Field, ImageUploadField, SectionTitle, TextAreaField } from "../ui";
 import BlockEditor from "../BlockEditor";
 import { MetaEditor, RowGalleryEditor } from "../MetaAndGallery";
 
 type Kind = "project" | "blog" | "cs" | "graphic";
+type SetData = Dispatch<SetStateAction<PortfolioData>>;
 
 const KIND_LABEL: Record<Kind, string> = {
   project: "Web Project",
@@ -20,7 +21,7 @@ export default function DetailTab({
   setData,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: SetData;
 }) {
   const [kind, setKind] = useState<Kind>("project");
 
@@ -98,12 +99,15 @@ function ProjectDetailEditor({
   id,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: SetData;
   id: string;
 }) {
   const detail = data.detail.project[id] || {};
   function update(patch: typeof detail) {
-    setData({ ...data, detail: { ...data.detail, project: { ...data.detail.project, [id]: { ...detail, ...patch } } } });
+    setData((prev) => ({
+      ...prev,
+      detail: { ...prev.detail, project: { ...prev.detail.project, [id]: { ...(prev.detail.project[id] || {}), ...patch } } },
+    }));
   }
 
   return (
@@ -131,12 +135,15 @@ function BlogDetailEditor({
   id,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: SetData;
   id: string;
 }) {
   const detail = data.detail.blog[id] || {};
   function update(patch: typeof detail) {
-    setData({ ...data, detail: { ...data.detail, blog: { ...data.detail.blog, [id]: { ...detail, ...patch } } } });
+    setData((prev) => ({
+      ...prev,
+      detail: { ...prev.detail, blog: { ...prev.detail.blog, [id]: { ...(prev.detail.blog[id] || {}), ...patch } } },
+    }));
   }
 
   return (
@@ -156,12 +163,15 @@ function CsDetailEditor({
   id,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: SetData;
   id: string;
 }) {
   const detail = data.detail.cs[id] || {};
   function update(patch: typeof detail) {
-    setData({ ...data, detail: { ...data.detail, cs: { ...data.detail.cs, [id]: { ...detail, ...patch } } } });
+    setData((prev) => ({
+      ...prev,
+      detail: { ...prev.detail, cs: { ...prev.detail.cs, [id]: { ...(prev.detail.cs[id] || {}), ...patch } } },
+    }));
   }
 
   return (
@@ -211,12 +221,15 @@ function GraphicDetailEditor({
   id,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: SetData;
   id: string;
 }) {
   const detail = data.detail.graphic[id] || {};
   function update(patch: typeof detail) {
-    setData({ ...data, detail: { ...data.detail, graphic: { ...data.detail.graphic, [id]: { ...detail, ...patch } } } });
+    setData((prev) => ({
+      ...prev,
+      detail: { ...prev.detail, graphic: { ...prev.detail.graphic, [id]: { ...(prev.detail.graphic[id] || {}), ...patch } } },
+    }));
   }
 
   return (
@@ -241,4 +254,3 @@ function GraphicDetailEditor({
     </div>
   );
 }
-

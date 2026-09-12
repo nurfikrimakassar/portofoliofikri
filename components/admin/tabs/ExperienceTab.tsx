@@ -1,5 +1,6 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
 import { Experience, PortfolioData } from "@/lib/types";
 import { Card, Field, GhostButton, PrimaryButton, SectionTitle } from "../ui";
 
@@ -28,23 +29,28 @@ export default function ExperienceTab({
   setData,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: Dispatch<SetStateAction<PortfolioData>>;
 }) {
   const sorted = sortExp(data.experience) as typeof data.experience;
 
   function update(i: number, patch: Partial<Experience>) {
-    const next = sorted.slice();
-    next[i] = { ...next[i], ...patch };
-    setData({ ...data, experience: next });
+    setData((prev) => {
+      const next = sortExp(prev.experience) as typeof prev.experience;
+      next[i] = { ...next[i], ...patch };
+      return { ...prev, experience: next };
+    });
   }
   function remove(i: number) {
-    setData({ ...data, experience: sorted.filter((_, idx) => idx !== i) });
+    setData((prev) => {
+      const next = sortExp(prev.experience) as typeof prev.experience;
+      return { ...prev, experience: next.filter((_, idx) => idx !== i) };
+    });
   }
   function add() {
-    setData({
-      ...data,
-      experience: [...sorted, { period: "2024 — NOW", role: "Role baru", org: "Organisasi", tag: "TAG" }],
-    });
+    setData((prev) => ({
+      ...prev,
+      experience: [...prev.experience, { period: "2024 — NOW", role: "Role baru", org: "Organisasi", tag: "TAG" }],
+    }));
   }
 
   return (

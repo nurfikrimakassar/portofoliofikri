@@ -1,5 +1,6 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
 import { BlogPost, PortfolioData } from "@/lib/types";
 import { Card, Field, GhostButton, PrimaryButton, SectionTitle, TextAreaField } from "../ui";
 
@@ -14,39 +15,45 @@ export default function BlogTab({
   setData,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: Dispatch<SetStateAction<PortfolioData>>;
 }) {
   const posts = data.blog.posts;
   const featuredId = data.blog.featuredId;
 
   function update(i: number, patch: Partial<BlogPost>) {
-    const next = posts.slice();
-    next[i] = { ...next[i], ...patch };
-    setData({ ...data, blog: { ...data.blog, posts: next } });
+    setData((prev) => {
+      const next = prev.blog.posts.slice();
+      next[i] = { ...next[i], ...patch };
+      return { ...prev, blog: { ...prev.blog, posts: next } };
+    });
   }
   function remove(i: number) {
-    const removedId = posts[i].id;
-    const next = posts.filter((_, idx) => idx !== i);
-    setData({
-      ...data,
-      blog: {
-        featuredId: featuredId === removedId ? next[0]?.id || "" : featuredId,
-        posts: next,
-      },
+    setData((prev) => {
+      const removedId = prev.blog.posts[i].id;
+      const next = prev.blog.posts.filter((_, idx) => idx !== i);
+      return {
+        ...prev,
+        blog: {
+          featuredId: prev.blog.featuredId === removedId ? next[0]?.id || "" : prev.blog.featuredId,
+          posts: next,
+        },
+      };
     });
   }
   function add() {
-    const id = slugId(posts.map((p) => p.id));
-    setData({
-      ...data,
-      blog: {
-        ...data.blog,
-        posts: [...posts, { id, date: "2025.01", read: "5 min", cat: "Notes", title: "Judul baru", excerpt: "" }],
-      },
+    setData((prev) => {
+      const id = slugId(prev.blog.posts.map((p) => p.id));
+      return {
+        ...prev,
+        blog: {
+          ...prev.blog,
+          posts: [...prev.blog.posts, { id, date: "2025.01", read: "5 min", cat: "Notes", title: "Judul baru", excerpt: "" }],
+        },
+      };
     });
   }
   function setFeatured(id: string) {
-    setData({ ...data, blog: { ...data.blog, featuredId: id } });
+    setData((prev) => ({ ...prev, blog: { ...prev.blog, featuredId: id } }));
   }
 
   return (

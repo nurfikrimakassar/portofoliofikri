@@ -1,5 +1,6 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
 import { PortfolioData } from "@/lib/types";
 import { Field, TextAreaField, SectionTitle } from "../ui";
 import { PhotoStripEditor } from "../MetaAndGallery";
@@ -9,16 +10,16 @@ export default function ProfileTab({
   setData,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: Dispatch<SetStateAction<PortfolioData>>;
 }) {
   const P = data.profile;
   const ST = data.stats;
 
   function update(patch: Partial<typeof P>) {
-    setData({ ...data, profile: { ...P, ...patch } });
+    setData((prev) => ({ ...prev, profile: { ...prev.profile, ...patch } }));
   }
   function updateStats(patch: Partial<typeof ST>) {
-    setData({ ...data, stats: { ...ST, ...patch } });
+    setData((prev) => ({ ...prev, stats: { ...prev.stats, ...patch } }));
   }
 
   return (
@@ -66,13 +67,16 @@ export default function ProfileTab({
       </div>
 
       <SectionTitle>FOTO STRIP (bergerak otomatis di homepage, antara Experience &amp; Selected Work)</SectionTitle>
-      <PhotoStripEditor photos={data.photoStrip || []} onChange={(photoStrip) => setData({ ...data, photoStrip })} />
+      <PhotoStripEditor
+        photos={data.photoStrip || []}
+        onChange={(photoStrip) => setData((prev) => ({ ...prev, photoStrip }))}
+      />
 
       <SectionTitle>STACK &amp; TOOLS (ticker, pisahkan dengan koma)</SectionTitle>
       <TextAreaField
         label="TOOLS"
         value={data.tools.join(", ")}
-        onChange={(v) => setData({ ...data, tools: v.split(",").map((s) => s.trim()).filter(Boolean) })}
+        onChange={(v) => setData((prev) => ({ ...prev, tools: v.split(",").map((s) => s.trim()).filter(Boolean) }))}
         rows={2}
       />
     </div>

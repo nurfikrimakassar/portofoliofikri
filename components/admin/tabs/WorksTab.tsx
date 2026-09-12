@@ -1,5 +1,6 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
 import { GraphicWork, PortfolioData, WebWork } from "@/lib/types";
 import { Card, Field, GhostButton, PrimaryButton, SectionTitle, TextAreaField } from "../ui";
 
@@ -14,41 +15,45 @@ export default function WorksTab({
   setData,
 }: {
   data: PortfolioData;
-  setData: (d: PortfolioData) => void;
+  setData: Dispatch<SetStateAction<PortfolioData>>;
 }) {
   const web = data.webWorks;
   const graphic = data.graphicWorks;
 
   function updateWeb(i: number, patch: Partial<WebWork>) {
-    const next = web.slice();
-    next[i] = { ...next[i], ...patch };
-    setData({ ...data, webWorks: next });
+    setData((prev) => {
+      const next = prev.webWorks.slice();
+      next[i] = { ...next[i], ...patch };
+      return { ...prev, webWorks: next };
+    });
   }
   function removeWeb(i: number) {
-    setData({ ...data, webWorks: web.filter((_, idx) => idx !== i) });
+    setData((prev) => ({ ...prev, webWorks: prev.webWorks.filter((_, idx) => idx !== i) }));
   }
   function addWeb() {
     const id = slugId("w", web.map((w) => w.id));
-    setData({
-      ...data,
+    setData((prev) => ({
+      ...prev,
       webWorks: [
-        ...web,
-        { id, idx: `W0${web.length + 1}`, title: "Project baru", cat: "Web App", year: "2024", desc: "Deskripsi singkat." },
+        ...prev.webWorks,
+        { id, idx: `W0${prev.webWorks.length + 1}`, title: "Project baru", cat: "Web App", year: "2024", desc: "Deskripsi singkat." },
       ],
-    });
+    }));
   }
 
   function updateGraphic(i: number, patch: Partial<GraphicWork>) {
-    const next = graphic.slice();
-    next[i] = { ...next[i], ...patch };
-    setData({ ...data, graphicWorks: next });
+    setData((prev) => {
+      const next = prev.graphicWorks.slice();
+      next[i] = { ...next[i], ...patch };
+      return { ...prev, graphicWorks: next };
+    });
   }
   function removeGraphic(i: number) {
-    setData({ ...data, graphicWorks: graphic.filter((_, idx) => idx !== i) });
+    setData((prev) => ({ ...prev, graphicWorks: prev.graphicWorks.filter((_, idx) => idx !== i) }));
   }
   function addGraphic() {
     const id = slugId("g", graphic.map((g) => g.id));
-    setData({ ...data, graphicWorks: [...graphic, { id, title: "Karya baru", cat: "Branding" }] });
+    setData((prev) => ({ ...prev, graphicWorks: [...prev.graphicWorks, { id, title: "Karya baru", cat: "Branding" }] }));
   }
 
   return (
