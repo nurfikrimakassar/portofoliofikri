@@ -279,8 +279,8 @@ export default async function HomePage() {
                   "linear-gradient(180deg,rgba(10,10,10,0.6) 0%,rgba(10,10,10,0) 28%,rgba(10,10,10,0) 72%,rgba(10,10,10,0.6) 100%)",
               }}
             />
-            <div className="absolute left-0 top-0 bottom-0 w-[36vw] max-w-[460px] min-w-[160px] max-[640px]:w-[17vw] max-[640px]:min-w-[62px] max-[640px]:max-w-[104px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 47%,rgba(10,10,10,0) 100%)" }} />
-            <div className="absolute right-0 top-0 bottom-0 w-[36vw] max-w-[460px] min-w-[160px] max-[640px]:w-[17vw] max-[640px]:min-w-[62px] max-[640px]:max-w-[104px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 47%,rgba(10,10,10,0) 100%)" }} />
+            <div className="absolute left-0 top-0 bottom-0 w-[36vw] max-w-[460px] min-w-[160px] max-[640px]:w-[15vw] max-[640px]:min-w-[55px] max-[640px]:max-w-[95px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 47%,rgba(10,10,10,0) 100%)" }} />
+            <div className="absolute right-0 top-0 bottom-0 w-[36vw] max-w-[460px] min-w-[160px] max-[640px]:w-[15vw] max-[640px]:min-w-[55px] max-[640px]:max-w-[95px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 47%,rgba(10,10,10,0) 100%)" }} />
           </div>
         </section>
       )}
@@ -340,6 +340,11 @@ export default async function HomePage() {
               <div className="relative text-[17px] font-semibold tracking-[-0.01em]">{g.title}</div>
             </Link>
           ))}
+        </div>
+        <div className="mt-10 flex justify-center">
+          <Link href="/work" className="font-mono text-[12px] text-[#a3a3a3] no-underline border-b border-white/20 pb-1 hover-link">
+            VIEW ALL WORK →
+          </Link>
         </div>
       </section>
 
