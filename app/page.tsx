@@ -367,7 +367,7 @@ export default async function HomePage() {
                   <span>{p.idx}</span>
                   <span className="text-[#0a0a0a]">{p.stat}</span>
                 </div>
-                <h3 className="text-[20px] font-bold tracking-[-0.01em] mb-3">{p.title}</h3>
+                <h3 className="text-[20px] font-bold tracking-[-0.01em] mb-2">{p.title}</h3>
                 <p className="text-[13.5px] leading-[1.6] text-[#404040] line-clamp-3 mb-5">{p.desc}</p>
                 <div className="flex justify-between items-center pt-5 mt-auto border-t border-black/[0.08]">
                   <span className="text-[18px] font-bold">{p.price}</span>
