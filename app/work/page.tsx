@@ -30,7 +30,7 @@ export default async function WorkPage() {
           <br />
           WORK
         </h1>
-        <p className="max-w-[560px] text-[16px] leading-[1.65] text-[#a3a3a3] mt-7">
+        <p className="max-w-[560px] text-[17px] leading-[1.65] text-[#a3a3a3] mt-7">
           Web &amp; engineering projects I&apos;ve built, alongside a set of graphic design work. Each project opens to a full write-up: what it was, my role, the impact, and what I took away.
         </p>
       </header>

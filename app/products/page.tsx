@@ -29,7 +29,7 @@ export default async function ProductsPage() {
           <br />
           &amp; AUTOMATION
         </h1>
-        <p className="max-w-[560px] text-[16px] leading-[1.65] text-[#525252] mt-7">
+        <p className="max-w-[560px] text-[17px] leading-[1.65] text-[#525252] mt-7">
           Templates and automation systems I sell, problem-solving case studies, and projects I&apos;ve shipped.
         </p>
       </header>

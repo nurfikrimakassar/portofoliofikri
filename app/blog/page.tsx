@@ -26,7 +26,7 @@ export default async function BlogPage() {
           <br />
           &amp; NOTES
         </h1>
-        <p className="max-w-[560px] text-[16px] leading-[1.65] text-[#a3a3a3] mt-7">
+        <p className="max-w-[560px] text-[17px] leading-[1.65] text-[#a3a3a3] mt-7">
           Notes on automation, design, and the career path so far — case studies and the things I picked up along the way.
         </p>
       </header>
