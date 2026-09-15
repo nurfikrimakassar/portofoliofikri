@@ -159,8 +159,8 @@ export function PaginatedProducts({ items, perPage }: { items: Product[]; perPag
               <span className="text-[#0a0a0a]">{p.stat}</span>
             </div>
             <h3 className="text-[20px] font-bold tracking-[-0.01em] mb-3">{p.title}</h3>
-            <p className="text-[13.5px] leading-[1.6] text-[#404040] line-clamp-3">{p.desc}</p>
-            <div className="flex gap-2 mt-auto pt-5 flex-wrap">
+            <p className="text-[13.5px] leading-[1.6] text-[#404040] line-clamp-3 mb-5">{p.desc}</p>
+            <div className="flex gap-2 mt-auto pt-5 pb-5 flex-wrap">
               {p.tags.map((t) => (
                 <span key={t} className="font-mono text-[10.5px] px-2 py-1 border border-black/10 text-[#525252]">{t}</span>
               ))}

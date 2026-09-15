@@ -367,8 +367,8 @@ export default async function HomePage() {
                   <span>{p.idx}</span>
                   <span className="text-[#0a0a0a]">{p.stat}</span>
                 </div>
-                <h3 className="text-[20px] font-bold tracking-[-0.01em] mb-2.5">{p.title}</h3>
-                <p className="text-[13.5px] leading-[1.6] text-[#404040] line-clamp-3">{p.desc}</p>
+                <h3 className="text-[20px] font-bold tracking-[-0.01em] mb-3">{p.title}</h3>
+                <p className="text-[13.5px] leading-[1.6] text-[#404040] line-clamp-3 mb-5">{p.desc}</p>
                 <div className="flex justify-between items-center pt-5 mt-auto border-t border-black/[0.08]">
                   <span className="text-[18px] font-bold">{p.price}</span>
                   <Link href={`/products/digital/${p.idx.toLowerCase()}`} className="font-mono text-[11px] px-3.5 py-2.5 bg-[#0a0a0a] text-[#f5f5f5] no-underline">
