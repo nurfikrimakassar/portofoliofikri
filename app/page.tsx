@@ -318,7 +318,7 @@ export default async function HomePage() {
         </div>
 
         <div className="mt-20 font-mono text-[12px] tracking-[0.2em] text-[#737373] mb-6">{`// DESIGN & IDENTITY`}</div>
-        <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">
+        <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1 max-[600px]:gap-7">
           {graphicHighlights.map((g) => (
             <Link
               key={g.id}

@@ -91,6 +91,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             {detail.linkLabel || "VIEW LIVE"} ↗
           </a>
         )}
+
+        <div className="mt-9 border-t border-white/[0.08]" />
       </header>
 
       <div className="relative z-10 max-w-[1040px] mx-auto px-8 max-[640px]:px-6">

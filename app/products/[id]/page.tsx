@@ -9,7 +9,11 @@ import { getData } from "@/lib/data";
 
 export async function generateStaticParams() {
   const S = await getData();
-  return S.automation.map((a) => ({ id: a.id }));
+  const ids = S.automation.map((a) => ({ id: a.id }));
+  // Cache Components requires at least one static param at build time; before
+  // any automation case study exists yet, fall back to a placeholder that
+  // 404s via notFound() below — real ids still render fine on demand.
+  return ids.length > 0 ? ids : [{ id: "_placeholder" }];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -58,23 +62,25 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ id: 
       <Nav active="/products" />
 
       <header className="relative z-10 max-w-[880px] mx-auto px-8 pt-[132px] max-[640px]:px-6 max-[640px]:pt-[104px]">
-        <Link href="/products" className="font-mono text-[12.5px] text-[#737373] no-underline hover-link">
+        <Link href="/products" className="font-mono text-[12px] text-[#737373] no-underline hover-link">
           ← ~/fikri / products / case-study
         </Link>
-        <div className="font-mono text-xs tracking-[0.15em] text-[#525252] my-7">CASE STUDY · AUTOMATION</div>
-        <h1 className="text-[clamp(34px,5.5vw,62px)] font-bold tracking-[-0.03em] leading-[1.02]">{item.title}</h1>
-        <p className="text-[clamp(17px,2vw,21px)] leading-[1.55] text-[#a3a3a3] mt-6 max-w-[640px]">
+        <div className="font-mono text-[11px] tracking-[0.15em] text-[#525252] my-7">CASE STUDY · AUTOMATION</div>
+        <h1 className="text-[clamp(32px,5vw,54px)] font-bold tracking-[-0.035em] leading-[1.05]">{item.title}</h1>
+        <p className="text-[clamp(17px,2vw,21px)] leading-[1.6] text-[#a3a3a3] mt-6 max-w-[640px]">
           {C.summary ||
             "Mengubah proses invoicing manual mingguan menjadi sistem terjadwal yang membuat, mengubah ke PDF, dan mengirim invoice tanpa sentuhan tangan."}
         </p>
         <div className="grid grid-cols-4 gap-px bg-white/8 border border-white/8 mt-10 max-[980px]:grid-cols-2">
           {meta.map((m) => (
             <div key={m.k} className="bg-[#0a0a0a] p-5">
-              <div className="font-mono text-[11px] text-[#525252] mb-2">{m.k}</div>
-              <div className="text-[15px] text-[#d4d4d4]">{m.v}</div>
+              <div className="font-mono text-[10.5px] tracking-[0.16em] text-[#525252] mb-1.5">{m.k}</div>
+              <div className="text-[14.5px] text-[#d4d4d4] leading-[1.5]">{m.v}</div>
             </div>
           ))}
         </div>
+
+        <div className="mt-9 border-t border-white/[0.08]" />
       </header>
 
       <div className="relative z-10 max-w-[880px] mx-auto px-8 max-[640px]:px-6">
@@ -102,7 +108,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ id: 
       </div>
 
       <footer className="relative z-10 max-w-[880px] mx-auto px-8 pb-10 max-[640px]:px-6">
-        <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-xs text-[#525252] pt-6 border-t border-white/10">
+        <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-[11px] text-[#525252] pt-7 border-t border-white/[0.08]">
           <Link href="/products" className="text-[#a3a3a3] no-underline hover-link">
             ← SEMUA PRODUCTS
           </Link>

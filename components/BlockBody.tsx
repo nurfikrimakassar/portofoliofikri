@@ -1,5 +1,4 @@
 import { Block } from "@/lib/types";
-import ImageSlot from "./ImageSlot";
 
 export default function BlockBody({ body }: { body: Block[] }) {
   return (
@@ -26,15 +25,24 @@ export default function BlockBody({ body }: { body: Block[] }) {
           );
         }
         if (blk.type === "image") {
-          return (
+          return blk.url ? (
             <figure key={blk.id} className="my-2">
-              <ImageSlot
-                url={blk.url}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={blk.url}
                 alt={blk.cap || "Gambar"}
-                placeholder="Gambar"
-                fit="cover"
-                className="block w-full aspect-video"
+                loading="lazy"
+                className="block w-full h-auto border border-white/12"
               />
+              {blk.cap && (
+                <figcaption className="font-mono text-[11.5px] text-[#525252] mt-3">{blk.cap}</figcaption>
+              )}
+            </figure>
+          ) : (
+            <figure key={blk.id} className="my-2">
+              <div className="flex items-center justify-center border border-dashed border-white/15 bg-white/[0.02] font-mono text-[12px] text-[#525252] aspect-video">
+                Gambar
+              </div>
               {blk.cap && (
                 <figcaption className="font-mono text-[11.5px] text-[#525252] mt-3">{blk.cap}</figcaption>
               )}

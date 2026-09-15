@@ -93,8 +93,8 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
           ← ~/fikri / work / graphic
         </Link>
         <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mt-8 mb-4">{`// ${item.cat.toUpperCase()}`}</div>
-        <h1 className="text-[clamp(34px,5.5vw,60px)] font-bold tracking-[-0.035em] leading-[1.03]">{item.title}</h1>
-        <p className="text-[clamp(16px,1.8vw,20px)] leading-[1.6] text-[#a3a3a3] mt-6">
+        <h1 className="text-[clamp(32px,5vw,54px)] font-bold tracking-[-0.035em] leading-[1.05]">{item.title}</h1>
+        <p className="text-[clamp(17px,2vw,21px)] leading-[1.6] text-[#a3a3a3] mt-6">
           {G.desc || "One or two sentences describing this piece — what it was for and what it involved."}
         </p>
 
@@ -129,6 +129,8 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
             {G.linkLabel || "VIEW FULL SET"} ↗
           </a>
         )}
+
+        <div className="mt-9 border-t border-white/[0.08]" />
       </header>
 
       <div className="relative z-10 max-w-[1040px] mx-auto px-8 max-[640px]:px-6">
@@ -136,7 +138,7 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
           {content.map((blk) => {
             if (blk.type === "text") {
               return blk.text ? (
-                <p key={blk.id} className="text-[clamp(16px,1.7vw,18px)] leading-[1.8] text-[#d4d4d4] text-balance-pretty">
+                <p key={blk.id} className="text-[17.5px] leading-[1.8] text-[#d4d4d4] text-balance-pretty">
                   {blk.text}
                 </p>
               ) : null;
@@ -144,7 +146,7 @@ export default async function GraphicDetailPage({ params }: { params: Promise<{ 
 
             if (blk.type === "heading") {
               return blk.text ? (
-                <h2 key={blk.id} className="text-[clamp(22px,2.6vw,30px)] font-semibold tracking-[-0.015em] text-[#f5f5f5]">
+                <h2 key={blk.id} className="text-[clamp(20px,2.4vw,26px)] font-semibold tracking-[-0.01em] text-[#f5f5f5]">
                   {blk.text}
                 </h2>
               ) : null;

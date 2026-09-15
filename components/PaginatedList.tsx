@@ -108,7 +108,7 @@ export function PaginatedGraphics({
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1">
+      <div className="grid grid-cols-3 gap-4 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1 max-[640px]:gap-7">
         {slice.map((g) => (
           <Link
             key={g.id}

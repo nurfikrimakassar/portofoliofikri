@@ -44,7 +44,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       <Nav theme="light" active="/products" />
 
       <div className="relative z-10 max-w-[1180px] mx-auto px-8 pt-[132px] pb-16 max-[640px]:px-5 max-[640px]:pt-[104px]">
-        <Link href="/products" className="font-mono text-[12.5px] text-[#737373] no-underline hover-link-dark">
+        <Link href="/products" className="font-mono text-[12px] text-[#737373] no-underline hover-link-dark">
           ← ~/fikri / products
         </Link>
 
@@ -86,11 +86,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 <span className="text-[#a3a3a3]">DIGITAL PRODUCT</span>
               </div>
 
-              <h1 className="text-[clamp(30px,4.5vw,48px)] font-bold tracking-[-0.03em] leading-[1.05]">
+              <h1 className="text-[clamp(32px,5vw,54px)] font-bold tracking-[-0.035em] leading-[1.05]">
                 {product.title}
               </h1>
 
-              <p className="text-[16.5px] leading-[1.65] text-[#404040] mt-5 whitespace-pre-line">
+              <p className="text-[clamp(17px,2vw,21px)] leading-[1.6] text-[#404040] mt-5 whitespace-pre-line">
                 {product.desc}
               </p>
 
@@ -143,7 +143,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         )}
 
         {/* Footer nav */}
-        <div className="mt-16 flex justify-between items-center flex-wrap gap-4 font-mono text-[12px] text-[#a3a3a3] pt-6 border-t border-black/10">
+        <div className="mt-16 flex justify-between items-center flex-wrap gap-4 font-mono text-[11px] text-[#a3a3a3] pt-7 border-t border-black/10">
           <Link href="/products" className="text-[#525252] no-underline hover-link-dark">
             ← SEMUA PRODUK
           </Link>
