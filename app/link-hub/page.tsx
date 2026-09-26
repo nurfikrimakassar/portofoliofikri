@@ -59,7 +59,7 @@ export default async function LinkHubPage() {
           className="inline-flex items-center no-underline text-[#f5f5f5] mb-16 max-[640px]:mb-12"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.svg" alt="nurfikri.com" className="h-[21px] w-auto max-[640px]:h-[16px]" />
+          <img src="/logo.svg" alt="nurfikri.com" className="h-[21px] w-auto max-[640px]:h-[20px]" />
         </a>
 
         <h1 className="text-[clamp(30px,4.5vw,48px)] font-bold tracking-[-0.03em] leading-[1.1] mb-5">
