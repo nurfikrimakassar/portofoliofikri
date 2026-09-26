@@ -59,7 +59,7 @@ export default function Nav({
           <img
             src="/logo.svg"
             alt="Fikri"
-            className="h-[27px] w-auto max-[640px]:h-[25px]"
+            className="h-[34px] w-auto max-[640px]:h-[30px]"
             style={{ filter: isLight ? "invert(1)" : "none" }}
           />
         </Link>
