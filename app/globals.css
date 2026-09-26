@@ -125,11 +125,16 @@ body {
   background: linear-gradient(270deg, #0a0a0a 0%, #0a0a0a 47%, rgba(10, 10, 10, 0) 100%);
 }
 @media (max-width: 640px) {
+  /* Solid near the top/bottom corners, curving away (thinner) toward the
+     vertical middle — two corner-anchored radial fades stacked with a
+     slight overlap, instead of one fade that bulges in the middle. */
   .photo-edge-left {
-    background: radial-gradient(ellipse 100% 100% at 0% 50%, #0a0a0a 0%, #0a0a0a 40%, rgba(10, 10, 10, 0) 75%);
+    background: radial-gradient(ellipse at 0% 0%, #0a0a0a 0%, #0a0a0a 35%, rgba(10, 10, 10, 0) 70%) top left / 100% 58% no-repeat,
+      radial-gradient(ellipse at 0% 100%, #0a0a0a 0%, #0a0a0a 35%, rgba(10, 10, 10, 0) 70%) bottom left / 100% 58% no-repeat;
   }
   .photo-edge-right {
-    background: radial-gradient(ellipse 100% 100% at 100% 50%, #0a0a0a 0%, #0a0a0a 40%, rgba(10, 10, 10, 0) 75%);
+    background: radial-gradient(ellipse at 100% 0%, #0a0a0a 0%, #0a0a0a 35%, rgba(10, 10, 10, 0) 70%) top right / 100% 58% no-repeat,
+      radial-gradient(ellipse at 100% 100%, #0a0a0a 0%, #0a0a0a 35%, rgba(10, 10, 10, 0) 70%) bottom right / 100% 58% no-repeat;
   }
 }
 
