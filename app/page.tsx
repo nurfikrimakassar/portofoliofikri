@@ -95,7 +95,7 @@ export default async function HomePage() {
             <span className="text-[#3a3a3a]">/</span>
             <LiveClock />
           </div>
-          <h1 className="text-[clamp(46px,7vw,100px)] leading-[0.98] font-bold tracking-[-0.035em] mb-7">
+          <h1 className="text-[clamp(46px,7vw,100px)] leading-[0.98] font-bold tracking-[-0.035em] mb-7 max-[640px]:text-[54px]">
             {P.name}
           </h1>
           <div className="h-[34px] overflow-hidden mb-8 max-[640px]:mb-5 font-mono text-[clamp(15px,2vw,20px)] text-[#d4d4d4]">
