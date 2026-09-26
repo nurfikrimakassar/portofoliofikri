@@ -90,8 +90,8 @@ export default async function HomePage() {
               style={{ boxShadow: "0 0 8px #f5f5f5" }}
             />
             <span>AVAILABLE FOR WORK</span>
-            <span className="text-[#3a3a3a]">/</span>
-            <span>MAKASSAR, ID</span>
+            <span className="text-[#3a3a3a] max-[640px]:hidden">/</span>
+            <span className="max-[640px]:hidden">MAKASSAR, ID</span>
             <span className="text-[#3a3a3a]">/</span>
             <LiveClock />
           </div>
