@@ -46,7 +46,6 @@ export default function Nav({
   const borderColor = isLight ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.08)";
   const ink = isLight ? "#0a0a0a" : "#f5f5f5";
   const muted = isLight ? "#737373" : "#a3a3a3";
-  const mutedHex = isLight ? "#525252" : "#a3a3a3";
 
   return (
     <>
@@ -55,16 +54,14 @@ export default function Nav({
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-[18px] backdrop-blur-[10px] border-b transition-transform duration-300 ease-out max-[640px]:px-[18px] max-[640px]:py-3.5"
         style={{ background: navBg, borderColor, transform: hidden && !open ? "translateY(-100%)" : "translateY(0)" }}
       >
-        <Link href="/" className="flex items-center gap-2.5 no-underline" style={{ color: ink }}>
-          <span
-            className="inline-flex items-center justify-center w-[30px] h-[30px] border font-mono font-bold text-sm"
-            style={{ borderColor: isLight ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.25)" }}
-          >
-            F
-          </span>
-          <span className="font-mono text-[13px] tracking-[0.08em]" style={{ color: mutedHex }}>
-            ~/fikri
-          </span>
+        <Link href="/" className="flex items-center no-underline" style={{ color: ink }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.svg"
+            alt="Fikri"
+            className="h-[21px] w-auto max-[640px]:h-[16px]"
+            style={{ filter: isLight ? "invert(1)" : "none" }}
+          />
         </Link>
 
         <div className="hidden xs:flex items-center gap-7 font-mono text-[12.5px] tracking-[0.06em]">

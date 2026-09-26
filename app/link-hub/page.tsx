@@ -56,12 +56,10 @@ export default async function LinkHubPage() {
       <div className="relative z-10 max-w-[720px] mx-auto px-8 py-20 max-[640px]:px-6 max-[640px]:py-14">
         <a
           href="https://nurfikri.com"
-          className="inline-flex items-center gap-2.5 no-underline text-[#f5f5f5] mb-16 max-[640px]:mb-12"
+          className="inline-flex items-center no-underline text-[#f5f5f5] mb-16 max-[640px]:mb-12"
         >
-          <span className="inline-flex items-center justify-center w-[30px] h-[30px] border border-white/25 font-mono font-bold text-sm">
-            F
-          </span>
-          <span className="font-mono text-[13px] tracking-[0.08em] text-[#a3a3a3]">nurfikri.com</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.svg" alt="nurfikri.com" className="h-[21px] w-auto max-[640px]:h-[16px]" />
         </a>
 
         <h1 className="text-[clamp(30px,4.5vw,48px)] font-bold tracking-[-0.03em] leading-[1.1] mb-5">
