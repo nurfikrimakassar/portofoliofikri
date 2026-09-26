@@ -297,8 +297,8 @@ export default async function HomePage() {
                   "linear-gradient(180deg,rgba(10,10,10,0.6) 0%,rgba(10,10,10,0) 28%,rgba(10,10,10,0) 72%,rgba(10,10,10,0.6) 100%)",
               }}
             />
-            <div className="absolute left-0 top-0 bottom-0 w-[36vw] max-w-[460px] min-w-[160px] max-[640px]:w-[15vw] max-[640px]:min-w-[55px] max-[640px]:max-w-[95px] pointer-events-none z-10" style={{ background: "linear-gradient(90deg,#0a0a0a 0%,#0a0a0a 47%,rgba(10,10,10,0) 100%)" }} />
-            <div className="absolute right-0 top-0 bottom-0 w-[36vw] max-w-[460px] min-w-[160px] max-[640px]:w-[15vw] max-[640px]:min-w-[55px] max-[640px]:max-w-[95px] pointer-events-none z-10" style={{ background: "linear-gradient(270deg,#0a0a0a 0%,#0a0a0a 47%,rgba(10,10,10,0) 100%)" }} />
+            <div className="photo-edge-left absolute left-0 top-0 bottom-0 w-[36vw] max-w-[460px] min-w-[160px] max-[640px]:w-[15vw] max-[640px]:min-w-[55px] max-[640px]:max-w-[95px] pointer-events-none z-10" />
+            <div className="photo-edge-right absolute right-0 top-0 bottom-0 w-[36vw] max-w-[460px] min-w-[160px] max-[640px]:w-[15vw] max-[640px]:min-w-[55px] max-[640px]:max-w-[95px] pointer-events-none z-10" />
           </div>
         </section>
       )}

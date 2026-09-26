@@ -118,6 +118,21 @@ body {
   animation: marquee 34s linear infinite reverse;
 }
 
+.photo-edge-left {
+  background: linear-gradient(90deg, #0a0a0a 0%, #0a0a0a 47%, rgba(10, 10, 10, 0) 100%);
+}
+.photo-edge-right {
+  background: linear-gradient(270deg, #0a0a0a 0%, #0a0a0a 47%, rgba(10, 10, 10, 0) 100%);
+}
+@media (max-width: 640px) {
+  .photo-edge-left {
+    background: radial-gradient(ellipse 100% 100% at 0% 50%, #0a0a0a 0%, #0a0a0a 40%, rgba(10, 10, 10, 0) 75%);
+  }
+  .photo-edge-right {
+    background: radial-gradient(ellipse 100% 100% at 100% 50%, #0a0a0a 0%, #0a0a0a 40%, rgba(10, 10, 10, 0) 75%);
+  }
+}
+
 .hover-fill {
   transition: background 0.15s ease, color 0.15s ease;
 }
