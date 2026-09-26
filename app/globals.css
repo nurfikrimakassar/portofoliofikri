@@ -124,17 +124,28 @@ body {
 .photo-edge-right {
   background: linear-gradient(270deg, #0a0a0a 0%, #0a0a0a 47%, rgba(10, 10, 10, 0) 100%);
 }
+
+.photo-vignette {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.6) 0%,
+    rgba(10, 10, 10, 0) 28%,
+    rgba(10, 10, 10, 0) 72%,
+    rgba(10, 10, 10, 0.6) 100%
+  );
+}
 @media (max-width: 640px) {
-  /* Solid near the top/bottom corners, curving away (thinner) toward the
-     vertical middle — two corner-anchored radial fades stacked with a
-     slight overlap, instead of one fade that bulges in the middle. */
-  .photo-edge-left {
-    background: radial-gradient(ellipse at 0% 0%, #0a0a0a 0%, #0a0a0a 35%, rgba(10, 10, 10, 0) 70%) top left / 100% 58% no-repeat,
-      radial-gradient(ellipse at 0% 100%, #0a0a0a 0%, #0a0a0a 35%, rgba(10, 10, 10, 0) 70%) bottom left / 100% 58% no-repeat;
-  }
-  .photo-edge-right {
-    background: radial-gradient(ellipse at 100% 0%, #0a0a0a 0%, #0a0a0a 35%, rgba(10, 10, 10, 0) 70%) top right / 100% 58% no-repeat,
-      radial-gradient(ellipse at 100% 100%, #0a0a0a 0%, #0a0a0a 35%, rgba(10, 10, 10, 0) 70%) bottom right / 100% 58% no-repeat;
+  /* One unified oval vignette instead of separate top/bottom + left/right
+     fades — clear in the middle, curving to black on every side and
+     corner at once, so the visible window reads as a circle/oval. */
+  .photo-vignette {
+    background: radial-gradient(
+      ellipse 60% 62% at 50% 50%,
+      transparent 0%,
+      transparent 45%,
+      rgba(10, 10, 10, 0.6) 75%,
+      #0a0a0a 100%
+    );
   }
 }
 
