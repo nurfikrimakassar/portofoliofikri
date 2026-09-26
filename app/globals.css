@@ -114,6 +114,9 @@ body {
 .photo-row-b {
   animation: marquee 30s linear infinite;
 }
+.photo-row-c {
+  animation: marquee 34s linear infinite reverse;
+}
 
 .hover-fill {
   transition: background 0.15s ease, color 0.15s ease;

@@ -54,6 +54,9 @@ export default async function HomePage() {
   const photoMid = Math.ceil(photos.length / 2);
   const photoRowA = photos.slice(0, photoMid);
   const photoRowB = photos.slice(photoMid).length ? photos.slice(photoMid) : photoRowA;
+  // Mobile-only third row: a reversed pass over the full set so it reads
+  // differently from rows A/B without disturbing their desktop split.
+  const photoRowC = photos.length > 1 ? [...photos].reverse() : photoRowA;
 
   const BASE = process.env.NEXT_PUBLIC_SITE_URL || "https://portofoliofikri-ebon.vercel.app";
   const jsonLd = {
@@ -262,6 +265,21 @@ export default async function HomePage() {
                     {photoRowB.map((src, i) => (
                       <span
                         key={`b-${dup}-${i}`}
+                        className="block w-[300px] h-[220px] shrink-0 overflow-hidden max-[640px]:w-[240px] max-[640px]:h-[180px]"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={src} alt="" className="block w-full h-full object-cover grayscale contrast-[1.05]" />
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </div>
+              <div className="photo-row-c hidden max-[640px]:flex w-max gap-4">
+                {[0, 1].map((dup) => (
+                  <span key={dup} className="flex gap-4">
+                    {photoRowC.map((src, i) => (
+                      <span
+                        key={`c-${dup}-${i}`}
                         className="block w-[300px] h-[220px] shrink-0 overflow-hidden max-[640px]:w-[240px] max-[640px]:h-[180px]"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
