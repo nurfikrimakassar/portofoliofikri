@@ -54,9 +54,12 @@ export default async function HomePage() {
   const photoMid = Math.ceil(photos.length / 2);
   const photoRowA = photos.slice(0, photoMid);
   const photoRowB = photos.slice(photoMid).length ? photos.slice(photoMid) : photoRowA;
-  // Mobile-only third row: a reversed pass over the full set so it reads
-  // differently from rows A/B without disturbing their desktop split.
-  const photoRowC = photos.length > 1 ? [...photos].reverse() : photoRowA;
+  // Mobile's 3-row layout gets its own three-way split so each row shows a
+  // genuinely different set of photos, instead of reusing the 2-row halves.
+  const photoThird = Math.ceil(photos.length / 3);
+  const photoRowM1 = photos.slice(0, photoThird);
+  const photoRowM2 = photos.slice(photoThird, photoThird * 2).length ? photos.slice(photoThird, photoThird * 2) : photoRowM1;
+  const photoRowM3 = photos.slice(photoThird * 2).length ? photos.slice(photoThird * 2) : photoRowM1;
 
   const BASE = process.env.NEXT_PUBLIC_SITE_URL || "https://portofoliofikri-ebon.vercel.app";
   const jsonLd = {
@@ -243,14 +246,15 @@ export default async function HomePage() {
             <div className="font-mono text-[11px] tracking-[0.2em] text-[#525252] mb-5">{`// IN FRAME`}</div>
           </div>
           <div className="relative overflow-hidden">
-            <div className="flex flex-col gap-4">
+            {/* Desktop/tablet: 2 rows, halves of the photo pool */}
+            <div className="flex flex-col gap-4 max-[640px]:hidden">
               <div className="photo-row-a flex w-max gap-4">
                 {[0, 1].map((dup) => (
                   <span key={dup} className="flex gap-4">
                     {photoRowA.map((src, i) => (
                       <span
                         key={`a-${dup}-${i}`}
-                        className="block w-[300px] h-[220px] shrink-0 overflow-hidden max-[640px]:w-[240px] max-[640px]:h-[180px]"
+                        className="block w-[300px] h-[220px] shrink-0 overflow-hidden"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={src} alt="" className="block w-full h-full object-cover grayscale contrast-[1.05]" />
@@ -265,7 +269,7 @@ export default async function HomePage() {
                     {photoRowB.map((src, i) => (
                       <span
                         key={`b-${dup}-${i}`}
-                        className="block w-[300px] h-[220px] shrink-0 overflow-hidden max-[640px]:w-[240px] max-[640px]:h-[180px]"
+                        className="block w-[300px] h-[220px] shrink-0 overflow-hidden"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={src} alt="" className="block w-full h-full object-cover grayscale contrast-[1.05]" />
@@ -274,14 +278,39 @@ export default async function HomePage() {
                   </span>
                 ))}
               </div>
-              <div className="photo-row-c hidden max-[640px]:flex w-max gap-4">
+            </div>
+
+            {/* Mobile: 3 rows, each a distinct third of the photo pool */}
+            <div className="hidden max-[640px]:flex flex-col gap-4">
+              <div className="photo-row-a flex w-max gap-4">
                 {[0, 1].map((dup) => (
                   <span key={dup} className="flex gap-4">
-                    {photoRowC.map((src, i) => (
-                      <span
-                        key={`c-${dup}-${i}`}
-                        className="block w-[300px] h-[220px] shrink-0 overflow-hidden max-[640px]:w-[240px] max-[640px]:h-[180px]"
-                      >
+                    {photoRowM1.map((src, i) => (
+                      <span key={`m1-${dup}-${i}`} className="block w-[240px] h-[180px] shrink-0 overflow-hidden">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={src} alt="" className="block w-full h-full object-cover grayscale contrast-[1.05]" />
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </div>
+              <div className="photo-row-b flex w-max gap-4">
+                {[0, 1].map((dup) => (
+                  <span key={dup} className="flex gap-4">
+                    {photoRowM2.map((src, i) => (
+                      <span key={`m2-${dup}-${i}`} className="block w-[240px] h-[180px] shrink-0 overflow-hidden">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={src} alt="" className="block w-full h-full object-cover grayscale contrast-[1.05]" />
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </div>
+              <div className="photo-row-c flex w-max gap-4">
+                {[0, 1].map((dup) => (
+                  <span key={dup} className="flex gap-4">
+                    {photoRowM3.map((src, i) => (
+                      <span key={`m3-${dup}-${i}`} className="block w-[240px] h-[180px] shrink-0 overflow-hidden">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={src} alt="" className="block w-full h-full object-cover grayscale contrast-[1.05]" />
                       </span>
