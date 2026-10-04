@@ -37,21 +37,21 @@ export default async function ProductsPage() {
       <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5 max-[640px]:pt-0">
         <div className="flex items-baseline gap-4 mb-8 font-mono">
           <span className="text-[12px] tracking-[0.2em] text-[#525252]">{`// DIGITAL PRODUCTS · FOR SALE`}</span>
-          <div className="flex-1 h-px bg-black/[0.08]" />
+          <div className="flex-1 h-px bg-black/[0.08] max-[640px]:hidden" />
           <span className="text-[11px] text-[#a3a3a3]">{String(S.products.length).padStart(2, "0")} products</span>
         </div>
         <PaginatedProducts items={S.products} perPage={6} />
 
         <div className="mt-24 max-[640px]:mt-12 flex items-baseline gap-4 mb-8 font-mono">
           <span className="text-[12px] tracking-[0.2em] text-[#525252]">{`// AUTOMATION · CASE STUDY`}</span>
-          <div className="flex-1 h-px bg-black/[0.08]" />
+          <div className="flex-1 h-px bg-black/[0.08] max-[640px]:hidden" />
           <span className="text-[11px] text-[#a3a3a3]">{String(S.automation.length).padStart(2, "0")} cases</span>
         </div>
         <PaginatedAutomation items={S.automation} perPage={6} />
 
         <div className="mt-24 max-[640px]:mt-12 flex items-baseline gap-4 mb-8 font-mono">
           <span className="text-[12px] tracking-[0.2em] text-[#525252]">{`// WEBSITES & PROJECTS DELIVERED`}</span>
-          <div className="flex-1 h-px bg-black/[0.08]" />
+          <div className="flex-1 h-px bg-black/[0.08] max-[640px]:hidden" />
           <span className="text-[11px] text-[#a3a3a3]">{String(S.webWorks.length).padStart(2, "0")} projects</span>
         </div>
         <PaginatedDelivered items={delivered} perPage={6} />
