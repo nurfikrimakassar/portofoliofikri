@@ -36,7 +36,7 @@ export default async function WorkPage() {
       </header>
 
       <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5 max-[640px]:pt-3 max-[640px]:pb-0">
-        <div className="flex items-baseline gap-4 mb-4 max-[640px]:mb-0 font-mono max-[640px]:justify-between">
+        <div className="flex items-baseline gap-4 mb-4 font-mono max-[640px]:justify-between">
           <span className="text-[12px] tracking-[0.2em] text-[#737373]">{`// WEB & ENGINEERING`}</span>
           <div className="flex-1 h-px bg-white/[0.07] max-[640px]:hidden" />
           <span className="text-[11px] text-[#525252]">{String(S.webWorks.length).padStart(2, "0")} projects</span>
