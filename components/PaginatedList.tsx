@@ -21,7 +21,7 @@ function Controls({
   const active = dark ? "text-[#f5f5f5]" : "text-[#0a0a0a]";
 
   return (
-    <div className="flex items-center justify-between mt-10 max-[640px]:mt-0 font-mono text-[12px]">
+    <div className="flex items-center justify-between mt-10 max-[640px]:mt-6 font-mono text-[12px]">
       <span className={dim}>{String(page).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
       <div className="flex items-center gap-5">
         <button
