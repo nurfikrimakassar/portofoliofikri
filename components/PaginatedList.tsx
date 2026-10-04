@@ -69,7 +69,7 @@ export function PaginatedWebWorks({ items, perPage }: { items: WebWork[]; perPag
             key={w.id}
             href={`/work/${w.id}`}
             data-r="workrow"
-            className="hover-row grid grid-cols-[auto_1fr_auto] gap-8 items-center py-8 no-underline text-[#f5f5f5] max-[640px]:grid-cols-1 max-[640px]:gap-2.5"
+            className="hover-row grid grid-cols-[auto_1fr_auto] gap-8 items-center py-8 no-underline text-[#f5f5f5] max-[640px]:grid-cols-1 max-[640px]:gap-2.5 max-[640px]:first:pt-0"
           >
             <span className="font-mono text-[13px] text-[#525252]">{w.idx}</span>
             <div>
