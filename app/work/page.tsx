@@ -35,7 +35,7 @@ export default async function WorkPage() {
         </p>
       </header>
 
-      <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5 max-[640px]:pt-1">
+      <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5 max-[640px]:pt-2 max-[640px]:pb-0">
         <div className="flex items-baseline gap-4 mb-4 font-mono max-[640px]:justify-between">
           <span className="text-[12px] tracking-[0.2em] text-[#737373]">{`// WEB & ENGINEERING`}</span>
           <div className="flex-1 h-px bg-white/[0.07] max-[640px]:hidden" />
@@ -51,7 +51,7 @@ export default async function WorkPage() {
         <PaginatedGraphics items={graphics} perPage={6} />
       </section>
 
-      <footer className="relative z-10 max-w-[1180px] mx-auto px-8 pt-16 pb-10 mt-12 max-[640px]:px-5">
+      <footer className="relative z-10 max-w-[1180px] mx-auto px-8 pt-16 pb-10 mt-12 max-[640px]:mt-0 max-[640px]:px-5">
         <div className="flex justify-between items-center flex-wrap gap-4 font-mono text-[11px] text-[#525252] pt-7 border-t border-white/[0.07]">
           <span>© 2024 FIKRI · MAKASSAR, ID</span>
           <Link href="/" className="text-[#a3a3a3] no-underline hover-link">
