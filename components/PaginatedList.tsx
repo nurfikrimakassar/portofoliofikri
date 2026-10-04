@@ -63,7 +63,7 @@ export function PaginatedWebWorks({ items, perPage }: { items: WebWork[]; perPag
 
   return (
     <>
-      <div className="divide-y divide-white/[0.07] border-t border-white/[0.07]">
+      <div className="divide-y divide-white/[0.07] border-t border-white/[0.07] max-[640px]:border-t-0">
         {slice.map((w) => (
           <Link
             key={w.id}
