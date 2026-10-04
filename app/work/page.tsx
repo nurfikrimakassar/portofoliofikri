@@ -36,14 +36,14 @@ export default async function WorkPage() {
       </header>
 
       <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5 max-[640px]:pt-0">
-        <div className="flex items-baseline gap-4 mb-4 font-mono">
+        <div className="flex items-baseline gap-4 mb-4 font-mono max-[640px]:justify-between">
           <span className="text-[12px] tracking-[0.2em] text-[#737373]">{`// WEB & ENGINEERING`}</span>
           <div className="flex-1 h-px bg-white/[0.07] max-[640px]:hidden" />
           <span className="text-[11px] text-[#525252]">{String(S.webWorks.length).padStart(2, "0")} projects</span>
         </div>
         <PaginatedWebWorks items={S.webWorks} perPage={3} />
 
-        <div className="flex items-baseline gap-4 mt-24 max-[640px]:mt-12 mb-8 font-mono">
+        <div className="flex items-baseline gap-4 mt-24 max-[640px]:mt-12 mb-8 font-mono max-[640px]:justify-between">
           <span className="text-[12px] tracking-[0.2em] text-[#737373]">{`// GRAPHIC DESIGN`}</span>
           <div className="flex-1 h-px bg-white/[0.07] max-[640px]:hidden" />
           <span className="text-[11px] text-[#525252]">{String(S.graphicWorks.length).padStart(2, "0")} pieces</span>
