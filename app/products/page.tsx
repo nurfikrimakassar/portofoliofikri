@@ -20,16 +20,16 @@ export default async function ProductsPage() {
     <div className="relative min-h-screen bg-[#f5f5f5] text-[#0a0a0a] font-sans overflow-x-hidden">
       <Nav theme="light" active="/products" />
 
-      <header className="relative z-10 max-w-[1180px] mx-auto px-8 pt-36 pb-12 max-[640px]:px-5 max-[640px]:pt-28">
+      <header className="relative z-10 max-w-[1180px] mx-auto px-8 pt-36 pb-12 max-[640px]:px-5 max-[640px]:pt-[110px]">
         <div className="font-mono text-[12px] text-[#a3a3a3] mb-6">
           ~/fikri <span className="text-[#d4d4d4]">/</span> <span className="text-[#525252]">products</span>
         </div>
-        <h1 className="text-[clamp(44px,7vw,88px)] font-bold tracking-[-0.035em] leading-[0.98]">
+        <h1 className="text-[clamp(44px,7vw,88px)] max-[640px]:text-[50px] font-bold tracking-[-0.035em] leading-[0.98]">
           PRODUCTS
           <br />
           &amp; AUTOMATION
         </h1>
-        <p className="max-w-[560px] text-[17px] leading-[1.65] text-[#525252] mt-7">
+        <p className="max-w-[560px] text-[17px] max-[640px]:text-[15px] leading-[1.65] text-[#525252] mt-7">
           Templates and automation systems I sell, problem-solving case studies, and projects I&apos;ve shipped.
         </p>
       </header>

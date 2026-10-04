@@ -21,16 +21,16 @@ export default async function WorkPage() {
       <GridBackground />
       <Nav active="/work" />
 
-      <header className="relative z-10 max-w-[1180px] mx-auto px-8 pt-36 pb-12 max-[640px]:px-5 max-[640px]:pt-28">
+      <header className="relative z-10 max-w-[1180px] mx-auto px-8 pt-36 pb-12 max-[640px]:px-5 max-[640px]:pt-[110px]">
         <div className="font-mono text-[12px] text-[#525252] mb-6">
           ~/fikri <span className="text-[#3a3a3a]">/</span> <span className="text-[#a3a3a3]">work</span>
         </div>
-        <h1 className="text-[clamp(44px,7vw,88px)] font-bold tracking-[-0.035em] leading-[0.98]">
+        <h1 className="text-[clamp(44px,7vw,88px)] max-[640px]:text-[54px] font-bold tracking-[-0.035em] leading-[0.98]">
           SELECTED
           <br />
           WORK
         </h1>
-        <p className="max-w-[560px] text-[17px] leading-[1.65] text-[#a3a3a3] mt-7">
+        <p className="max-w-[560px] text-[17px] max-[640px]:text-[15px] leading-[1.65] text-[#a3a3a3] mt-7">
           Web &amp; engineering projects I&apos;ve built, alongside a set of graphic design work. Each project opens to a full write-up: what it was, my role, the impact, and what I took away.
         </p>
       </header>
