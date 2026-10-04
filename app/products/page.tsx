@@ -34,7 +34,7 @@ export default async function ProductsPage() {
         </p>
       </header>
 
-      <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5">
+      <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5 max-[640px]:pt-0">
         <div className="flex items-baseline gap-4 mb-8 font-mono">
           <span className="text-[12px] tracking-[0.2em] text-[#525252]">{`// DIGITAL PRODUCTS · FOR SALE`}</span>
           <div className="flex-1 h-px bg-black/[0.08]" />
