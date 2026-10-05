@@ -66,9 +66,9 @@ export default async function BlogPage() {
           </Link>
         )}
 
-        <div className="flex items-baseline gap-4 mb-2 font-mono">
+        <div className="flex items-baseline gap-4 mb-2 font-mono max-[640px]:justify-between">
           <span className="text-[12px] tracking-[0.2em] text-[#737373]">{`// ALL POSTS`}</span>
-          <div className="flex-1 h-px bg-white/[0.07]" />
+          <div className="flex-1 h-px bg-white/[0.07] max-[640px]:hidden" />
           <span className="text-[11px] text-[#525252]">{String(rest.length).padStart(2, "0")} posts</span>
         </div>
         <PaginatedBlog items={rest} perPage={10} />
