@@ -21,12 +21,12 @@ export default async function BlogPage() {
         <div className="font-mono text-[12px] text-[#525252] mb-6">
           ~/fikri <span className="text-[#3a3a3a]">/</span> <span className="text-[#a3a3a3]">blog</span>
         </div>
-        <h1 className="text-[clamp(44px,7vw,88px)] font-bold tracking-[-0.035em] leading-[0.98]">
+        <h1 className="text-[clamp(44px,7vw,88px)] max-[640px]:text-[54px] font-bold tracking-[-0.035em] leading-[0.98]">
           WRITING
           <br />
           &amp; NOTES
         </h1>
-        <p className="max-w-[560px] text-[17px] leading-[1.65] text-[#a3a3a3] mt-7">
+        <p className="max-w-[560px] text-[17px] max-[640px]:text-[15px] leading-[1.65] text-[#a3a3a3] mt-7">
           Notes on automation, design, and the career path so far — case studies and the things I picked up along the way.
         </p>
       </header>
