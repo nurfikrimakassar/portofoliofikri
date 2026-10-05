@@ -31,7 +31,7 @@ export default async function BlogPage() {
         </p>
       </header>
 
-      <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5 max-[640px]:pt-3">
+      <section className="relative z-10 max-w-[1180px] mx-auto px-8 py-12 max-[640px]:px-5 max-[640px]:pt-5">
         {featured && (
           <Link
             href={`/blog/${featured.id}`}
