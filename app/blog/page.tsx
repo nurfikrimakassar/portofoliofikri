@@ -17,7 +17,7 @@ export default async function BlogPage() {
       <GridBackground />
       <Nav active="/blog" />
 
-      <header className="relative z-10 max-w-[1180px] mx-auto px-8 pt-36 pb-12 max-[640px]:px-5 max-[640px]:pt-28">
+      <header className="relative z-10 max-w-[1180px] mx-auto px-8 pt-36 pb-12 max-[640px]:px-5 max-[640px]:pt-[110px]">
         <div className="font-mono text-[12px] text-[#525252] mb-6">
           ~/fikri <span className="text-[#3a3a3a]">/</span> <span className="text-[#a3a3a3]">blog</span>
         </div>
