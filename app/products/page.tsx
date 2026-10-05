@@ -42,14 +42,14 @@ export default async function ProductsPage() {
         </div>
         <PaginatedProducts items={S.products} perPage={6} />
 
-        <div className="mt-24 max-[640px]:mt-15 flex items-baseline gap-4 mb-8 font-mono max-[640px]:justify-between">
+        <div className="mt-24 max-[640px]:mt-17 flex items-baseline gap-4 mb-8 font-mono max-[640px]:justify-between">
           <span className="text-[12px] tracking-[0.2em] text-[#525252]">{`// AUTOMATION · CASE STUDY`}</span>
           <div className="flex-1 h-px bg-black/[0.08] max-[640px]:hidden" />
           <span className="text-[11px] text-[#a3a3a3]">{String(S.automation.length).padStart(2, "0")} cases</span>
         </div>
         <PaginatedAutomation items={S.automation} perPage={6} />
 
-        <div className="mt-24 max-[640px]:mt-15 flex items-baseline gap-4 mb-8 font-mono max-[640px]:justify-between">
+        <div className="mt-24 max-[640px]:mt-17 flex items-baseline gap-4 mb-8 font-mono max-[640px]:justify-between">
           <span className="text-[12px] tracking-[0.2em] text-[#525252]">{`// WEBSITES & PROJECTS DELIVERED`}</span>
           <div className="flex-1 h-px bg-black/[0.08] max-[640px]:hidden" />
           <span className="text-[11px] text-[#a3a3a3]">{String(S.webWorks.length).padStart(2, "0")} projects</span>

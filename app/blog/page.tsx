@@ -35,7 +35,7 @@ export default async function BlogPage() {
         {featured && (
           <Link
             href={`/blog/${featured.id}`}
-            className="grid grid-cols-[1.1fr_1fr] border border-white/10 no-underline text-[#f5f5f5] mb-12 overflow-hidden hover-card-dark max-[640px]:grid-cols-1"
+            className="grid grid-cols-[1.1fr_1fr] border border-white/10 no-underline text-[#f5f5f5] mb-12 max-[640px]:mb-17 overflow-hidden hover-card-dark max-[640px]:grid-cols-1"
           >
             <div className="p-10 flex flex-col justify-between max-[640px]:p-6">
               <div className="flex gap-2.5 items-center font-mono text-[11.5px] text-[#737373]">
